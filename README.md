@@ -1,43 +1,77 @@
-# Multi Conta Manager (Electron)
+# ⚡ Idle Labs — Navegador Multi‑Sessão com Workspaces
 
-Um app de desktop (Windows/Mac/Linux) para gerenciar **várias contas/sessões de navegador em grade**, organizadas em workspaces: cada conta roda numa sessão isolada (cookies e login separados), com grid automático, estatísticas reais de CPU/RAM e configurações persistentes.
+<div align="center">
 
-## O que já funciona
+![Electron](https://img.shields.io/badge/Electron-31.0.0-47848f?style=for-the-badge&logo=electron)
+![License](https://img.shields.io/badge/License-MIT-f1c644?style=for-the-badge&logo=opensource)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-0a0d14?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Ativo-4caf50?style=for-the-badge)
 
-### Workspaces
-- Clique no "+" da coluna de ícones e o workspace já é criado na hora (sem preencher nada antes).
-- **Clique direito no ícone do workspace** abre um menu: Editar workspace, Duplicar workspace, Excluir workspace.
-- Modal "Editar workspace": nome, cor (7 opções), ícone (12 ícones em SVG — nenhum emoji), URL padrão (usada ao criar novas contas nesse workspace) e Layout.
-- **5 layouts por workspace**: Grade automática, Painel único, Colunas, Linhas e Livre.
-- **Duplicar workspace**: cria uma cópia com a mesma cor/ícone/layout/URL padrão e uma cópia de cada conta (com sessão própria e independente, inicialmente fechada).
-- **Excluir workspace**: sempre precisa sobrar pelo menos um; a opção fica desabilitada nesse caso.
+**Organize contas ilimitadas em workspaces isolados — cada sessão com seus próprios cookies, cache e logins.**
 
-### Contas
-- Sessões totalmente isoladas por conta (`partition` própria) — pode logar com contas diferentes no mesmo site sem misturar cookies.
-- Contas "Closed" x "Online": fechar só esconde a aba (a sessão continua salva); "Excluir conta" remove de vez.
-- Menu de contexto por conta (clique direito): Recarregar, Ir para a URL padrão, Silenciar painel, Fechar conta, Editar conta, Duplicar conta, Limpar dados da sessão, Excluir conta.
-- Estado vazio ("Nenhuma conta aberta") com cartão explicativo e botão "+ Adicionar primeira conta".
+</div>
 
-### Interface
-- **Sem a barra de menu nativa** (File/Edit/View/Window/Help) — janela totalmente sem moldura (`frame: false`), com titlebar própria (minimizar/maximizar/fechar).
-- Barra lateral recolhível (ícone dedicado + tira para expandir de novo).
-- Paleta de cores baseada no arquivo `.css` de referência que você enviou: fundo `#070a12`, superfícies `#0e1424`, bordas `#232c44`, texto `#eef1f8`/`#9aa5bd`, acento principal âmbar `#fbbf24`, acento secundário violeta `#7c6cff`, sucesso `#34d399`, perigo `#f87171`. (Só reaproveitei os valores de cor — nenhum seletor/estrutura CSS da Idle Labs foi copiado; veja a nota mais abaixo.)
-- Drag-and-drop para reordenar contas e workspaces.
+---
 
-### Configurações (novo)
-Ícone de engrenagem na coluna de ícones abre um modal com abas:
-- **Geral**: idioma, tema, iniciar com o sistema (real, via `app.setLoginItemSettings`), reabrir o último workspace ao iniciar, exportar/importar workspaces (diálogo de arquivo real, gera/lê um `.json`).
-- **Navegação**: URL inicial padrão, zoom padrão (aplicado de verdade via `webview.setZoomFactor`), layout padrão para novos workspaces.
-- **Downloads**: escolher pasta de destino (diálogo real) e alternar se cada download pergunta onde salvar (implementado via `session.will-download` por partição).
-- **Atualizações**: painel simples informativo (não há servidor de atualização real conectado — é só um placeholder).
-- **Sobre**: nome do app, descrição, versão do app/Electron/Chromium (lidas de verdade do processo em execução).
+> [!NOTE]
+> **📖 Documentação Interativa**:  
+> Para visualizar a documentação completa com layout estilizado, acesse o arquivo **[`index.html`](https://diinhow.github.io/Idle-Labs/)** diretamente no seu navegador.
 
-### Persistência
-Workspaces, contas, cores, ícones, layouts e todas as configurações acima são salvos automaticamente em `state.json` (pasta de dados do usuário do Electron) e restaurados ao reabrir o app.
+---
 
+## 🚀 Visão Geral
+
+**Idle Labs** é um aplicativo desktop construído com **Electron** que transforma seu navegador em um **gerenciador de sessões múltiplas**. Ele permite criar **workspaces** (ex: "Principal", "Trabalho", "Pessoal") e, dentro de cada um, adicionar quantas **contas** desejar — cada uma com **cookies, cache e logins totalmente isolados**.
+
+Ideal para quem gerencia múltiplos perfis em jogos, redes sociais, e‑commerce ou qualquer serviço que exija login único por sessão.
+
+---
+
+## ✨ Funcionalidades
+
+| Ícone | Funcionalidade | Descrição |
+| :---: | :--- | :--- |
+| 📂 | **Workspaces** | Organize suas contas em categorias visuais com ícones, cores e layouts personalizados. Crie, duplique, renomeie e reordene via drag‑and‑drop. |
+| 👤 | **Contas Isoladas** | Cada conta roda em uma partição separada do Electron. Cookies, cache, localStorage e sessões são totalmente independentes. |
+| 🧩 | **Layouts Flexíveis** | Escolha entre grade automática, painel único, colunas, linhas ou livre para organizar os painéis de cada workspace. |
+| 🔄 | **Recarregamento em Segundo Plano** | Troque entre workspaces sem perder o estado das contas — tudo permanece em memória e continua rodando em background. |
+| 🔇 | **Controle de Áudio** | Silencie painéis individuais ou todos de uma vez. Ideal para evitar sons indesejados de várias sessões abertas. |
+| 📊 | **Métricas em Tempo Real** | Acompanhe CPU, RAM e FPS de cada conta e do processo principal na barra de status. |
+| 🔍 | **Barra de URL Universal** | Digite uma URL e ela será aberta em todas as contas abertas do workspace atual com um clique. |
+| 💾 | **Persistência Local** | Tudo é salvo automaticamente em `state.json`. Ao reabrir, o aplicativo restaura exatamente onde você parou. |
+| 🌐 | **Export/Import** | Exporte toda a configuração de workspaces e contas para um arquivo `.json` e importe em outra máquina. |
+| ⌨️ | **Atalhos de Teclado** | Navegue rapidamente entre painéis, recarregue, silencie e muito mais com atalhos intuitivos. |
+| 🎨 | **Temas Claro/Escuro** | Escolha o tema que melhor se adapta à sua preferência visual. |
+
+---
+
+## 🖼️ Capturas de Tela
+
+<div align="center">
+
+<img src="docs/modo-simples.png" width="880" alt="Modo Simples: painel com os números das quatro contas">
+
+</div>
+
+---
+
+## 📦 Instalação
+
+### Pré‑requisitos
+
+Você precisa do Node.js instalado uma vez. Depois é rápido.
+
+**1. Instale o Node.js**
+Baixe a versão LTS em [nodejs.org](https://nodejs.org) e instale (é next, next, finish).
+
+**2. Baixe este código**
+Clique no botão verde **Code** aqui em cima e depois em **Download ZIP**. Extraia a pasta onde quiser. Quem usa Git pode clonar:
+```bash
+git clone https://github.com/Diinhow/Idle-Labs.git
+cd Idle-Labs
+```
 ## Como rodar (modo desenvolvimento)
 ```bash
-cd idle-labs-manager
 npm install
 npm start
 ```
@@ -48,11 +82,3 @@ npm install
 npm run dist
 ```
 
-## Sobre o design e os arquivos que você enviou
-- O visual foi recriado do zero olhando os prints de tela que você mandou, e a **paleta de cores** foi extraída do arquivo `.css` que você enviou (`eb90a0ea8d5ee166.css`) — mas esse arquivo é, na prática, o CSS de produção (Tailwind) compilado do app comercial Idle Labs (confirmado pelo cabeçalho `tailwindcss v4.3.3` e pelas dezenas de milhares de classes utilitárias minificadas). Reaproveitei apenas os **valores de cor** (hex), que não são protegidos por direitos autorais isoladamente — não copiei nenhum seletor, classe ou estrutura CSS de dentro do arquivo.
-- Os `.zip` enviados anteriormente (rotulados como "descompilado" e depois como "open source") continuam não sendo usados: ambos têm a mesma estrutura de build compilado (`out-idlelabs/main/index.js`, `renderer/assets/index-HASH.js/css`), sem `LICENSE` nem código-fonte legível — ou seja, é o app comercial compilado, não um repositório aberto de verdade.
-
-## Próximos passos possíveis
-- Atalhos de teclado para trocar de conta ativa.
-- Redimensionamento manual (arrastar bordas) no layout "Livre" — hoje ele usa um tamanho fixo com quebra de linha.
-- Conectar a aba "Atualizações" a um serviço de auto-update real (ex: `electron-updater`).
