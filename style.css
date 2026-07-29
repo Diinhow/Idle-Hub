@@ -1,0 +1,409 @@
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #070a12;
+  color: #eef1f8;
+  user-select: none;
+  overflow: hidden;
+}
+
+#app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ---------- Titlebar ---------- */
+#titlebar {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  background: #0e1424;
+  border-bottom: 1px solid #232c44;
+  -webkit-app-region: drag;
+  flex-shrink: 0;
+}
+.titlebar-left { display: flex; align-items: center; gap: 8px; padding: 0 12px; }
+.brand-dot { width: 10px; height: 10px; border-radius: 50%; background: #fbbf24; display: inline-block; }
+.brand-name { font-size: 13px; color: #c3cadd; }
+.brand-name b { color: #fbbf24; }
+.titlebar-drag { flex: 1; }
+.titlebar-controls { display: flex; -webkit-app-region: no-drag; }
+.titlebar-controls button {
+  width: 42px; height: 38px; background: transparent; border: none; color: #c3cadd;
+  cursor: pointer; font-size: 14px;
+}
+.titlebar-controls button:hover { background: #232c44; }
+#btn-close:hover { background: #7f1d1d; color: #fff; }
+
+/* ---------- Body layout ---------- */
+#body-wrap { flex: 1; display: flex; min-height: 0; }
+
+/* ---------- Workspace rail (coluna de ícones) ---------- */
+#workspace-rail {
+  width: 56px; background: #070a12; border-right: 1px solid #232c44;
+  display: flex; flex-direction: column; align-items: center; padding: 10px 0; flex-shrink: 0;
+}
+#workspace-icons { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; width: 100%; align-items: center; }
+.ws-icon {
+  position: relative; width: 40px; height: 40px; border-radius: 10px; background: #111a2e;
+  display: flex; align-items: center; justify-content: center; font-size: 17px; cursor: pointer;
+  border: 1px solid transparent;
+}
+.ws-icon:hover { border-color: #2c3654; }
+.ws-icon.active { background: #2a2454; border-color: #7c6cff; }
+.ws-icon .ws-badge {
+  position: absolute; bottom: -4px; right: -4px; background: #fbbf24; color: #0e1424;
+  font-size: 9px; font-weight: 700; border-radius: 8px; min-width: 15px; height: 15px;
+  display: flex; align-items: center; justify-content: center; padding: 0 3px;
+}
+.ws-icon.dragging { opacity: .4; }
+#add-workspace-btn {
+  width: 40px; height: 40px; border-radius: 10px; border: 1px dashed #334066; background: transparent;
+  color: #c3cadd; font-size: 18px; cursor: pointer; margin-top: 8px; flex-shrink: 0;
+}
+#add-workspace-btn:hover { border-color: #fbbf24; color: #fbbf24; }
+
+/* ---------- Sidebar ---------- */
+#sidebar {
+  width: 240px;
+  background: #0e1424;
+  border-right: 1px solid #232c44;
+  display: flex; flex-direction: column;
+  flex-shrink: 0;
+}
+.sidebar-header {
+  padding: 14px 16px; display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid #232c44; color: #fbbf24; font-weight: 600; font-size: 14px;
+}
+#workspace-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar-header button {
+  background: transparent; border: none; color: #9aa5bd; cursor: pointer; font-size: 13px;
+  width: 22px; height: 22px; border-radius: 4px;
+}
+.sidebar-header button:hover { background: #232c44; color: #fbbf24; }
+#account-list { flex: 1; overflow-y: auto; padding: 8px; }
+
+.account-item {
+  padding: 10px 10px; border-radius: 8px; margin-bottom: 6px;
+  background: #111a2e; cursor: pointer; border: 1px solid transparent;
+  transition: border-color .15s, opacity .15s;
+}
+.account-item:hover { border-color: #2c3654; }
+.account-item.active { border-color: #fbbf24; }
+.account-item.closed { opacity: .55; }
+.account-item.dragging { opacity: .3; }
+.account-item.drag-over { border-color: #fbbf24; border-style: dashed; }
+.account-item .row1 { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+.account-item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.account-item .dot.closed-dot { background: #3a4562 !important; }
+.account-item .row2 { font-size: 11px; color: #9aa5bd; margin-top: 3px; padding-left: 14px; }
+.account-item .row3 { font-size: 11px; color: #6b7690; margin-top: 2px; padding-left: 14px; }
+
+.sidebar-footer { padding: 10px; border-top: 1px solid #232c44; }
+#add-account-btn {
+  width: 100%; padding: 10px; border: 1px dashed #334066; border-radius: 8px;
+  background: transparent; color: #c3cadd; cursor: pointer; font-size: 13px;
+}
+#add-account-btn:hover { border-color: #fbbf24; color: #fbbf24; }
+
+/* ---------- Main ---------- */
+#main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+#topbar {
+  height: 46px; display: flex; align-items: center; gap: 8px; padding: 0 10px;
+  background: #0e1424; border-bottom: 1px solid #232c44; flex-shrink: 0;
+}
+#topbar button {
+  background: #232c44; border: none; color: #c3cadd; border-radius: 6px;
+  height: 30px; padding: 0 10px; cursor: pointer; font-size: 13px;
+}
+#topbar button:hover { background: #2c3654; }
+#address-bar {
+  flex: 1; height: 30px; background: #0b0f1c; border: 1px solid #232c44; border-radius: 6px;
+  color: #eef1f8; padding: 0 10px; font-size: 13px;
+}
+#nav-go-all { background: #e0ac1f; color: #0e1424; font-weight: 600; }
+#nav-go-all:hover { background: #f5ce5c; }
+
+/* ---------- Grid of accounts ---------- */
+#grid {
+  flex: 1; display: grid; gap: 6px; padding: 6px; overflow: hidden;
+  background: #070a12;
+}
+
+.account-card {
+  position: relative; display: flex; flex-direction: column;
+  background: #0e1424; border: 1px solid #232c44; border-radius: 8px; overflow: hidden; min-height: 0;
+}
+.account-card.maximized {
+  position: absolute; inset: 6px; z-index: 20;
+}
+
+.card-header {
+  height: 32px; flex-shrink: 0; display: flex; align-items: center; gap: 6px;
+  padding: 0 8px; background: #111a2e; border-bottom: 1px solid #232c44;
+}
+.card-header .drag-handle { color: #6b7690; font-size: 12px; cursor: grab; flex-shrink: 0; }
+.card-header .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.card-header .name { font-size: 12px; font-weight: 600; color: #eef1f8; }
+.card-header .url { font-size: 11px; color: #9aa5bd; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-header button {
+  background: transparent; border: none; color: #9aa5bd; cursor: pointer;
+  width: 22px; height: 22px; border-radius: 4px; font-size: 12px;
+}
+.card-header button svg { width: 14px; height: 14px; display: block; flex-shrink: 0; }
+.card-header button:hover { background: #2c3654; color: #fff; }
+.card-header button.close:hover { background: #7f1d1d; color: #fff; }
+
+.card-webview-wrap { flex: 1; min-height: 0; position: relative; }
+webview { width: 100%; height: 100%; }
+
+.card-empty-hint {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #6b7690; font-size: 12px; pointer-events: none;
+}
+
+/* ---------- Statusbar ---------- */
+#statusbar {
+  height: 26px; flex-shrink: 0; display: flex; align-items: center; gap: 16px;
+  background: #0e1424; border-top: 1px solid #232c44; padding: 0 12px;
+  font-size: 11px; color: #9aa5bd;
+}
+#status-conn { color: #34d399; }
+.spacer { flex: 1; }
+
+/* ---------- Modal ---------- */
+#modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+#modal-overlay.hidden { display: none; }
+#modal-box {
+  width: 320px; background: #0e1424; border: 1px solid #2c3654; border-radius: 10px; padding: 18px;
+}
+#modal-box h3 { margin: 0 0 14px 0; color: #fbbf24; font-size: 15px; }
+#modal-box label { display: block; font-size: 12px; color: #9aa5bd; margin: 10px 0 4px; }
+#modal-box input {
+  width: 100%; height: 32px; background: #0b0f1c; border: 1px solid #232c44; border-radius: 6px;
+  color: #eef1f8; padding: 0 8px; font-size: 13px;
+}
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.modal-actions button {
+  padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px;
+}
+#modal-cancel, #ws-modal-cancel { background: #232c44; color: #c3cadd; }
+#modal-confirm, #ws-modal-confirm { background: #fbbf24; color: #0e1424; font-weight: 600; }
+
+/* ---------- Menu de contexto ---------- */
+#context-menu {
+  position: fixed; z-index: 200; background: #0e1424; border: 1px solid #2c3654;
+  border-radius: 10px; padding: 6px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+#context-menu.hidden { display: none; }
+#context-menu button {
+  width: 100%; text-align: left; background: transparent; border: none; color: #eef1f8;
+  padding: 8px 10px; border-radius: 6px; cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; gap: 10px;
+}
+#context-menu button:hover { background: #232c44; }
+#context-menu button.danger { color: #f87171; }
+#context-menu button.danger:hover { background: #3a1220; }
+#context-menu .icn { width: 16px; text-align: center; opacity: .85; }
+#context-menu button svg { width: 16px; height: 16px; flex-shrink: 0; display: block; opacity: .85; }
+.ctx-sep { height: 1px; background: #232c44; margin: 6px 4px; }
+
+/* ---------- Grid card ativo / drag ---------- */
+.account-card.active-card { border-color: #7c6cff; }
+.account-card.drag-over { outline: 2px dashed #fbbf24; outline-offset: -2px; }
+.account-card[draggable="true"] .card-header { cursor: grab; }
+
+/* ---------- Botões com ícone SVG (topbar, títulos, sidebar-header) ---------- */
+#topbar button svg, .sidebar-header button svg, #add-workspace-btn svg, #expand-sidebar-btn svg {
+  width: 15px; height: 15px; display: block;
+}
+.sidebar-header button, #add-workspace-btn, #expand-sidebar-btn {
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ---------- Tira de expandir barra lateral (quando recolhida) ---------- */
+#sidebar-collapsed-strip {
+  width: 18px; flex-shrink: 0; background: #0e1424; border-right: 1px solid #232c44;
+  display: flex; align-items: flex-start; justify-content: center; padding-top: 14px;
+}
+#sidebar-collapsed-strip.hidden { display: none; }
+#expand-sidebar-btn {
+  width: 18px; height: 28px; background: transparent; border: none; color: #9aa5bd; cursor: pointer;
+  border-radius: 4px;
+}
+#expand-sidebar-btn:hover { color: #fbbf24; background: #232c44; }
+#sidebar.collapsed { display: none; }
+
+/* ---------- Ícones do workspace (SVG, sem emoji) ---------- */
+.ws-icon svg { width: 19px; height: 19px; }
+
+/* ---------- Modal "Editar workspace" ---------- */
+#ws-edit-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  display: flex; align-items: center; justify-content: center; z-index: 150;
+}
+#ws-edit-overlay.hidden { display: none; }
+#ws-edit-box {
+  width: 460px; max-width: 92vw; background: #0e1424; border: 1px solid #2c3654; border-radius: 12px;
+  padding: 20px 22px;
+}
+.ws-edit-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.ws-edit-head h3 { margin: 0; font-size: 16px; color: #eef1f8; }
+#ws-edit-close { background: transparent; border: none; color: #9aa5bd; cursor: pointer; width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+#ws-edit-close:hover { background: #232c44; color: #fff; }
+.ws-edit-label { display: block; font-size: 11px; letter-spacing: .04em; color: #9aa5bd; margin: 14px 0 6px; text-transform: uppercase; }
+#ws-edit-name, #ws-edit-url {
+  width: 100%; height: 36px; background: #0b0f1c; border: 1px solid #232c44; border-radius: 8px;
+  color: #eef1f8; padding: 0 10px; font-size: 13px;
+}
+.ws-edit-colors { display: flex; gap: 10px; flex-wrap: wrap; }
+.ws-edit-colors button {
+  width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0;
+}
+.ws-edit-colors button.selected { border-color: #fff; box-shadow: 0 0 0 2px #0e1424, 0 0 0 4px currentColor; }
+.ws-edit-icons { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.ws-edit-icons button {
+  height: 36px; border-radius: 8px; background: #0b0f1c; border: 1px solid #232c44; color: #c3cadd;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.ws-edit-icons button svg { width: 16px; height: 16px; }
+.ws-edit-icons button:hover { border-color: #334066; }
+.ws-edit-icons button.selected { border-color: #fbbf24; background: #232c44; color: #fbbf24; }
+.ws-edit-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ws-edit-col { min-width: 0; }
+#ws-edit-layout {
+  width: 100%; height: 36px; background: #0b0f1c; border: 1px solid #232c44; border-radius: 8px;
+  color: #eef1f8; padding: 0 8px; font-size: 13px;
+}
+#ws-edit-save {
+  padding: 9px 18px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px;
+  background: #fbbf24; color: #0e1424; font-weight: 600;
+}
+#ws-edit-box .modal-actions { justify-content: space-between; margin-top: 18px; align-items: center; }
+.ws-edit-delete-link {
+  background: transparent; border: none; color: #f87171; cursor: pointer; font-size: 13px;
+  padding: 6px 4px; border-radius: 6px;
+}
+.ws-edit-delete-link:hover { background: #3a1220; }
+.ws-edit-delete-link:disabled { color: #6b7690; cursor: not-allowed; }
+.ws-edit-delete-link:disabled:hover { background: transparent; }
+
+/* ---------- Layout: painel único ---------- */
+#grid.layout-single { display: block; }
+#grid.layout-single .account-card { position: absolute; inset: 6px; }
+
+/* ---------- Layout: livre (flex-wrap, tamanho intrínseco) ---------- */
+#grid.layout-free { display: flex; flex-wrap: wrap; align-content: flex-start; }
+#grid.layout-free .account-card { width: 420px; height: 300px; flex: 0 0 auto; }
+
+/* ---------- Botão de configurações no rail ---------- */
+#open-settings-btn {
+  width: 40px; height: 40px; border-radius: 10px; border: 1px solid transparent; background: transparent;
+  color: #9aa5bd; cursor: pointer; margin-top: 6px; display: flex; align-items: center; justify-content: center;
+}
+#open-settings-btn:hover { background: #111a2e; color: #fbbf24; }
+#open-settings-btn svg { width: 18px; height: 18px; }
+
+/* ---------- Menu de contexto do workspace ---------- */
+#ws-context-menu {
+  position: fixed; z-index: 200; background: #0e1424; border: 1px solid #2c3654;
+  border-radius: 10px; padding: 6px; min-width: 190px; box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+#ws-context-menu.hidden { display: none; }
+#ws-context-menu button {
+  width: 100%; text-align: left; background: transparent; border: none; color: #eef1f8;
+  padding: 8px 10px; border-radius: 6px; cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; gap: 10px;
+}
+#ws-context-menu button svg { width: 15px; height: 15px; flex-shrink: 0; opacity: .85; }
+#ws-context-menu button:hover { background: #232c44; }
+#ws-context-menu button.danger { color: #f87171; }
+#ws-context-menu button.danger:hover { background: #3a1220; }
+
+/* ---------- Empty-state (nenhuma conta aberta) ---------- */
+.empty-state-card {
+  max-width: 480px; margin: auto; background: #0e1424; border: 1px solid #232c44; border-radius: 14px;
+  padding: 28px 26px; text-align: center;
+}
+.empty-state-card h3 { margin: 0 0 10px; font-size: 16px; color: #eef1f8; }
+.empty-state-card p { margin: 0 0 18px; font-size: 13px; color: #9aa5bd; line-height: 1.5; }
+.empty-state-card button {
+  padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px;
+  background: #fbbf24; color: #0e1424; font-weight: 600;
+}
+.empty-state-card button:hover { background: #f5ce5c; }
+#grid .card-empty-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+
+/* ---------- Toggle (switch) estilo pill ---------- */
+.switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch-track {
+  position: absolute; inset: 0; background: #232c44; border-radius: 999px; cursor: pointer; transition: background .15s;
+}
+.switch-track::before {
+  content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff;
+  border-radius: 50%; transition: transform .15s;
+}
+.switch input:checked + .switch-track { background: #fbbf24; }
+.switch input:checked + .switch-track::before { transform: translateX(18px); }
+
+/* ---------- Modal: Configurações ---------- */
+#settings-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 150;
+  display: flex; align-items: center; justify-content: center;
+}
+#settings-overlay.hidden { display: none; }
+#settings-box {
+  width: 640px; max-width: 94vw; max-height: 86vh; background: #0e1424; border: 1px solid #2c3654;
+  border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;
+}
+.settings-head {
+  display: flex; align-items: center; justify-content: space-between; padding: 16px 20px;
+  border-bottom: 1px solid #232c44;
+}
+.settings-head h3 { margin: 0; font-size: 16px; color: #eef1f8; }
+#settings-close { background: transparent; border: none; color: #9aa5bd; cursor: pointer; width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+#settings-close:hover { background: #232c44; color: #fff; }
+#settings-close svg { width: 16px; height: 16px; }
+
+.settings-body { display: flex; flex: 1; min-height: 0; }
+.settings-tabs {
+  width: 170px; flex-shrink: 0; background: #0b0f1c; border-right: 1px solid #232c44;
+  padding: 10px; display: flex; flex-direction: column; gap: 2px;
+}
+.settings-tab {
+  display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; background: transparent;
+  border: none; color: #9aa5bd; cursor: pointer; font-size: 13px; text-align: left;
+}
+.settings-tab svg { width: 15px; height: 15px; flex-shrink: 0; }
+.settings-tab:hover { background: #111a2e; }
+.settings-tab.active { background: #232c44; color: #fbbf24; }
+
+.settings-content { flex: 1; padding: 20px 24px; overflow-y: auto; }
+.settings-panel { display: none; }
+.settings-panel.active { display: block; }
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 12px 0; font-size: 13px; color: #eef1f8;
+}
+.settings-row + .settings-row { border-top: 1px solid #1a2338; }
+.settings-row select, .settings-row input[type="text"] {
+  min-width: 220px; height: 34px; background: #0b0f1c; border: 1px solid #232c44; border-radius: 8px;
+  color: #eef1f8; padding: 0 10px; font-size: 13px;
+}
+.settings-sep { height: 1px; background: #1a2338; margin: 6px 0 14px; }
+.settings-row-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.ghost-btn {
+  display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 8px;
+  background: transparent; border: 1px solid #fbbf24; color: #fbbf24; cursor: pointer; font-size: 13px;
+}
+.ghost-btn svg { width: 15px; height: 15px; }
+.ghost-btn:hover { background: #232c44; }
+.settings-subtext { font-size: 12px; color: #9aa5bd; margin: 2px 0 0; }
+.settings-info-row {
+  display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #eef1f8;
+  border-top: 1px solid #1a2338;
+}
+#settings-box h4 { margin: 0 0 8px; color: #fbbf24; font-size: 15px; }

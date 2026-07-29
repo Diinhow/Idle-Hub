@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Multi Conta Manager</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- Barra de título custom -->
+    <div id="titlebar">
+      <div class="titlebar-left">
+        <span class="brand-dot"></span>
+        <span class="brand-name">Multi <b>Conta Manager</b></span>
+      </div>
+      <div class="titlebar-drag"></div>
+      <div class="titlebar-controls">
+        <button id="btn-min" title="Minimizar">&#8211;</button>
+        <button id="btn-max" title="Maximizar">&#9723;</button>
+        <button id="btn-close" title="Fechar">&#10005;</button>
+      </div>
+    </div>
+
+    <div id="body-wrap">
+
+      <!-- Coluna estreita: lista de workspaces -->
+      <div id="workspace-rail">
+        <div id="workspace-icons"></div>
+        <button id="add-workspace-btn" title="Novo workspace">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 3v14M3 10h14"/></svg>
+        </button>
+        <button id="open-settings-btn" title="Configurações">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="2.6"/><path d="M10 2.5v2M10 15.5v2M17.5 10h-2M4.5 10h-2M15.1 4.9l-1.4 1.4M6.3 13.7l-1.4 1.4M15.1 15.1l-1.4-1.4M6.3 6.3L4.9 4.9"/></svg>
+        </button>
+      </div>
+
+      <!-- Tira fina exibida quando a barra lateral está recolhida -->
+      <div id="sidebar-collapsed-strip" class="hidden">
+        <button id="expand-sidebar-btn" title="Mostrar barra lateral">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Sidebar: contas do workspace ativo -->
+      <div id="sidebar">
+        <div class="sidebar-header">
+          <span id="workspace-title">Principal</span>
+          <button id="rename-workspace-btn" title="Editar workspace">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2.5l4 4L6 18l-4.3.8L2.5 14.5 13.5 2.5z"/></svg>
+          </button>
+          <button id="collapse-sidebar-btn" title="Recolher barra lateral">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4l-6 6 6 6"/><path d="M6 3v14"/></svg>
+          </button>
+        </div>
+
+        <div id="account-list"></div>
+
+        <div class="sidebar-footer">
+          <button id="add-account-btn">+ Adicionar conta</button>
+        </div>
+      </div>
+
+      <!-- Área principal -->
+      <div id="main">
+        <div id="topbar">
+          <button id="nav-reload" title="Recarregar conta ativa">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a6 6 0 11-2-4.5M16 3v4h-4"/></svg>
+          </button>
+          <input id="address-bar" type="text" placeholder="https://exemplo.com" />
+          <button id="nav-go" title="Ir">Ir</button>
+          <button id="nav-go-all" title="Abrir esta URL em TODAS as contas abertas">Aplicar a todas</button>
+        </div>
+
+        <div id="grid"></div>
+      </div>
+    </div>
+
+    <!-- Barra de status -->
+    <div id="statusbar">
+      <span id="status-conn">&#9679; Conectado</span>
+      <span id="status-workspace">Principal · Grade automática · <span id="status-count">0</span></span>
+      <span id="status-active">Nenhuma conta ativa</span>
+      <span class="spacer"></span>
+      <span id="status-cpu">CPU —</span>
+      <span id="status-ram">RAM —</span>
+      <span id="status-version">v1.2.0</span>
+    </div>
+
+  </div>
+
+  <!-- Modal genérico: adicionar/editar conta -->
+  <div id="modal-overlay" class="hidden">
+    <div id="modal-box">
+      <h3 id="modal-title">Adicionar conta</h3>
+      <label>Nome da conta</label>
+      <input id="modal-name" type="text" placeholder="Ex: Conta 5" />
+      <label>URL inicial / padrão</label>
+      <input id="modal-url" type="text" placeholder="https://exemplo.com" />
+      <div class="modal-actions">
+        <button id="modal-cancel">Cancelar</button>
+        <button id="modal-confirm">Adicionar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: editar workspace (nome, cor, ícone, URL padrão, layout) -->
+  <div id="ws-edit-overlay" class="hidden">
+    <div id="ws-edit-box">
+      <div class="ws-edit-head">
+        <h3>Editar workspace</h3>
+        <button id="ws-edit-close" title="Fechar">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>
+        </button>
+      </div>
+
+      <label class="ws-edit-label">NOME</label>
+      <input id="ws-edit-name" type="text" />
+
+      <label class="ws-edit-label">COR</label>
+      <div id="ws-edit-colors" class="ws-edit-colors"></div>
+
+      <label class="ws-edit-label">ÍCONE</label>
+      <div id="ws-edit-icons" class="ws-edit-icons"></div>
+
+      <div class="ws-edit-row2">
+        <div class="ws-edit-col">
+          <label class="ws-edit-label">URL PADRÃO</label>
+          <input id="ws-edit-url" type="text" placeholder="https://exemplo.com" />
+        </div>
+        <div class="ws-edit-col">
+          <label class="ws-edit-label">LAYOUTS</label>
+          <select id="ws-edit-layout">
+            <option value="auto">Grade automática</option>
+            <option value="single">Painel único</option>
+            <option value="columns">Colunas</option>
+            <option value="rows">Linhas</option>
+            <option value="free">Livre</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="ws-edit-save">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu de contexto de conta -->
+  <div id="context-menu" class="hidden">
+    <button data-action="reload">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a6 6 0 11-2-4.5M16 3v4h-4"/></svg>
+      Recarregar
+    </button>
+    <button data-action="default-url">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l7-7 7 7M5 8v8h10V8"/></svg>
+      Ir para a URL padrão
+    </button>
+    <button data-action="mute">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h3l4 3V4L6 7H3z"/></svg>
+      Silenciar painel
+    </button>
+    <button data-action="close">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+      Fechar conta
+    </button>
+    <button data-action="edit">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2.5l4 4L6 18l-4.3.8L2.5 14.5 13.5 2.5z"/></svg>
+      Editar conta
+    </button>
+    <button data-action="duplicate">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="3" width="10" height="10" rx="1.5"/><path d="M7 13v2a1.5 1.5 0 001.5 1.5H17a1.5 1.5 0 001.5-1.5V8.5A1.5 1.5 0 0017 7h-2"/></svg>
+      Duplicar conta
+    </button>
+    <div class="ctx-sep"></div>
+    <button data-action="clear-data" class="danger">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h10l-1 11H6L5 6zM8 3h4l.5 3h-5L8 3z"/></svg>
+      Limpar dados da sessão
+    </button>
+    <button data-action="delete" class="danger">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M8 6V4h4v2M6 6l1 11h6l1-11"/></svg>
+      Excluir conta
+    </button>
+  </div>
+
+  <!-- Menu de contexto do workspace (clique direito no ícone) -->
+  <div id="ws-context-menu" class="hidden">
+    <button data-action="edit">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2.5l4 4L6 18l-4.3.8L2.5 14.5 13.5 2.5z"/></svg>
+      Editar workspace
+    </button>
+    <button data-action="duplicate">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="3" width="10" height="10" rx="1.5"/><path d="M7 13v2a1.5 1.5 0 001.5 1.5H17a1.5 1.5 0 001.5-1.5V8.5A1.5 1.5 0 0017 7h-2"/></svg>
+      Duplicar workspace
+    </button>
+    <div class="ctx-sep"></div>
+    <button data-action="delete" class="danger">
+      <svg class="icn" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M8 6V4h4v2M6 6l1 11h6l1-11"/></svg>
+      Excluir workspace
+    </button>
+  </div>
+
+  <!-- Modal: Configurações -->
+  <div id="settings-overlay" class="hidden">
+    <div id="settings-box">
+      <div class="settings-head">
+        <h3>Configurações</h3>
+        <button id="settings-close" title="Fechar">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>
+        </button>
+      </div>
+      <div class="settings-body">
+        <div class="settings-tabs">
+          <button class="settings-tab active" data-tab="geral">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="2.4"/><path d="M10 2.5v2M10 15.5v2M17.5 10h-2M4.5 10h-2M15.1 4.9l-1.4 1.4M6.3 13.7l-1.4 1.4M15.1 15.1l-1.4-1.4M6.3 6.3L4.9 4.9"/></svg>
+            Geral
+          </button>
+          <button class="settings-tab" data-tab="navegacao">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7.2"/><path d="M2.8 10h14.4M10 2.8c2 2 3 5 3 7.2s-1 5.2-3 7.2c-2-2-3-5-3-7.2s1-5.2 3-7.2z"/></svg>
+            Navegação
+          </button>
+          <button class="settings-tab" data-tab="downloads">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9m0 0l-3.2-3.2M10 12l3.2-3.2M4 15h12"/></svg>
+            Downloads
+          </button>
+          <button class="settings-tab" data-tab="atualizacoes">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a6 6 0 11-2-4.5M16 3v4h-4"/></svg>
+            Atualizações
+          </button>
+          <button class="settings-tab" data-tab="sobre">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7.2"/><path d="M10 9v4.5M10 6.6v.01"/></svg>
+            Sobre
+          </button>
+        </div>
+
+        <div class="settings-content">
+          <!-- Geral -->
+          <div class="settings-panel active" data-panel="geral">
+            <div class="settings-row">
+              <span>Idioma</span>
+              <select id="set-idioma"><option value="sistema">Sistema</option><option value="pt-br">Português (Brasil)</option><option value="en">English</option></select>
+            </div>
+            <div class="settings-row">
+              <span>Tema</span>
+              <select id="set-tema"><option value="escuro">Escuro</option></select>
+            </div>
+            <div class="settings-row">
+              <span>Inicializar com o sistema</span>
+              <label class="switch"><input type="checkbox" id="set-login-item"><span class="switch-track"></span></label>
+            </div>
+            <div class="settings-row">
+              <span>Reabrir o último workspace ao iniciar</span>
+              <label class="switch"><input type="checkbox" id="set-reopen-last"><span class="switch-track"></span></label>
+            </div>
+            <div class="settings-sep"></div>
+            <div class="settings-row-buttons">
+              <button id="set-export" class="ghost-btn">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3m0 0L6.5 6.5M10 3l3.5 3.5M4 15h12"/></svg>
+                Exportar workspaces
+              </button>
+              <button id="set-import" class="ghost-btn">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10m0 0l-3.5-3.5M10 13l3.5-3.5M4 15h12"/></svg>
+                Importar workspaces
+              </button>
+            </div>
+          </div>
+
+          <!-- Navegação -->
+          <div class="settings-panel" data-panel="navegacao">
+            <div class="settings-row">
+              <span>URL inicial padrão</span>
+              <input id="set-url-padrao" type="text" placeholder="https://exemplo.com" />
+            </div>
+            <div class="settings-row">
+              <span>Zoom padrão</span>
+              <select id="set-zoom"><option value="0.75">75%</option><option value="0.9">90%</option><option value="1">100%</option><option value="1.1">110%</option><option value="1.25">125%</option><option value="1.5">150%</option></select>
+            </div>
+            <div class="settings-row">
+              <span>Layout padrão</span>
+              <select id="set-layout-padrao">
+                <option value="auto">Grade automática</option>
+                <option value="single">Painel único</option>
+                <option value="columns">Colunas</option>
+                <option value="rows">Linhas</option>
+                <option value="free">Livre</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Downloads -->
+          <div class="settings-panel" data-panel="downloads">
+            <div class="settings-row">
+              <div>
+                <div>Pasta de downloads</div>
+                <div class="settings-subtext" id="set-downloads-path">Pasta padrão do sistema</div>
+              </div>
+              <button id="set-choose-folder" class="ghost-btn">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5A1.5 1.5 0 014 5h3l1.5 1.5H16A1.5 1.5 0 0117.5 8v6A1.5 1.5 0 0116 15.5H4A1.5 1.5 0 012.5 14v-7.5z"/></svg>
+                Escolher pasta...
+              </button>
+            </div>
+            <div class="settings-row">
+              <span>Perguntar onde salvar cada download</span>
+              <label class="switch"><input type="checkbox" id="set-ask-download" checked><span class="switch-track"></span></label>
+            </div>
+          </div>
+
+          <!-- Atualizações -->
+          <div class="settings-panel" data-panel="atualizacoes">
+            <p class="settings-subtext">Você está usando a versão mais recente deste projeto de código aberto.</p>
+            <button id="set-check-updates" class="ghost-btn">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a6 6 0 11-2-4.5M16 3v4h-4"/></svg>
+              Verificar atualizações
+            </button>
+          </div>
+
+          <!-- Sobre -->
+          <div class="settings-panel" data-panel="sobre">
+            <h4>Multi Conta Manager</h4>
+            <p class="settings-subtext">Gerenciador multi-sessão com workspaces: organize contas ilimitadas em grupos, cada uma com sessão isolada.</p>
+            <div class="settings-info-row"><span>Versão</span><span id="about-version">—</span></div>
+            <div class="settings-info-row"><span>Electron</span><span id="about-electron">—</span></div>
+            <div class="settings-info-row"><span>Chromium</span><span id="about-chrome">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

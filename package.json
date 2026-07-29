@@ -1,0 +1,26 @@
+{
+  "name": "multi-conta-manager",
+  "version": "1.3.0",
+  "description": "Gerenciador de múltiplas contas/sessões em navegador (inspirado no Idle Labs) feito em Electron",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.exemplo.multicontamanager",
+    "productName": "Multi Conta Manager",
+    "files": [
+      "**/*"
+    ],
+    "win": { "target": "nsis" },
+    "mac": { "target": "dmg" },
+    "linux": { "target": "AppImage" }
+  }
+}
