@@ -15,9 +15,25 @@
 
 > [!NOTE]
 > **📖 Documentação Interativa**:  
-> Para visualizar a documentação completa com layout estilizado, acesse o arquivo **[`index.html`](https://diinhow.github.io/Idle-Labs/)** diretamente no seu navegador.
+> Para visualizar a documentação completa com layout estilizado, acesse o arquivo **[`index.html`](https://diinhow.github.io/idlelabs/)** diretamente no seu navegador.
 
 ---
+
+## 🖼️ Capturas de Tela
+
+<div align="center">
+
+<img src="docs/modo-simples.png" width="880" alt="Modo Simples: painel com os números das quatro contas">
+
+</div>
+
+> Esta é a versão que roda a partir do código. Não tem executável pronto pra baixar: você pega o código, olha o que ele faz e roda você mesmo. Assim a confiança fica com você, não comigo.
+
+> 🔰 **Nunca mexeu com isso?** Tem um passo a passo pra leigo aqui: **[TUTORIAL.md](docs/TUTORIAL.md)** (ou o arquivo `COMO USAR.txt` dentro da pasta).
+
+> ### 🔒 Seus dados de login ficam só no seu computador
+> Login e senha são criptografados no seu próprio PC e nunca saem dele. Nada de servidor, nada de repositório. O código está todo aqui pra você conferir.
+
 
 ## 🚀 Visão Geral
 
@@ -25,7 +41,6 @@
 
 Ideal para quem gerencia múltiplos perfis em jogos, redes sociais, e‑commerce ou qualquer serviço que exija login único por sessão.
 
----
 
 ## ✨ Funcionalidades
 
@@ -42,16 +57,6 @@ Ideal para quem gerencia múltiplos perfis em jogos, redes sociais, e‑commerce
 | 🌐 | **Export/Import** | Exporte toda a configuração de workspaces e contas para um arquivo `.json` e importe em outra máquina. |
 | ⌨️ | **Atalhos de Teclado** | Navegue rapidamente entre painéis, recarregue, silencie e muito mais com atalhos intuitivos. |
 | 🎨 | **Temas Claro/Escuro** | Escolha o tema que melhor se adapta à sua preferência visual. |
-
----
-
-## 🖼️ Capturas de Tela
-
-<div align="center">
-
-<img src="docs/modo-simples.png" width="880" alt="Modo Simples: painel com os números das quatro contas">
-
-</div>
 
 ---
 
@@ -82,3 +87,6 @@ npm install
 npm run dist
 ```
 
+## Licença
+
+MIT. Projeto independente, sem ligação com o Poke Idle World.

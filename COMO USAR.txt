@@ -1,0 +1,73 @@
+========================================
+   IdleLabs - COMO USAR (passo a passo)
+========================================
+
+Guia para quem nunca mexeu com isso.
+Esta versao roda direto do codigo. Sao 3 passos, e a parte
+"dificil" voce so faz UMA vez.
+
+
+PASSO 1 - INSTALAR O NODE.JS (so na primeira vez)
+--------------------------------------------------
+O Node.js e o "motor" que faz o app funcionar.
+
+  1. Entre no site:  nodejs.org
+  2. Baixe o botao verde grande escrito  LTS
+  3. Abra o arquivo baixado e va clicando em "Avancar / Next"
+     ate o "Concluir / Finish". Nao precisa mudar nada.
+
+Pronto. Isso nao precisa fazer de novo.
+
+
+PASSO 2 - BAIXAR A IdleLabs
+---------------------------
+  1. Na pagina do projeto no GitHub, clique no botao verde  Code
+  2. Clique em  Download ZIP
+  3. Va na pasta Downloads, clique com o BOTAO DIREITO no arquivo
+     .zip e escolha "Extrair tudo". Vai aparecer uma pasta.
+
+
+PASSO 3 - ABRIR O APP
+---------------------
+  1. Entre na pasta que apareceu
+  2. De DOIS CLIQUES no arquivo  Abrir IdleLabs  (.vbs).
+     Ele abre o app SEM janela preta.
+  3. Na primeira vez ele demora um pouco (esta baixando o que
+     precisa) e abre sozinho. Nas proximas vezes abre rapido,
+     sem terminal nenhum.
+
+  * Se o Windows mostrar uma tela azul ("O Windows protegeu seu
+    computador"), clique em "Mais informacoes" e depois em
+    "Executar assim mesmo". E porque o app nao tem assinatura
+    paga, mas o codigo e aberto e voce pode conferir.
+
+  QUER UM ATALHO NA AREA DE TRABALHO?
+  Botao direito no arquivo "Abrir IdleLabs" e escolha:
+  Enviar para > Area de trabalho (criar atalho).
+
+  * O iniciar.bat continua funcionando, mas deixa uma janela
+    preta aberta: se fechar essa janela, o app fecha junto.
+    Pelo "Abrir IdleLabs" isso nao acontece.
+
+  No Mac ou Linux: abra o Terminal na pasta e digite:  bash iniciar.sh
+
+
+PASSO 4 - USAR
+--------------
+  1. Em cada quadradinho, entre em qualquer site
+  2. Depois faça login no seu jogo idle Favorito.
+
+
+PARA ATUALIZAR DEPOIS
+---------------------
+Baixe o ZIP de novo (Passo 2) e substitua a pasta antiga.
+Suas contas continuam salvas.
+
+
+DEU PROBLEMA?
+-------------
+- "iniciar.bat" abre e fecha na hora: o Node.js nao foi
+  instalado. Refaca o Passo 1.
+- Uma conta nao entra sozinha: abra "Treinadores" e confira o
+  e-mail e a senha daquela conta.
+- Travando ou lento: ligue o "Eco" no menu "Opcoes".
