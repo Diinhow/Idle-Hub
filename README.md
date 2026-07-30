@@ -1,6 +1,7 @@
 # ⚡ Idle Labs — Navegador Multi‑Sessão com Workspaces
 
 <div align="center">
+<img src="docs/banner_idlelab.png" width="880" alt="Banner Idle Lab">
 
 ![Electron](https://img.shields.io/badge/Electron-31.0.0-47848f?style=for-the-badge&logo=electron)
 ![License](https://img.shields.io/badge/License-MIT-f1c644?style=for-the-badge&logo=opensource)
@@ -15,7 +16,7 @@
 
 > [!NOTE]
 > **📖 Documentação Interativa**:  
-> Para visualizar a documentação completa com layout estilizado, acesse o arquivo **[`index.html`](https://diinhow.github.io/idlelabs/)** diretamente no seu navegador.
+> Para visualizar a documentação completa com layout estilizado, acesse o arquivo **[`index.html`](https://diinhow.github.io/Idle-Labs/)** diretamente no seu navegador.
 
 ---
 
@@ -24,6 +25,7 @@
 <div align="center">
 
 <img src="docs/modo-simples.png" width="880" alt="Modo Simples: painel com os números das quatro contas">
+<img src="docs/userscript.png" width="880" alt="Suporte para UserScript/Tampermonkey">
 
 </div>
 
@@ -89,4 +91,5 @@ npm run dist
 
 ## Licença
 
-MIT. Projeto independente, sem ligação com o Poke Idle World.
+MIT License. Projeto independente.
+Idle Labs is made available under the MIT License — you are free to use it for commercial, non-commercial, closed or open projects.

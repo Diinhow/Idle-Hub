@@ -14,8 +14,12 @@ contextBridge.exposeInMainWorld('nativeAPI', {
   exportState: (data) => ipcRenderer.invoke('export-state', data),
   importState: () => ipcRenderer.invoke('import-state'),
   registerPartitionDownloads: (partition) => ipcRenderer.send('register-partition-downloads', partition),
+  onDownloadEvent: (callback) => ipcRenderer.on('download-event', (event, data) => callback(data)),
 
   minimize: () => ipcRenderer.send('win-minimize'),
   maximize: () => ipcRenderer.send('win-maximize'),
   close: () => ipcRenderer.send('win-close'),
+  toggleFullscreen: () => ipcRenderer.invoke('toggle-fullscreen'),
+  isFullscreen: () => ipcRenderer.invoke('is-fullscreen'),
+  openExternal: (url) => ipcRenderer.invoke('open-external', url),
 });

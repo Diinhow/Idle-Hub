@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, webContents, session, Menu, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, webContents, session, Menu, dialog, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -7,13 +7,20 @@ const STATE_FILE = () => path.join(app.getPath('userData'), 'state.json');
 const registeredPartitions = new Set();
 
 function createWindow() {
+  // Em desenvolvimento (npm start), usa build/icon.png se existir — sem quebrar
+  // caso o arquivo ainda não tenha sido criado. No build final (.exe/.AppImage/.dmg)
+  // quem define o ícone é a config "build" do package.json (electron-builder).
+  const devIconPath = path.join(__dirname, 'build', 'icon.png');
+  const devIcon = fs.existsSync(devIconPath) ? devIconPath : undefined;
+
   mainWindow = new BrowserWindow({
     width: 1440,
     height: 900,
     minWidth: 900,
     minHeight: 600,
-    backgroundColor: '#070a12',
+    backgroundColor: '#05070b',
     title: 'Multi Conta Manager',
+    icon: devIcon,
     frame: false, // usamos nossa própria titlebar em HTML — remove a barra nativa e o menu File/Edit/View...
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -150,7 +157,11 @@ ipcMain.handle('import-state', async () => {
 
 // Downloads dentro das <webview>: cada conta usa sua própria partição/sessão,
 // então registramos o listener de download nela assim que a conta é criada.
-function handleDownload(event, item) {
+function handleDownload(event, item, webContents) {
+  const downloadId = `dl-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  const send = (payload) => { if (mainWindow) mainWindow.webContents.send('download-event', { id: downloadId, ...payload }); };
+  send({ state: 'started', filename: item.getFilename(), url: item.getURL(), startTime: Date.now() });
+
   try {
     let settings = {};
     if (fs.existsSync(STATE_FILE())) {
@@ -159,17 +170,26 @@ function handleDownload(event, item) {
     }
     const folder = settings.downloadsPath || app.getPath('downloads');
     if (settings.perguntarOndeSalvar !== false) {
-      const chosen = dialog.showSaveDialogSync(mainWindow, {
-        defaultPath: path.join(folder, item.getFilename()),
-      });
+      const chosen = dialog.showSaveDialogSync(mainWindow, { defaultPath: path.join(folder, item.getFilename()) });
       if (chosen) item.setSavePath(chosen);
-      else item.cancel();
+      else { item.cancel(); send({ state: 'cancelled' }); return; }
     } else {
       item.setSavePath(path.join(folder, item.getFilename()));
     }
   } catch (err) {
     console.error('Erro ao tratar download:', err);
   }
+
+  item.on('updated', (e, state) => {
+    if (state === 'progressing') {
+      send({ state: 'progressing', receivedBytes: item.getReceivedBytes(), totalBytes: item.getTotalBytes() });
+    } else if (state === 'interrupted') {
+      send({ state: 'interrupted' });
+    }
+  });
+  item.once('done', (e, state) => {
+    send({ state: state === 'completed' ? 'completed' : 'cancelled', savePath: item.getSavePath() });
+  });
 }
 
 ipcMain.on('register-partition-downloads', (event, partition) => {
@@ -188,3 +208,15 @@ ipcMain.on('win-maximize', () => {
   else mainWindow.maximize();
 });
 ipcMain.on('win-close', () => mainWindow && mainWindow.close());
+
+ipcMain.handle('toggle-fullscreen', () => {
+  if (!mainWindow) return false;
+  const next = !mainWindow.isFullScreen();
+  mainWindow.setFullScreen(next);
+  return next;
+});
+ipcMain.handle('is-fullscreen', () => (mainWindow ? mainWindow.isFullScreen() : false));
+
+ipcMain.handle('open-external', (event, url) => {
+  if (/^https?:\/\//i.test(url)) shell.openExternal(url);
+});
