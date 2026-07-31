@@ -1,7 +1,7 @@
 {
-  "name": "multi-conta-manager",
-  "version": "1.8.1",
-  "description": "Gerenciador de múltiplas contas/sessões em navegador (inspirado no Idle Labs) feito em Electron",
+  "name": "idle-hub",
+  "version": "1.2.2",
+  "description": "Idle Hub — gerenciador de múltiplas contas/sessões de navegador em workspaces, feito em Electron",
   "main": "main.js",
   "author": "",
   "license": "MIT",
@@ -16,8 +16,8 @@
     "tailwindcss": "^3.4.19"
   },
   "build": {
-    "appId": "com.exemplo.multicontamanager",
-    "productName": "Multi Conta Manager",
+    "appId": "com.exemplo.idlehub",
+    "productName": "Idle Hub",
     "icon": "build/icon.png",
     "files": [
       "**/*"

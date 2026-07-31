@@ -1,7 +1,7 @@
-# ⚡ Idle Labs — Navegador Multi‑Sessão com Workspaces
+# ⚡ Idle Hub — Navegador Multi‑Sessão com Workspaces
 
 <div align="center">
-<img src="docs/banner_idlelab.png" width="880" alt="Banner Idle Lab">
+<img src="docs/banner_idlehub.png" width="880" alt="Banner Idle Hub">
 
 ![Electron](https://img.shields.io/badge/Electron-31.0.0-47848f?style=for-the-badge&logo=electron)
 ![License](https://img.shields.io/badge/License-MIT-f1c644?style=for-the-badge&logo=opensource)
@@ -16,7 +16,7 @@
 
 > [!NOTE]
 > **📖 Documentação Interativa**:  
-> Para visualizar a documentação completa com layout estilizado, acesse o arquivo **[`index.html`](https://diinhow.github.io/Idle-Labs/)** diretamente no seu navegador.
+> Para visualizar a documentação completa com layout estilizado, acesse o arquivo **[`index.html`](https://diinhow.github.io/Idle-Hub/)** diretamente no seu navegador.
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🚀 Visão Geral
 
-**Idle Labs** é um aplicativo desktop construído com **Electron** que transforma seu navegador em um **gerenciador de sessões múltiplas**. Ele permite criar **workspaces** (ex: "Principal", "Trabalho", "Pessoal") e, dentro de cada um, adicionar quantas **contas** desejar — cada uma com **cookies, cache e logins totalmente isolados**.
+**Idle Hub** é um aplicativo desktop construído com **Electron** que transforma seu navegador em um **gerenciador de sessões múltiplas**. Ele permite criar **workspaces** (ex: "Principal", "Trabalho", "Pessoal") e, dentro de cada um, adicionar quantas **contas** desejar — cada uma com **cookies, cache e logins totalmente isolados**.
 
 Ideal para quem gerencia múltiplos perfis em jogos, redes sociais, e‑commerce ou qualquer serviço que exija login único por sessão.
 
@@ -74,7 +74,7 @@ Baixe a versão LTS em [nodejs.org](https://nodejs.org) e instale (é next, next
 **2. Baixe este código**
 Clique no botão verde **Code** aqui em cima e depois em **Download ZIP**. Extraia a pasta onde quiser. Quem usa Git pode clonar:
 ```bash
-git clone https://github.com/Diinhow/Idle-Labs.git
+git clone https://github.com/Diinhow/Idle-Hub.git
 cd Idle-Labs
 ```
 ## Como rodar (modo desenvolvimento)
@@ -92,4 +92,4 @@ npm run dist
 ## Licença
 
 MIT License. Projeto independente.
-Idle Labs is made available under the MIT License — you are free to use it for commercial, non-commercial, closed or open projects.
+Idle Hub is made available under the MIT License — you are free to use it for commercial, non-commercial, closed or open projects.

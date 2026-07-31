@@ -19,7 +19,7 @@ function createWindow() {
     minWidth: 900,
     minHeight: 600,
     backgroundColor: '#05070b',
-    title: 'Multi Conta Manager',
+    title: 'Idle Hub',
     icon: devIcon,
     frame: false, // usamos nossa própria titlebar em HTML — remove a barra nativa e o menu File/Edit/View...
     webPreferences: {

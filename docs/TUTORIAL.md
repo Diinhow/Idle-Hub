@@ -1,4 +1,4 @@
-# Como usar a Idle Labs (versão sem instalador)
+# Como usar a Idle Hub (versão sem instalador)
 
 Guia para quem nunca mexeu com isso. Essa versão roda direto do código. Parece complicado, mas são 3 passos e a parte "difícil" você só faz uma vez.
 
@@ -21,12 +21,12 @@ Pronto, isso não precisa fazer de novo.
 ## Passo 3: abrir o app
 
 1. Entre na pasta que apareceu
-2. Dê **dois cliques** no arquivo **Abrir IdleLabs** (`.vbs`). Ele abre o app **sem janela preta**.
+2. Dê **dois cliques** no arquivo **Abrir IdleHub** (`.vbs`). Ele abre o app **sem janela preta**.
 3. Na **primeira vez** ele demora um pouquinho (está baixando o que precisa) e abre sozinho. Nas próximas vezes abre rápido e sem terminal nenhum.
 
 > Se o Windows mostrar uma tela azul ("O Windows protegeu seu computador"), clique em **Mais informações** e depois **Executar assim mesmo**. Isso acontece porque o app não tem assinatura paga, mas o código é aberto e você pode conferir tudo aqui.
 
-**Quer um atalho na área de trabalho?** Clique com o **botão direito** no arquivo **Abrir IdleLabs** e escolha **Enviar para: Área de trabalho (criar atalho)**. Pronto, vira um clique só.
+**Quer um atalho na área de trabalho?** Clique com o **botão direito** no arquivo **Abrir IdleHub** e escolha **Enviar para: Área de trabalho (criar atalho)**. Pronto, vira um clique só.
 
 > O `iniciar.bat` continua na pasta e funciona igual, mas ele deixa uma janela preta aberta: se você fechar essa janela, o app fecha junto. Pelo **Abrir PokeGrid** isso não acontece.
 
@@ -45,5 +45,4 @@ Baixe o ZIP de novo (Passo 2) e substitua a pasta antiga. Suas contas continuam 
 ## Deu algum problema?
 
 - **"iniciar.bat" abre e fecha na hora:** provavelmente o Node.js não foi instalado. Refaça o Passo 1.
-- **Uma conta não entra sozinha:** abra os **👤 Treinadores** e confira se o e-mail e a senha daquela conta estão certos.
-- **Trava ou fica lento:** ligue o **⚡ Eco** no menu **☰ Opções**, ele segura o uso de CPU.
+

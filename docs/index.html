@@ -1,978 +1,552 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Idle Labs — Navegador Multi-Sessão</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet" />
-    <style>
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Idle Hub — Navegador Desktop Multi-Sessão</title>
+<meta name="description" content="Idle Hub: navegador desktop em Electron com workspaces e contas ilimitadas, cada uma com sessão totalmente isolada. Open source, local e auditável." />
+<meta property="og:title" content="Idle Hub — Navegador Desktop Multi-Sessão" />
+<meta property="og:description" content="Workspaces, contas isoladas, métricas em tempo real e layouts flexíveis. 100% local e open source." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0b0e15;
+  --surface:#161b26;
+  --surface-2:#1e2431;
+  --hairline:rgba(255,255,255,.09);
+  --fg:#f2f5fa;
+  --muted:#9aa6b8;
+  --gold:#f5c74a;
+  --cyan:#59e7d6;
+  --violet:#b490ff;
+  --lime:#6ff0b0;
+  --red:#ff6070;
+  --radius:20px;
+  --shadow-float:0 24px 60px -28px rgba(0,0,0,.85);
+  --shadow-glow:0 0 0 1px rgba(245,199,74,.3), 0 18px 50px -22px rgba(245,199,74,.55);
+  --aurora:
+    radial-gradient(60rem 40rem at 12% -10%, rgba(245,199,74,.16), transparent 60%),
+    radial-gradient(55rem 38rem at 95% 8%, rgba(89,231,214,.12), transparent 62%),
+    radial-gradient(70rem 50rem at 50% 110%, rgba(180,144,255,.12), transparent 65%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--fg);
+  line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(245,199,74,.4)}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(245,199,74,.55);border-radius:99px}
+a{text-decoration:none;color:inherit}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
 
-        :root {
-            --bg-primary: #080b12;
-            --bg-card: rgba(18, 24, 36, 0.75);
-            --bg-card-solid: #121824;
-            --border-card: rgba(255, 255, 255, 0.08);
-            --border-glow: rgba(241, 198, 68, 0.25);
+.bg-aurora{position:fixed;inset:0;background-image:var(--aurora);opacity:.75;pointer-events:none;z-index:0}
+.bg-grain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.bg-grid{position:absolute;inset:0 0 auto 0;height:900px;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--hairline) 1px,transparent 1px),linear-gradient(90deg,var(--hairline) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(70% 60% at 50% 0%,#000,transparent 85%);
+  mask-image:radial-gradient(70% 60% at 50% 0%,#000,transparent 85%)}
 
-            --gold: #f1c644;
-            --gold-glow: rgba(241, 198, 68, 0.35);
-            --cyan: #55e6d3;
-            --purple: #b388ff;
-            --pink: #ff6b9d;
-            --red: #ff5e6b;
-            --green: #69f0ae;
+.glass{background:rgba(22,27,38,.62);backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--hairline)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
-            --text-primary: #f0f4f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-        }
+/* HEADER */
+header{position:sticky;top:0;z-index:50;border-bottom:1px solid transparent;transition:.4s}
+header.scrolled{background:rgba(22,27,38,.62);backdrop-filter:blur(20px) saturate(150%);border-bottom-color:var(--hairline)}
+.hd{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;max-width:1120px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;letter-spacing:-.01em}
+.brand .mark{width:32px;height:32px;border-radius:8px;background:var(--gold);color:#1b1f2a;display:grid;place-items:center;font-weight:900;font-size:13px}
+nav.main{display:none;gap:4px}
+@media(min-width:1024px){nav.main{display:flex}}
+nav.main a{padding:6px 14px;border-radius:99px;font-size:13px;font-weight:500;color:var(--muted);transition:.2s}
+nav.main a:hover{color:var(--fg)}
+nav.main a.active{background:var(--surface-2);color:var(--fg)}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:99px;font-weight:600;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:var(--gold);color:#1b1f2a;padding:14px 24px;font-size:14px;box-shadow:var(--shadow-glow)}
+.btn-sm{padding:8px 16px;font-size:13px;box-shadow:none}
+.btn-ghost{border:1px solid var(--hairline);padding:14px 24px;font-size:14px;color:var(--fg)}
+.btn-ghost:hover{background:var(--surface-2)}
 
-        html {
-            scroll-behavior: smooth;
-        }
+main{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 20px 112px}
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(241, 198, 68, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(85, 230, 211, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(179, 136, 255, 0.03) 0%, transparent 70%);
-        }
+/* HERO */
+.hero{padding:80px 0 96px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{border:1px solid var(--hairline);background:rgba(22,27,38,.6);border-radius:99px;padding:4px 12px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+.b-gold{color:var(--gold)}.b-cyan{color:var(--cyan)}.b-lime{color:var(--lime)}.b-violet{color:var(--violet)}
+h1{margin-top:32px;font-size:clamp(3rem,10vw,7.5rem);font-weight:800;line-height:.92;letter-spacing:-.045em}
+.grad-gold{background:linear-gradient(100deg,var(--gold),#fff0bd 45%,var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h1 .sub{color:var(--muted)}
+.lead{margin-top:32px;max-width:600px;font-size:clamp(17px,2.2vw,21px);color:var(--muted);line-height:1.6}
+.lead strong{color:var(--fg);font-weight:600}
+.hero-actions{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px}
 
-        /* ===== CANVAS PARTICLES ===== */
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+/* APP MOCK */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.mock{margin-top:80px;border-radius:28px;padding:10px;box-shadow:var(--shadow-float);animation:float 9s ease-in-out infinite}
+.mock-inner{border:1px solid var(--hairline);border-radius:19px;background:rgba(11,14,21,.7);overflow:hidden}
+.mock-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--hairline)}
+.dot{width:10px;height:10px;border-radius:99px}
+.mock-url{flex:1;margin-left:12px;border:1px solid var(--hairline);background:var(--surface);border-radius:99px;padding:4px 12px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.mock-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px}
+@media(min-width:640px){.mock-grid{grid-template-columns:repeat(4,1fr)}}
+.pane{border:1px solid var(--hairline);background:rgba(22,27,38,.7);border-radius:14px;padding:12px}
+.pane .top{display:flex;align-items:center;justify-content:space-between}
+.pane .idx{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+.pane .live{width:6px;height:6px;border-radius:99px;background:var(--lime)}
+.pane .name{margin-top:12px;font-size:13px;font-weight:600}
+.pane .tag{margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+.bar{margin-top:16px;height:4px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--cyan)}
+.mock-status{display:flex;flex-wrap:wrap;gap:16px;padding:10px 16px;border-top:1px solid var(--hairline);
+  font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
 
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 99px;
-        }
+/* MARQUEE */
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee{position:relative;margin:0 -20px 112px;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);padding:16px 0;overflow:hidden}
+.marquee .track{display:flex;width:max-content;gap:40px;animation:marquee 32s linear infinite;
+  font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.25em;color:var(--muted)}
+.marquee .track span{display:flex;align-items:center;gap:40px;white-space:nowrap}
+.marquee .track b{color:var(--gold);font-weight:400}
 
-        /* ===== CONTAINER ===== */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px 60px;
-        }
+/* SECTIONS */
+section{scroll-margin-top:110px;padding-bottom:112px}
+.sec-head{margin-bottom:48px;display:flex;flex-direction:column;gap:12px}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.3em;color:var(--gold)}
+h2{max-width:680px;font-size:clamp(26px,4.4vw,48px);font-weight:600;line-height:1.1;letter-spacing:-.025em}
 
-        /* ===== BANNER HERO ===== */
-        .hero-banner {
-            margin-top: 30px;
-            padding: 50px 40px;
-            border-radius: 32px;
-            background: linear-gradient(145deg, rgba(18, 24, 36, 0.85), rgba(10, 13, 20, 0.95));
-            border: 1px solid var(--border-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-        }
-        .hero-banner::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            left: -10%;
-            width: 60%;
-            height: 160%;
-            background: radial-gradient(circle, rgba(241, 198, 68, 0.08), transparent 70%);
-            pointer-events: none;
-        }
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            bottom: -20%;
-            right: -10%;
-            width: 50%;
-            height: 140%;
-            background: radial-gradient(circle, rgba(85, 230, 211, 0.05), transparent 70%);
-            pointer-events: none;
-        }
+.grid-about{display:grid;gap:20px}
+@media(min-width:1024px){.grid-about{grid-template-columns:1.25fr 1fr}}
+.card{border-radius:26px;padding:32px;height:100%}
+.card p{color:var(--muted);line-height:1.7}
+.card p+p{margin-top:20px}
+.card p strong{color:var(--fg);font-weight:600}
+.card p .gold{color:var(--gold)}
+.big-p{font-size:18px}
+.stats{margin-top:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-top:1px solid var(--hairline);padding-top:24px}
+.stats .v{font-size:30px;font-weight:700;color:var(--gold);line-height:1.2}
+.stats .l{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+.who{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.3em;color:var(--cyan)}
+.who-list{margin-top:24px;list-style:none}
+.who-list li{padding:16px 0;border-top:1px solid var(--hairline)}
+.who-list li:first-child{border-top:0;padding-top:0}
+.who-list li:last-child{padding-bottom:0}
+.who-list .t{font-size:15px;font-weight:600}
+.who-list .d{margin-top:2px;font-size:14px;color:var(--muted)}
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            flex: 1 1 300px;
-        }
+.features{display:grid;gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:26px;overflow:hidden}
+@media(min-width:640px){.features{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.features{grid-template-columns:repeat(3,1fr)}}
+.feat{background:var(--bg);padding:28px;height:100%;transition:background .25s}
+.feat:hover{background:var(--surface)}
+.feat .k{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--gold)}
+.feat h3{margin-top:16px;font-size:18px;font-weight:600;letter-spacing:-.02em}
+.feat p{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.65}
 
-        .hero-content .title-group {
-            display: flex;
-            align-items: baseline;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .hero-content .title-group h1 {
-            font-size: 52px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #fff 0%, #cbd5e1 40%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-        }
-        .hero-content .title-group .launcher {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--gold);
-            background: rgba(241, 198, 68, 0.12);
-            padding: 0 16px;
-            border-radius: 40px;
-            border: 1px solid rgba(241, 198, 68, 0.2);
-            -webkit-text-fill-color: var(--gold);
-            letter-spacing: 0.5px;
-        }
-        .hero-content .desc {
-            font-size: 18px;
-            color: var(--text-secondary);
-            margin-top: 12px;
-            max-width: 600px;
-            font-weight: 400;
-            line-height: 1.6;
-        }
-        .hero-content .desc strong {
-            color: #fff;
-            font-weight: 600;
-        }
+/* ========== ESTILOS DOS PASSOS ========== */
+.steps {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;  /* <--- UMA ÚNICA COLUNA */
+}
+.step {
+  padding: 24px 28px;
+}
+.step .h {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.step .n {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.step h3 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.step .desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.step .note {
+  font-size: 13px;
+  color: var(--gold);
+  background: rgba(245,199,74,.08);
+  border-left: 3px solid var(--gold);
+  padding: 6px 14px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+}
+.step pre {
+  margin-top: 8px;
+  border-radius: 14px;
+  background: rgba(11,14,21,.9);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--cyan);
+  border: 1px solid var(--hairline);
+  overflow-x: auto;
+}
+.step code {
+  font-family: 'JetBrains Mono', monospace;
+}
+@media (max-width: 480px) {
+  .step { padding: 18px; }
+  .step .h { flex-wrap: wrap; }
+}
 
-        .hero-actions {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+/* resto */
+.stack{border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+.stack .row{display:flex;flex-direction:column;gap:6px;padding:24px 0;border-top:1px solid var(--hairline);transition:padding .25s}
+.stack .row:first-child{border-top:0}
+.stack .row:hover{padding-left:12px}
+.stack .row:hover .n{color:var(--gold)}
+@media(min-width:640px){.stack .row{flex-direction:row;align-items:baseline;gap:40px}}
+.stack .n{width:176px;flex-shrink:0;font-size:18px;font-weight:600;letter-spacing:-.02em;transition:color .25s}
+.stack .d{font-size:14px;color:var(--muted);line-height:1.7}
 
-        .btn-github {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, var(--gold), #f59e0b);
-            color: #0a0d14;
-            padding: 14px 32px;
-            border-radius: 40px;
-            font-weight: 800;
-            font-size: 15px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(241, 198, 68, 0.25);
-            border: none;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        .btn-github:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 0 50px rgba(241, 198, 68, 0.45);
-            background: linear-gradient(135deg, #f5d058, #f59e0b);
-        }
-        .btn-github svg {
-            width: 22px;
-            height: 22px;
-        }
-        .btn-github-outline {
-            background: transparent;
-            color: var(--text-secondary);
-            box-shadow: none;
-            border: 1px solid var(--border-card);
-            padding: 13px 28px;
-        }
-        .btn-github-outline:hover {
-            background: rgba(241, 198, 68, 0.06);
-            border-color: var(--gold);
-            color: var(--gold);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 0 30px rgba(241, 198, 68, 0.08);
-        }
+.sec-grid{display:grid;gap:20px}
+@media(min-width:768px){.sec-grid{grid-template-columns:repeat(3,1fr)}}
+.sec-card{height:100%;border:1px solid var(--hairline);background:rgba(22,27,38,.5);border-radius:26px;padding:28px}
+.sec-card .d{width:8px;height:8px;border-radius:99px;background:var(--lime)}
+.sec-card h3{margin-top:20px;font-size:15px;font-weight:600}
+.sec-card p{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.65}
 
-        /* ===== BADGE ROW ===== */
-        .badge-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
+.cta{position:relative;overflow:hidden;border-radius:32px;padding:64px 32px;text-align:center}
+.cta .aur{position:absolute;inset:0;background-image:var(--aurora);opacity:.6;pointer-events:none}
+.cta .inner{position:relative}
+.cta h2{margin:0 auto;max-width:820px}
+.cta .btn{margin-top:40px}
 
-        .badge {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 4px 14px;
-            border-radius: 99px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-card);
-            color: var(--text-secondary);
-            transition: all 0.2s;
-        }
-        .badge:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(241, 198, 68, 0.06);
-        }
-        .badge-gold {
-            background: rgba(241, 198, 68, 0.12);
-            border-color: rgba(241, 198, 68, 0.3);
-            color: var(--gold);
-        }
-        .badge-cyan {
-            background: rgba(85, 230, 211, 0.12);
-            border-color: rgba(85, 230, 211, 0.3);
-            color: var(--cyan);
-        }
-        .badge-red {
-            background: rgba(255, 94, 107, 0.12);
-            border-color: rgba(255, 94, 107, 0.3);
-            color: var(--red);
-        }
-        .badge-purple {
-            background: rgba(179, 136, 255, 0.12);
-            border-color: rgba(179, 136, 255, 0.3);
-            color: var(--purple);
-        }
+footer{position:relative;z-index:1;border-top:1px solid var(--hairline)}
+.ft{max-width:1120px;margin:0 auto;padding:32px 20px;display:flex;flex-wrap:wrap;gap:16px;
+  align-items:center;justify-content:space-between;font-size:12px;color:var(--muted)}
+.ft .links{display:flex;gap:24px}
+.ft a:hover{color:var(--gold)}
 
-        /* ===== NAV ===== */
-        .nav-bar {
-            display: flex;
-            gap: 6px;
-            margin-top: 32px;
-            overflow-x: auto;
-            padding: 4px 2px 12px 2px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: 1px solid var(--border-card);
-            color: var(--text-secondary);
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-        .nav-btn:hover {
-            background: rgba(241, 198, 68, 0.06);
-            border-color: var(--gold);
-            color: var(--gold);
-            transform: translateY(-2px);
-        }
-        .nav-btn.active {
-            background: rgba(241, 198, 68, 0.12);
-            border-color: var(--gold);
-            color: var(--gold);
-            box-shadow: 0 0 20px rgba(241, 198, 68, 0.08);
-        }
-
-        /* ===== SECTION HEADER ===== */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin: 60px 0 28px;
-        }
-        .section-header h2 {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #fff, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .section-header .line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--border-card), transparent);
-        }
-
-        /* ===== CARDS ===== */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-card);
-            border-radius: 24px;
-            padding: 28px;
-            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(241, 198, 68, 0.03), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.6s;
-            pointer-events: none;
-        }
-        .card:hover::before {
-            opacity: 1;
-        }
-        .card:hover {
-            transform: translateY(-6px) scale(1.005);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(241, 198, 68, 0.04);
-        }
-        .card-gold {
-            border-color: rgba(241, 198, 68, 0.2);
-        }
-        .card-gold:hover {
-            border-color: var(--gold);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 40px rgba(241, 198, 68, 0.08);
-        }
-
-        .card-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-card);
-            display: grid;
-            place-items: center;
-            font-size: 20px;
-            margin-bottom: 14px;
-            transition: all 0.3s;
-        }
-        .card:hover .card-icon {
-            border-color: var(--gold);
-            background: rgba(241, 198, 68, 0.06);
-        }
-
-        .card-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #fff;
-        }
-
-        .card-p {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 12px;
-        }
-
-        .card ul {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.8;
-            list-style: none;
-            padding-left: 0;
-        }
-        .card ul li {
-            padding-left: 20px;
-            position: relative;
-        }
-        .card ul li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--gold);
-        }
-
-        /* ===== PRE ===== */
-        pre {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 16px 18px;
-            overflow-x: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: #e2e8f0;
-            backdrop-filter: blur(4px);
-            margin: 8px 0 12px;
-        }
-        pre code {
-            color: #cbd5e1;
-        }
-
-        /* ===== SECURITY CARD ===== */
-        .card-security {
-            background: linear-gradient(145deg, rgba(255, 94, 107, 0.06) 0%, rgba(18, 24, 36, 0.9) 100%);
-            border: 1px solid rgba(255, 94, 107, 0.25);
-            border-left: 6px solid var(--red);
-            padding: 28px;
-            border-radius: 24px;
-            margin-top: 20px;
-        }
-        .card-security .header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 16px;
-        }
-        .card-security .header .icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: rgba(255, 94, 107, 0.12);
-            border: 1px solid rgba(255, 94, 107, 0.3);
-            display: grid;
-            place-items: center;
-            font-size: 24px;
-        }
-        .card-security .header h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ff6e75;
-            margin: 0;
-        }
-        .card-security .header .sub {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        .security-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 16px 0 20px;
-        }
-        .security-item {
-            background: rgba(0, 0, 0, 0.25);
-            padding: 16px 18px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: 0.3s;
-        }
-        .security-item:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-            background: rgba(0, 0, 0, 0.4);
-        }
-        .security-item h4 {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #fff;
-        }
-        .security-item h4 .emoji {
-            font-size: 18px;
-        }
-        .security-item p {
-            color: var(--text-secondary);
-            font-size: 13px;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            margin-top: 70px;
-            padding-top: 28px;
-            border-top: 1px solid var(--border-card);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 13px;
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-        footer a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: 0.2s;
-        }
-        footer a:hover {
-            color: var(--gold);
-        }
-
-        /* ===== ANIMAÇÕES DE ENTRADA ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .hero-banner {
-                padding: 30px 20px;
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .hero-content .title-group h1 {
-                font-size: 36px;
-            }
-            .hero-content .title-group .launcher {
-                font-size: 20px;
-                padding: 0 12px;
-            }
-            .hero-content .desc {
-                font-size: 16px;
-            }
-            .hero-actions {
-                justify-content: center;
-            }
-            .btn-github {
-                padding: 12px 24px;
-                font-size: 14px;
-            }
-            .grid-2,
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-            .nav-bar {
-                gap: 4px;
-            }
-            .nav-btn {
-                font-size: 12px;
-                padding: 6px 14px;
-            }
-            .section-header h2 {
-                font-size: 22px;
-            }
-            .card-security .header {
-                flex-wrap: wrap;
-            }
-            .security-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .mock,.marquee .track{animation:none}
+}
+</style>
 </head>
 <body>
+<div class="bg-aurora"></div>
+<div class="bg-grain"></div>
+<div class="bg-grid"></div>
 
-    <!-- ===== PARTICLES CANVAS ===== -->
-    <canvas id="particles-canvas"></canvas>
+<header id="hdr">
+  <div class="hd">
+    <a href="#top" class="brand"><span class="mark"><img src="https://i.imgur.com/wlz1hvW.png" width="32" height="32" alt="Modo Simples: painel com os números das quatro contas"></span> Idle&nbsp;Hub</a>
+    <nav class="main">
+      <a href="#sobre" class="active">Sobre</a>
+      <a href="#funcionalidades">Funcionalidades</a>
+      <a href="#instalacao">Instalação</a>
+      <a href="#tecnologias">Stack</a>
+      <a href="#seguranca">Segurança</a>
+    </nav>
+    <a href="https://github.com/Diinhow/Idle-Hub" target="_blank" rel="noreferrer" class="btn btn-gold btn-sm">GitHub</a>
+  </div>
+</header>
 
-    <div class="container">
-
-        <!-- ===== BANNER HERO ===== -->
-        <div class="hero-banner">
-            <div class="hero-content">
-                <div class="badge-row">
-                    <span class="badge badge-gold">⚡ v1.3.0</span>
-                    <span class="badge badge-cyan">Electron 31</span>
-                    <span class="badge badge-red">Open Source</span>
-                    <span class="badge badge-purple">MIT License</span>
-                </div>
-                <div class="title-group">
-                    <h1>Idle Lab</h1>
-                    <span class="launcher">Launcher</span>
-                </div>
-                <p class="desc">
-                    Navegador desktop multi-sessão com workspaces: <br />
-                    organize <strong>contas ilimitadas</strong> em categorias, <br />
-                    cada uma com <strong>sessão isolada</strong>.
-                </p>
-            </div>
-            <div class="hero-actions">
-                <a href="https://github.com/Diinhow/Idle-Labs" target="_blank" class="btn-github">
-                    <svg viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                    </svg>
-                    Acessar GitHub Oficial
-                </a>
-                <a href="#instalacao" class="btn-github btn-github-outline">📥 Instalação</a>
-            </div>
-        </div>
-
-        <!-- ===== NAV ===== -->
-        <nav class="nav-bar">
-            <a href="#sobre" class="nav-btn active">📖 Sobre</a>
-            <a href="#funcionalidades" class="nav-btn">✨ Funcionalidades</a>
-            <a href="#instalacao" class="nav-btn">📥 Instalação</a>
-            <a href="#tecnologias" class="nav-btn">⚙️ Tecnologias</a>
-            <a href="#seguranca" class="nav-btn">🛡️ Segurança</a>
-        </nav>
-
-        <!-- ===== SOBRE ===== -->
-        <section id="sobre" class="reveal">
-            <div class="section-header">
-                <h2>📖 O que é o Idle Labs?</h2>
-                <div class="line"></div>
-            </div>
-            <div class="grid-2">
-                <div class="card card-gold">
-                    <div class="card-icon">🧠</div>
-                    <h3 class="card-title">Conceito</h3>
-                    <p class="card-p">O <strong>Idle Labs</strong> é um aplicativo desktop baseado em <strong>Electron</strong> que transforma seu navegador em um <strong>gerenciador de sessões múltiplas</strong>. Ele permite criar <strong>workspaces</strong> (ex: "Principal", "Trabalho", "Pessoal") e, dentro de cada um, adicionar quantas <strong>contas</strong> desejar — cada uma com <strong>cookies, cache e logins totalmente isolados</strong>.</p>
-                    <p class="card-p">Ideal para quem gerencia múltiplos perfis em jogos, redes sociais, e‑commerce ou qualquer serviço que exija login único por sessão.</p>
-                </div>
-                <div class="card card-gold">
-                    <div class="card-icon">🎯</div>
-                    <h3 class="card-title">Para quem é?</h3>
-                    <ul>
-                        <li><strong>Jogadores</strong> que querem rodar várias contas de MMORPG (ex: Pokémon Idle)</li>
-                        <li><strong>Gestores</strong> que administram várias redes sociais</li>
-                        <li><strong>Testers</strong> que precisam testar fluxos com diferentes perfis</li>
-                        <li><strong>Desenvolvedores</strong> que precisam simular múltiplos usuários</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== FUNCIONALIDADES ===== -->
-        <section id="funcionalidades" class="reveal">
-            <div class="section-header">
-                <h2>✨ Funcionalidades e Módulos</h2>
-                <div class="line"></div>
-            </div>
-
-            <div class="grid-3">
-                <div class="card card-gold">
-                    <div class="card-icon">📂</div>
-                    <h3 class="card-title">Workspaces</h3>
-                    <p class="card-p">Organize suas contas em categorias visuais com <strong>ícones, cores e layouts</strong> personalizados. Crie, duplique, renomeie e reordene via drag‑and‑drop.</p>
-                </div>
-                <div class="card card-gold">
-                    <div class="card-icon">👤</div>
-                    <h3 class="card-title">Contas Isoladas</h3>
-                    <p class="card-p">Cada conta roda em uma <strong>partição separada</strong> do Electron. Cookies, cache, localStorage e sessões são totalmente independentes.</p>
-                </div>
-                <div class="card card-gold">
-                    <div class="card-icon">🧩</div>
-                    <h3 class="card-title">Layouts Flexíveis</h3>
-                    <p class="card-p">Escolha entre <strong>grade automática, painel único, colunas, linhas ou livre</strong> para organizar os painéis de cada workspace.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔄</div>
-                    <h3 class="card-title">Recarregamento em Segundo Plano</h3>
-                    <p class="card-p">Troque entre workspaces sem perder o estado das contas — tudo permanece em memória e continua rodando em background.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔇</div>
-                    <h3 class="card-title">Controle de Áudio</h3>
-                    <p class="card-p">Silencie painéis individuais ou todos de uma vez. Ideal para evitar sons indesejados de várias sessões abertas.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3 class="card-title">Métricas em Tempo Real</h3>
-                    <p class="card-p">Acompanhe <strong>CPU, RAM e FPS</strong> de cada conta e do processo principal na barra de status.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔍</div>
-                    <h3 class="card-title">Barra de URL Universal</h3>
-                    <p class="card-p">Digite uma URL e ela será aberta em <strong>todas as contas abertas</strong> do workspace atual com um clique.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💾</div>
-                    <h3 class="card-title">Persistência Local</h3>
-                    <p class="card-p">Tudo é salvo automaticamente em <code>state.json</code>. Ao reabrir, o aplicativo restaura exatamente onde você parou.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🌐</div>
-                    <h3 class="card-title">Export/Import</h3>
-                    <p class="card-p">Exporte toda a configuração de workspaces e contas para um arquivo <code>.json</code> e importe em outra máquina.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== INSTALAÇÃO ===== -->
-        <section id="instalacao" class="reveal">
-            <div class="section-header">
-                <h2>📥 Como Instalar e Executar</h2>
-                <div class="line"></div>
-            </div>
-
-            <div class="grid-2">
-                <div class="card">
-                    <h3 class="card-title">Passo 1: Clonar o repositório</h3>
-                    <pre><code>git clone https://github.com/Diinhow/Idle-Labs.git
-        cd Idle-Labs</code></pre>
-                </div>
-                <div class="card">
-                    <h3 class="card-title">Passo 2: Instalar dependências</h3>
-                    <pre><code>npm install</code></pre>
-                </div>
-                <div class="card">
-                    <h3 class="card-title">Passo 3: Rodar em desenvolvimento</h3>
-                    <pre><code>npm start</code></pre>
-                </div>
-                <div class="card">
-                    <h3 class="card-title">Passo 4: Gerar instalador</h3>
-                    <pre><code>npm run dist</code></pre>
-                    <p class="card-p" style="margin-top:10px;">Gera <strong>.exe</strong> (Windows), <strong>.dmg</strong> (macOS) ou <strong>.AppImage</strong> (Linux) na pasta <code>dist/</code>.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== TECNOLOGIAS ===== -->
-        <section id="tecnologias" class="reveal">
-            <div class="section-header">
-                <h2>⚙️ Stack Tecnológica</h2>
-                <div class="line"></div>
-            </div>
-
-            <div class="grid-3">
-                <div class="card">
-                    <div class="card-icon">⚛️</div>
-                    <h3 class="card-title">Electron</h3>
-                    <p class="card-p">Framework para aplicações desktop com JavaScript, HTML e CSS. Versão 31.0.0.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🖥️</div>
-                    <h3 class="card-title">Vanilla JS</h3>
-                    <p class="card-p">Todo o frontend é <strong>JavaScript puro</strong>, sem frameworks — performance máxima e fácil auditoria.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🎨</div>
-                    <h3 class="card-title">CSS Custom</h3>
-                    <p class="card-p">Estilização própria com <strong>variáveis CSS</strong>, sem dependências externas. Tema escuro nativo.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📦</div>
-                    <h3 class="card-title">electron-store</h3>
-                    <p class="card-p">Persistência simples e segura de configurações e estado do aplicativo.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔌</div>
-                    <h3 class="card-title">IPC Seguro</h3>
-                    <p class="card-p">Comunicação entre processos com <code>contextBridge</code> e <code>preload.js</code> para isolar o renderer.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🛠️</div>
-                    <h3 class="card-title">electron-builder</h3>
-                    <p class="card-p">Empacotamento e distribuição multiplataforma com assinatura automática.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== SEGURANÇA ===== -->
-        <section id="seguranca" class="reveal">
-            <div class="card-security">
-                <div class="header">
-                    <div class="icon">🛡️</div>
-                    <div>
-                        <h3>Segurança & Transparência</h3>
-                        <div class="sub">Código aberto e auditável.</div>
-                    </div>
-                </div>
-
-                <div class="security-grid">
-                    <div class="security-item">
-                        <h4><span class="emoji">🔒</span> Execução Local</h4>
-                        <p>Todo o processamento é feito <strong>100% no seu computador</strong>. Nenhuma senha, token ou dado é enviado para servidores externos.</p>
-                    </div>
-                    <div class="security-item">
-                        <h4><span class="emoji">🔍</span> Código Aberto</h4>
-                        <p>O repositório é <strong>totalmente público</strong> no GitHub. Qualquer pessoa pode auditar, contribuir ou modificar.</p>
-                    </div>
-                    <div class="security-item">
-                        <h4><span class="emoji">📦</span> Sem Dependências Maliciosas</h4>
-                        <p>Todas as dependências são <strong>bibliotecas oficiais e amplamente utilizadas</strong> (Electron, electron-store, etc.).</p>
-                    </div>
-                </div>
-
-                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;">
-                    <a href="https://github.com/Diinhow/Idle-Labs" target="_blank" class="btn-github">
-                        <svg viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                        </svg>
-                        Acessar Repositório Oficial
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== FOOTER ===== -->
-        <footer>
-            <span>Idle Labs — Documentação Oficial © 2026</span>
-            <a href="https://github.com/Diinhow/Idle-Labs" target="_blank">GitHub</a>
-            <a href="#">MIT License</a>
-        </footer>
-
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badges">
+      <span class="badge b-gold">v1.3.0</span>
+      <span class="badge b-cyan">Electron 31</span>
+      <span class="badge b-lime">Open Source</span>
+      <span class="badge b-violet">MIT</span>
+    </div>
+    <h1><span class="grad-gold">Idle Hub</span><br /><span class="sub">Launcher</span></h1>
+    <p class="lead">Navegador desktop multi-sessão com workspaces. Organize <strong>contas ilimitadas</strong> em categorias, cada uma com <strong>sessão completamente isolada</strong>.</p>
+    <div class="hero-actions">
+      <a href="https://github.com/Diinhow/Idle-Hub" target="_blank" rel="noreferrer" class="btn btn-gold">
+        <svg viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Repositório oficial
+      </a>
+      <a href="#instalacao" class="btn btn-ghost">Instalação</a>
     </div>
 
-    <!-- ===== JAVASCRIPT ===== -->
-    <script>
-        (function() {
-            'use strict';
+    <div class="mock glass">
+      <div class="mock-inner">
+        <div class="mock-bar">
+          <span class="dot" style="background:rgba(255,96,112,.8)"></span>
+          <span class="dot" style="background:rgba(245,199,74,.8)"></span>
+          <span class="dot" style="background:rgba(111,240,176,.7)"></span>
+          <div class="mock-url">idle://workspace/principal</div>
+        </div>
+        <div class="mock-grid" id="panes"></div>
+        <div class="mock-status">
+          <span>cpu 12%</span><span>ram 840mb</span><span>fps 60</span>
+          <span style="color:var(--gold)">8 contas ativas</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            // ---- PARTICLES ----
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            let particles = [];
+  <!-- MARQUEE -->
+  <div class="marquee"><div class="track" id="track"></div></div>
 
-            function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
-            }
-            window.addEventListener('resize', resize);
-            resize();
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="eyebrow">01 — Sobre</span>
+        <h2>Um navegador que trata cada conta como um ambiente próprio.</h2>
+      </div>
+    </div>
+    <div class="grid-about">
+      <div class="reveal">
+        <div class="card glass">
+          <p class="big-p">O <strong>Idle Hub</strong> é um app desktop em Electron que transforma o navegador num gerenciador de sessões múltiplas. Você cria <span class="gold">workspaces</span> — Principal, Trabalho, Pessoal — e adiciona quantas contas quiser dentro de cada um, com cookies, cache e logins totalmente isolados.</p>
+          <p>Feito para quem gerencia vários perfis em jogos, redes sociais, e-commerce ou qualquer serviço que aceite só um login por sessão.</p>
+          <div class="stats">
+            <div><div class="v">∞</div><div class="l">contas</div></div>
+            <div><div class="v">100%</div><div class="l">local</div></div>
+            <div><div class="v">3</div><div class="l">plataformas</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:80ms">
+        <div class="card glass">
+          <h3 class="who">Para quem é</h3>
+          <ul class="who-list">
+            <li><div class="t">Jogadores</div><div class="d">várias contas de MMORPG e idle games rodando juntas</div></li>
+            <li><div class="t">Gestores</div><div class="d">múltiplas redes sociais sem trocar de login</div></li>
+            <li><div class="t">Testers</div><div class="d">fluxos testados com perfis diferentes lado a lado</div></li>
+            <li><div class="t">Devs</div><div class="d">simulação de vários usuários no mesmo ambiente</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.4;
-                    this.vy = (Math.random() - 0.5) * 0.4;
-                    this.radius = Math.random() * 2 + 1;
-                    this.opacity = Math.random() * 0.5 + 0.2;
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(241, 198, 68, ${this.opacity})`;
-                    ctx.fill();
-                }
-            }
+  <!-- FUNCIONALIDADES -->
+  <section id="funcionalidades">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="eyebrow">02 — Funcionalidades</span>
+        <h2>Nove módulos que fazem o trabalho pesado.</h2>
+      </div>
+    </div>
+    <div class="features" id="features"></div>
+  </section>
 
-            function initParticles(count = 120) {
-                particles = [];
-                for (let i = 0; i < count; i++) {
-                    particles.push(new Particle());
-                }
-            }
+  <!-- INSTALAÇÃO (atualizado com o guia do TUTORIAL.md) -->
+  <section id="instalacao">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="eyebrow">03 — Instalação</span>
+        <h2>Do download ao primeiro login em quatro passos.</h2>
+      </div>
+      <p class="lead" style="max-width:600px; margin-bottom:32px;">
+        Siga os passos abaixo para rodar a Idle Hub no seu computador — sem complicação,
+        mesmo que você nunca tenha usado linha de comando.
+      </p>
+    </div>
+    <div class="steps" id="steps"></div>
+  </section>
 
-            function drawLines() {
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 150) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(241, 198, 68, ${0.06 * (1 - dist / 150)})`;
-                            ctx.lineWidth = 1;
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
+  <!-- STACK -->
+  <section id="tecnologias">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="eyebrow">04 — Stack</span>
+        <h2>Dependências poucas, escolhidas e auditáveis.</h2>
+      </div>
+    </div>
+    <div class="stack" id="stack"></div>
+  </section>
 
-            function animateParticles() {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                drawLines();
-                requestAnimationFrame(animateParticles);
-            }
+  <!-- SEGURANÇA -->
+  <section id="seguranca">
+    <div class="reveal">
+      <div class="sec-head">
+        <span class="eyebrow">05 — Segurança</span>
+        <h2>Nada sai da sua máquina. Nada é opaco.</h2>
+      </div>
+    </div>
+    <div class="sec-grid" id="security"></div>
+  </section>
 
-            initParticles(100);
-            animateParticles();
+  <!-- CTA -->
+  <div class="reveal">
+    <section class="cta glass" style="padding-bottom:64px">
+      <div class="aur"></div>
+      <div class="inner">
+        <h2>Pronto para rodar <span class="grad-gold">todas as contas</span> ao mesmo tempo?</h2>
+        <a href="https://github.com/Diinhow/Idle-Hub" target="_blank" rel="noreferrer" class="btn btn-gold">Acessar repositório oficial</a>
+      </div>
+    </section>
+  </div>
+</main>
 
-            // ---- SCROLL REVEAL ----
-            const revealElements = document.querySelectorAll('.reveal');
+<footer>
+  <div class="ft">
+    <span>Idle Hub — Documentação Oficial © 2026</span>
+    <div class="links">
+      <a href="https://github.com/Diinhow/Idle-Hub" target="_blank" rel="noreferrer">GitHub</a>
+      <span>MIT License</span>
+    </div>
+  </div>
+</footer>
 
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+<script>
+(function(){
+  'use strict';
 
-            revealElements.forEach(el => revealObserver.observe(el));
+  var FEATURES=[
+    ['01','Workspaces','Organize contas em categorias visuais com ícones, cores e layouts próprios. Crie, duplique, renomeie e reordene por drag-and-drop.'],
+    ['02','Contas isoladas','Cada conta roda numa partição separada do Electron. Cookies, cache, localStorage e sessões totalmente independentes.'],
+    ['03','Layouts flexíveis','Grade automática, painel único, colunas, linhas ou modo livre para arranjar os painéis de cada workspace.'],
+    ['04','Background reload','Troque de workspace sem perder estado — as contas continuam vivas em memória, rodando em segundo plano.'],
+    ['05','Controle de áudio','Silencie painéis individualmente ou todos de uma vez. Fim dos sons cruzados entre sessões.'],
+    ['06','Métricas em tempo real','CPU, RAM e FPS de cada conta e do processo principal, direto na barra de status.'],
+    ['07','Barra de URL universal','Digite uma URL e abra-a em todas as contas ativas do workspace atual com um clique.'],
+    ['08','Persistência local','Tudo salvo automaticamente em state.json. Ao reabrir, o app restaura exatamente onde você parou.'],
+    ['09','Export / Import','Exporte workspaces e contas para um .json e importe em outra máquina em segundos.']
+  ];
 
-            // ---- NAV SCROLL SPY ----
-            const navBtns = document.querySelectorAll('.nav-btn');
-            const sections = document.querySelectorAll('section[id]');
+  // ================================================================
+  //  PASSOS REESCRITOS COM BASE NO TUTORIAL.md
+  // ================================================================
+  var STEPS = [
+    {
+      num: '01',
+      title: 'Instalar o Node.js (só na primeira vez)',
+      desc: 'Acesse <strong>nodejs.org</strong> e baixe a versão <strong>LTS</strong>. Instale com todos os padrões (Next > Next > Finish).',
+      cmd: 'O Node.js é o motor que faz o app rodar. Você só precisa fazer isso uma vez.'
+    },
+    {
+      num: '02',
+      title: 'Baixar o código da Idle Hub',
+      desc: 'No GitHub, clique no botão verde <strong>Code</strong> e escolha <strong>Download ZIP</strong>. Extraia a pasta para onde preferir.',
+      cmd: 'Ou, se preferir, use git clone https://github.com/Diinhow/Idle-Hub.git'
+    },
+    {
+      num: '03',
+      title: 'Executar o app',
+      desc: 'Entre na pasta extraída e dê dois cliques em <strong>Abrir IdleLabs.vbs</strong> (Windows, sem janela preta) ou use <strong>iniciar.bat</strong> (com janela). No Mac/Linux, use <strong>bash iniciar.sh</strong> no Terminal.',
+      cmd: 'Na primeira vez, o app pode demorar um pouco para abrir enquanto baixa dependências.'
+    },
+    {
+      num: '04',
+      title: 'Criar um atalho (opcional)',
+      desc: 'Clique com o botão direito em <strong>Abrir IdleLabs.vbs</strong> e escolha <strong>Enviar para > Área de trabalho (criar atalho)</strong>.',
+      cmd: 'Agora você pode abrir o app com um clique direto da área de trabalho.'
+    }
+  ];
 
-            function updateActiveNav() {
-                let current = '';
-                sections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top <= 120) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                navBtns.forEach(btn => {
-                    btn.classList.toggle('active', btn.getAttribute('href') === '#' + current);
-                });
-            }
+  var STACK=[
+    ['Electron 31','Aplicações desktop com JS, HTML e CSS.'],
+    ['Vanilla JS','Frontend puro, sem frameworks. Performance e auditoria fáceis.'],
+    ['CSS Custom','Estilização própria com variáveis. Tema escuro nativo.'],
+    ['electron-store','Persistência simples e segura de estado e config.'],
+    ['IPC seguro','contextBridge + preload.js isolando o renderer.'],
+    ['electron-builder','Empacotamento e distribuição multiplataforma.']
+  ];
+  var SECURITY=[
+    ['Execução local','100% no seu computador. Nenhuma senha, token ou dado sai da máquina.'],
+    ['Código aberto','Repositório público no GitHub — audite, contribua ou modifique.'],
+    ['Sem dependências obscuras','Apenas bibliotecas oficiais e amplamente usadas.']
+  ];
+  var MARQUEE=['workspaces','sessões isoladas','background reload','métricas ao vivo','export / import','100% local','mit license'];
 
-            window.addEventListener('scroll', updateActiveNav);
-            window.addEventListener('load', updateActiveNav);
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
 
-            // ---- SMOOTH SCROLL PARA NAV ----
-            navBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = btn.getAttribute('href');
-                    if (targetId && targetId.startsWith('#')) {
-                        const targetEl = document.querySelector(targetId);
-                        if (targetEl) {
-                            targetEl.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
-                });
-            });
+  // panes
+  var panes='';
+  for(var i=0;i<8;i++){
+    panes+='<div class="pane" style="opacity:'+(1-i*0.06)+'">'
+      +'<div class="top"><span class="idx">#'+(i+1)+'</span><span class="live"></span></div>'
+      +'<div class="name">Conta 0'+(i+1)+'</div><div class="tag">sessão isolada</div>'
+      +'<div class="bar"><i style="width:'+(30+i*8)+'%"></i></div></div>';
+  }
+  document.getElementById('panes').innerHTML=panes;
 
-        })();
-    </script>
+  // marquee (duplicado para loop contínuo)
+  var group='<span>'+MARQUEE.map(function(t){return esc(t)+' <b>◆</b>'}).join('</span><span>')+'</span>';
+  document.getElementById('track').innerHTML=group+group;
+
+  document.getElementById('features').innerHTML=FEATURES.map(function(f,i){
+    return '<div class="feat reveal" style="transition-delay:'+((i%3)*70)+'ms"><span class="k">'+f[0]+'</span><h3>'+esc(f[1])+'</h3><p>'+esc(f[2])+'</p></div>';
+  }).join('');
+
+  // ================================================================
+  //  RENDERIZA OS PASSOS EM UMA COLUNA ÚNICA
+  // ================================================================
+  document.getElementById('steps').innerHTML=STEPS.map(function(s,i){
+    return '<div class="reveal" style="transition-delay:'+((i%2)*70)+'ms">'+
+      '<div class="card glass step">'+
+        '<div class="h">'+
+          '<span class="n">'+s.num+'</span>'+
+          '<h3>'+esc(s.title)+'</h3>'+
+        '</div>'+
+        '<div class="desc">'+s.desc+'</div>'+
+        '<pre><code>'+esc(s.cmd)+'</code></pre>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  document.getElementById('stack').innerHTML=STACK.map(function(t,i){
+    return '<div class="row reveal" style="transition-delay:'+(i*40)+'ms"><span class="n">'+esc(t[0])+'</span><span class="d">'+esc(t[1])+'</span></div>';
+  }).join('');
+
+  document.getElementById('security').innerHTML=SECURITY.map(function(s,i){
+    return '<div class="reveal" style="transition-delay:'+(i*70)+'ms"><div class="sec-card"><span class="d"></span><h3>'+esc(s[0])+'</h3><p>'+esc(s[1])+'</p></div></div>';
+  }).join('');
+
+  // reveal
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  // header + scrollspy
+  var hdr=document.getElementById('hdr');
+  var links=Array.prototype.slice.call(document.querySelectorAll('nav.main a'));
+  var ids=links.map(function(a){return a.getAttribute('href').slice(1)});
+  function onScroll(){
+    hdr.classList.toggle('scrolled', window.scrollY>24);
+    var cur=ids[0];
+    ids.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el && el.getBoundingClientRect().top<=160) cur=id;
+    });
+    links.forEach(function(a){a.classList.toggle('active', a.getAttribute('href')==='#'+cur)});
+  }
+  onScroll();
+  window.addEventListener('scroll',onScroll,{passive:true});
+})();
+</script>
 </body>
 </html>

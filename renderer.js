@@ -13,6 +13,7 @@ const I18N = {
     layoutAuto: 'Grade automática', layoutSingle: 'Painel único', layoutColumns: 'Colunas', layoutRows: 'Linhas', layoutFree: 'Livre (redimensionável)',
     ctxReload: 'Recarregar', ctxDefaultUrl: 'Ir para a URL padrão', ctxMute: 'Silenciar painel', ctxUnmute: 'Reativar som',
     ctxClose: 'Fechar conta', ctxEdit: 'Editar conta', ctxDuplicate: 'Duplicar conta', ctxClearData: 'Limpar dados da sessão', ctxDelete: 'Excluir conta',
+    ctxDevtools: 'Abrir DevTools (F12)',
     wsCtxEdit: 'Editar workspace', wsCtxDuplicate: 'Duplicar workspace', wsCtxDelete: 'Excluir workspace',
     confirmBtn: 'Confirmar', shortcutsTitle: 'Atalhos de teclado', settingsTitleModal: 'Configurações',
     tabGeneral: 'Geral', tabNav: 'Navegação', tabDownloads: 'Downloads', tabUpdates: 'Atualizações', tabAbout: 'Sobre',
@@ -39,7 +40,13 @@ const I18N = {
     shcPanel19: 'Selecionar painel 1–9', shcNextPanel: 'Próximo painel', shcNewWorkspace: 'Novo workspace', shcNewAccount: 'Nova conta',
     shcReloadActive: 'Recarregar painel ativo', shcReloadNoCache: 'Recarregar ignorando cache', shcReloadAll: 'Recarregar todas',
     shcMuteActive: 'Silenciar painel ativo', shcMuteAll: 'Silenciar todas', shcFocusAddress: 'Focar barra de endereço',
-    shcZoom: 'Zoom + / −', shcCleanMode: 'Modo tela limpa', shcFullscreen: 'Tela cheia', shcSettings: 'Configurações', shcHelp: 'Ajuda',
+    shcZoomIn: 'Aumentar zoom', shcZoomOut: 'Diminuir zoom', shcZoomReset: 'Restaurar zoom (100%)',
+    shcCleanMode: 'Modo tela limpa', shcFullscreen: 'Tela cheia', shcSettings: 'Configurações', shcHelp: 'Ajuda',
+    shcDeleteAccount: 'Excluir conta ativa', shcDevtools: 'Abrir DevTools da conta ativa',
+    changeBtn: 'Alterar', pressKeys: 'Pressione uma tecla... (Esc cancela)',
+    resetShortcutsBtn: 'Restaurar padrões', resetShortcutsTitle: 'Restaurar atalhos padrão?',
+    resetShortcutsBody: 'Todos os atalhos personalizados voltam para o valor original. Essa ação não pode ser desfeita.',
+    resetDividersBtn: 'Redefinir tamanho das divisórias',
     confirmDeleteWsTitle: 'Excluir este workspace?', confirmDeleteWsBody: 'O workspace e todas as suas contas serão removidos da lista. As sessões salvas em disco não são apagadas.',
     confirmDeleteAccTitle: 'Excluir esta conta?', confirmDeleteAccBody: 'A conta "{name}" será removida da lista. A sessão salva em disco não é apagada automaticamente.',
     confirmCloseAllTitle: 'Fechar todas as contas?', confirmCloseAllBody: 'Isso vai fechar {count} conta(s) aberta(s) neste workspace. As sessões salvas em disco não são apagadas.',
@@ -58,6 +65,7 @@ const I18N = {
     layoutAuto: 'Auto grid', layoutSingle: 'Single panel', layoutColumns: 'Columns', layoutRows: 'Rows', layoutFree: 'Free (resizable)',
     ctxReload: 'Reload', ctxDefaultUrl: 'Go to default URL', ctxMute: 'Mute panel', ctxUnmute: 'Unmute',
     ctxClose: 'Close account', ctxEdit: 'Edit account', ctxDuplicate: 'Duplicate account', ctxClearData: 'Clear session data', ctxDelete: 'Delete account',
+    ctxDevtools: 'Open DevTools (F12)',
     wsCtxEdit: 'Edit workspace', wsCtxDuplicate: 'Duplicate workspace', wsCtxDelete: 'Delete workspace',
     confirmBtn: 'Confirm', shortcutsTitle: 'Keyboard shortcuts', settingsTitleModal: 'Settings',
     tabGeneral: 'General', tabNav: 'Browsing', tabDownloads: 'Downloads', tabUpdates: 'Updates', tabAbout: 'About',
@@ -84,7 +92,13 @@ const I18N = {
     shcPanel19: 'Select panel 1–9', shcNextPanel: 'Next panel', shcNewWorkspace: 'New workspace', shcNewAccount: 'New account',
     shcReloadActive: 'Reload active panel', shcReloadNoCache: 'Reload ignoring cache', shcReloadAll: 'Reload all',
     shcMuteActive: 'Mute active panel', shcMuteAll: 'Mute all', shcFocusAddress: 'Focus address bar',
-    shcZoom: 'Zoom + / −', shcCleanMode: 'Clean screen mode', shcFullscreen: 'Fullscreen', shcSettings: 'Settings', shcHelp: 'Help',
+    shcZoomIn: 'Zoom in', shcZoomOut: 'Zoom out', shcZoomReset: 'Reset zoom (100%)',
+    shcCleanMode: 'Clean screen mode', shcFullscreen: 'Fullscreen', shcSettings: 'Settings', shcHelp: 'Help',
+    shcDeleteAccount: 'Delete active account', shcDevtools: "Open active account's DevTools",
+    changeBtn: 'Change', pressKeys: 'Press a key... (Esc cancels)',
+    resetShortcutsBtn: 'Reset to defaults', resetShortcutsTitle: 'Reset default shortcuts?',
+    resetShortcutsBody: 'All custom shortcuts go back to their original value. This cannot be undone.',
+    resetDividersBtn: 'Reset divider sizes',
     confirmDeleteWsTitle: 'Delete this workspace?', confirmDeleteWsBody: 'The workspace and all its accounts will be removed from the list. Sessions saved on disk are not deleted.',
     confirmDeleteAccTitle: 'Delete this account?', confirmDeleteAccBody: 'The account "{name}" will be removed from the list. The session saved on disk is not automatically deleted.',
     confirmCloseAllTitle: 'Close all accounts?', confirmCloseAllBody: 'This will close {count} open account(s) in this workspace. Sessions saved on disk are not deleted.',
@@ -103,6 +117,7 @@ const I18N = {
     layoutAuto: 'Cuadrícula automática', layoutSingle: 'Panel único', layoutColumns: 'Columnas', layoutRows: 'Filas', layoutFree: 'Libre (redimensionable)',
     ctxReload: 'Recargar', ctxDefaultUrl: 'Ir a la URL predeterminada', ctxMute: 'Silenciar panel', ctxUnmute: 'Reactivar sonido',
     ctxClose: 'Cerrar cuenta', ctxEdit: 'Editar cuenta', ctxDuplicate: 'Duplicar cuenta', ctxClearData: 'Borrar datos de la sesión', ctxDelete: 'Eliminar cuenta',
+    ctxDevtools: 'Abrir DevTools (F12)',
     wsCtxEdit: 'Editar workspace', wsCtxDuplicate: 'Duplicar workspace', wsCtxDelete: 'Eliminar workspace',
     confirmBtn: 'Confirmar', shortcutsTitle: 'Atajos de teclado', settingsTitleModal: 'Configuración',
     tabGeneral: 'General', tabNav: 'Navegación', tabDownloads: 'Descargas', tabUpdates: 'Actualizaciones', tabAbout: 'Acerca de',
@@ -129,7 +144,13 @@ const I18N = {
     shcPanel19: 'Seleccionar panel 1–9', shcNextPanel: 'Panel siguiente', shcNewWorkspace: 'Nuevo workspace', shcNewAccount: 'Nueva cuenta',
     shcReloadActive: 'Recargar panel activo', shcReloadNoCache: 'Recargar ignorando caché', shcReloadAll: 'Recargar todas',
     shcMuteActive: 'Silenciar panel activo', shcMuteAll: 'Silenciar todas', shcFocusAddress: 'Enfocar barra de direcciones',
-    shcZoom: 'Zoom + / −', shcCleanMode: 'Modo pantalla limpia', shcFullscreen: 'Pantalla completa', shcSettings: 'Configuración', shcHelp: 'Ayuda',
+    shcZoomIn: 'Acercar zoom', shcZoomOut: 'Alejar zoom', shcZoomReset: 'Restablecer zoom (100%)',
+    shcCleanMode: 'Modo pantalla limpia', shcFullscreen: 'Pantalla completa', shcSettings: 'Configuración', shcHelp: 'Ayuda',
+    shcDeleteAccount: 'Eliminar cuenta activa', shcDevtools: 'Abrir DevTools de la cuenta activa',
+    changeBtn: 'Cambiar', pressKeys: 'Presiona una tecla... (Esc cancela)',
+    resetShortcutsBtn: 'Restablecer predeterminados', resetShortcutsTitle: '¿Restablecer atajos predeterminados?',
+    resetShortcutsBody: 'Todos los atajos personalizados vuelven a su valor original. Esta acción no se puede deshacer.',
+    resetDividersBtn: 'Restablecer tamaño de las divisiones',
     confirmDeleteWsTitle: '¿Eliminar este workspace?', confirmDeleteWsBody: 'El workspace y todas sus cuentas se eliminarán de la lista. Las sesiones guardadas en disco no se borran.',
     confirmDeleteAccTitle: '¿Eliminar esta cuenta?', confirmDeleteAccBody: 'La cuenta "{name}" se eliminará de la lista. La sesión guardada en disco no se borra automáticamente.',
     confirmCloseAllTitle: '¿Cerrar todas las cuentas?', confirmCloseAllBody: 'Esto cerrará {count} cuenta(s) abierta(s) en este workspace. Las sesiones guardadas en disco no se borran.',
@@ -527,9 +548,22 @@ function openWorkspaceEditModal() {
   $('#ws-edit-layout').value = ws.layout || 'auto';
   wsEditColor = ws.color; wsEditIcon = ws.iconKey;
   renderWsEditColors(); renderWsEditIcons();
+  updateResetDividersVisibility();
   wsEditOverlay.classList.remove('hidden');
   $('#ws-edit-name').focus();
 }
+function updateResetDividersVisibility() {
+  $('#ws-edit-reset-dividers-wrap').style.display = $('#ws-edit-layout').value === 'auto' ? '' : 'none';
+}
+$('#ws-edit-layout').addEventListener('change', updateResetDividersVisibility);
+$('#ws-edit-reset-dividers').addEventListener('click', () => {
+  const ws = getActiveWorkspace();
+  if (!ws) return;
+  ws.autoGridColFr = null;
+  ws.autoGridRowFr = null;
+  renderGrid();
+  schedulePersist();
+});
 function renderWsEditColors() {
   const wrap = $('#ws-edit-colors'); wrap.innerHTML = '';
   COLORS.forEach((c) => {
@@ -653,12 +687,20 @@ function editAccount(id, name, url) {
   const acc = getAccountById(id);
   if (!acc) return;
   if (name.trim()) acc.name = name.trim();
-  if (url.trim()) {
-    const full = normalizeUrl(url.trim());
-    acc.defaultUrl = full; acc.url = full;
-    if (acc.status === 'open') {
-      const webview = grid.querySelector(`.account-card[data-id="${acc.id}"] webview`);
-      if (webview) webview.loadURL(full);
+  const trimmedUrl = url.trim();
+  if (trimmedUrl) {
+    const full = normalizeUrl(trimmedUrl);
+    // Só navega se a URL realmente mudou — antes, salvar só o nome (com o
+    // campo de URL ainda preenchido com o valor atual) fazia a página
+    // recarregar de volta pra URL padrão do nada, perdendo o progresso.
+    const changed = full !== acc.defaultUrl;
+    acc.defaultUrl = full;
+    if (changed) {
+      acc.url = full;
+      if (acc.status === 'open') {
+        const webview = grid.querySelector(`.account-card[data-id="${acc.id}"] webview`);
+        if (webview) webview.loadURL(full);
+      }
     }
   }
   renderSidebar(); renderGrid(); schedulePersist();
@@ -837,6 +879,16 @@ function startAxisDrag(e, ws, i, axis) {
   const containerSize = (isCol ? grid.clientWidth : grid.clientHeight) - GRID_PADDING * 2;
   const totalFr = frArray.reduce((a, b) => a + b, 0);
   const frPerPixel = totalFr / Math.max(containerSize, 1);
+
+  // Cada <webview> roda num processo separado e "engole" os eventos de mouse
+  // quando o cursor passa por cima dela — por isso o arraste "parava" ao
+  // cruzar outra conta. Uma camada transparente por cima de tudo (elemento
+  // comum do documento, não um webview) captura o mouse o tempo todo,
+  // independente de sobre qual conta o cursor esteja passando.
+  const captureLayer = document.createElement('div');
+  captureLayer.className = 'drag-capture-layer';
+  captureLayer.style.cursor = isCol ? 'col-resize' : 'row-resize';
+  document.body.appendChild(captureLayer);
   document.body.style.cursor = isCol ? 'col-resize' : 'row-resize';
 
   let rafId = null;
@@ -859,14 +911,16 @@ function startAxisDrag(e, ws, i, axis) {
     if (rafId == null) rafId = requestAnimationFrame(apply);
   }
   function onUp() {
-    document.removeEventListener('mousemove', onMove);
-    document.removeEventListener('mouseup', onUp);
+    captureLayer.removeEventListener('mousemove', onMove);
+    captureLayer.removeEventListener('mouseup', onUp);
+    captureLayer.remove();
     if (rafId != null) cancelAnimationFrame(rafId);
     document.body.style.cursor = '';
     schedulePersist();
   }
-  document.addEventListener('mousemove', onMove);
-  document.addEventListener('mouseup', onUp);
+  captureLayer.addEventListener('mousemove', onMove);
+  captureLayer.addEventListener('mouseup', onUp);
+  captureLayer.addEventListener('mouseleave', onUp);
 }
 function startColumnDrag(e, ws, i) { startAxisDrag(e, ws, i, 'col'); }
 function startRowDrag(e, ws, i) { startAxisDrag(e, ws, i, 'row'); }
@@ -1069,6 +1123,12 @@ ctxMenu.addEventListener('click', (e) => {
       if (webview) webview.reload(); else if (acc) openAccount(id);
       break;
     }
+    case 'devtools': {
+      const webview = grid.querySelector(`.account-card[data-id="${id}"] webview`);
+      if (webview) { if (webview.isDevToolsOpened()) webview.closeDevTools(); else webview.openDevTools(); }
+      else if (acc) openAccount(id);
+      break;
+    }
     case 'default-url': {
       if (!acc) break;
       if (acc.status === 'open') {
@@ -1244,39 +1304,199 @@ $('#topbar-settings').addEventListener('click', () => openSettingsModal());
 $('#topbar-help').addEventListener('click', () => openShortcutsModal());
 
 // ---------------------------------------------------------------------------
-// Modal: Atalhos de teclado
+// Atalhos de teclado — sistema com combinações remapeáveis pelo usuário
 // ---------------------------------------------------------------------------
-function getShortcutRows() {
-  return [
-    { label: t('shcPanel19'), keys: ['Ctrl', '1–9'] },
-    { label: t('shcNextPanel'), keys: ['Ctrl', 'Tab'] },
-    { label: t('shcNewWorkspace'), keys: ['Ctrl', 'Shift', 'N'] },
-    { label: t('shcNewAccount'), keys: ['Ctrl', 'N'] },
-    { label: t('shcReloadActive'), keys: ['Ctrl', 'R'] },
-    { label: t('shcReloadNoCache'), keys: ['Ctrl', 'Shift', 'R'] },
-    { label: t('shcReloadAll'), keys: ['Ctrl', 'Alt', 'R'] },
-    { label: t('shcMuteActive'), keys: ['Ctrl', 'M'] },
-    { label: t('shcMuteAll'), keys: ['Ctrl', 'Shift', 'M'] },
-    { label: t('shcFocusAddress'), keys: ['Ctrl', 'L'] },
-    { label: t('shcZoom'), keys: ['Ctrl', '+ / -'] },
-    { label: t('shcCleanMode'), keys: ['Ctrl', 'Shift', 'Z'] },
-    { label: t('shcPresentation'), keys: ['Ctrl', 'Shift', 'P'] },
-    { label: t('shcFullscreen'), keys: ['F11'] },
-    { label: t('shcSettings'), keys: ['Ctrl', ','] },
-    { label: t('shcHelp'), keys: ['F1'] },
-  ];
+const ACTION_DEFS = [
+  { id: 'nextPanel', labelKey: 'shcNextPanel', def: { ctrl: true, key: 'Tab' } },
+  { id: 'newWorkspace', labelKey: 'shcNewWorkspace', def: { ctrl: true, shift: true, key: 'n' } },
+  { id: 'newAccount', labelKey: 'shcNewAccount', def: { ctrl: true, key: 'n' } },
+  { id: 'deleteAccount', labelKey: 'shcDeleteAccount', def: { ctrl: true, key: 'x' } },
+  { id: 'devtools', labelKey: 'shcDevtools', def: { key: 'F12' } },
+  { id: 'reloadActive', labelKey: 'shcReloadActive', def: { ctrl: true, key: 'r' } },
+  { id: 'reloadNoCache', labelKey: 'shcReloadNoCache', def: { ctrl: true, shift: true, key: 'r' } },
+  { id: 'reloadAll', labelKey: 'shcReloadAll', def: { ctrl: true, alt: true, key: 'r' } },
+  { id: 'muteActive', labelKey: 'shcMuteActive', def: { ctrl: true, key: 'm' } },
+  { id: 'muteAll', labelKey: 'shcMuteAll', def: { ctrl: true, shift: true, key: 'm' } },
+  { id: 'focusAddress', labelKey: 'shcFocusAddress', def: { ctrl: true, key: 'l' } },
+  { id: 'zoomIn', labelKey: 'shcZoomIn', def: { ctrl: true, key: '=' } },
+  { id: 'zoomOut', labelKey: 'shcZoomOut', def: { ctrl: true, key: '-' } },
+  { id: 'zoomReset', labelKey: 'shcZoomReset', def: { ctrl: true, key: '0' } },
+  { id: 'cleanMode', labelKey: 'shcCleanMode', def: { ctrl: true, shift: true, key: 'z' } },
+  { id: 'presentationMode', labelKey: 'shcPresentation', def: { ctrl: true, shift: true, key: 'p' } },
+  { id: 'fullscreen', labelKey: 'shcFullscreen', def: { key: 'F11' } },
+  { id: 'settings', labelKey: 'shcSettings', def: { ctrl: true, key: ',' } },
+  { id: 'help', labelKey: 'shcHelp', def: { key: 'F1' } },
+];
+// Combos que continuam sendo o padrão do sistema operacional/navegador
+// (recortar/copiar/colar/desfazer/refazer) enquanto o foco estiver num campo
+// de texto NOSSO (endereço, nome de script, etc.) — nunca interceptamos esses
+// ali, mesmo que "excluir conta" use Ctrl+X por padrão.
+const NATIVE_EDIT_KEYS = ['x', 'c', 'v', 'a', 'z', 'y'];
+
+function getBinding(actionId) {
+  const custom = state.settings.keybindings && state.settings.keybindings[actionId];
+  if (custom) return custom;
+  const def = ACTION_DEFS.find((a) => a.id === actionId);
+  return def ? def.def : null;
+}
+function normalizeKey(key) {
+  return key.length === 1 ? key.toLowerCase() : key;
+}
+function comboMatches(e, combo) {
+  if (!combo) return false;
+  const hasCtrl = e.ctrlKey || e.metaKey;
+  if (hasCtrl !== !!combo.ctrl) return false;
+  if (e.shiftKey !== !!combo.shift) return false;
+  if (e.altKey !== !!combo.alt) return false;
+  return normalizeKey(e.key) === combo.key;
+}
+function comboToKeyParts(combo) {
+  if (!combo) return ['—'];
+  const parts = [];
+  if (combo.ctrl) parts.push('Ctrl');
+  if (combo.shift) parts.push('Shift');
+  if (combo.alt) parts.push('Alt');
+  let k = combo.key;
+  if (k === ' ') k = 'Space';
+  else if (k.length === 1) k = k.toUpperCase();
+  parts.push(k);
+  return parts;
+}
+function isEditableTarget(target) {
+  const tag = target.tagName;
+  return tag === 'INPUT' || tag === 'TEXTAREA' || target.isContentEditable;
+}
+
+function runAction(id) {
+  switch (id) {
+    case 'nextPanel': {
+      const open = getOpenAccountsOfActiveWorkspace();
+      if (!open.length) return;
+      const idx = open.findIndex((a) => a.id === activeAccountId);
+      setActiveAccount(open[(idx + 1) % open.length].id);
+      break;
+    }
+    case 'newWorkspace': createWorkspace(); break;
+    case 'newAccount': quickCreateAccount(); break;
+    case 'deleteAccount': if (activeAccountId) deleteAccount(activeAccountId); break;
+    case 'devtools': {
+      const w = getActiveWebview();
+      if (w) { if (w.isDevToolsOpened()) w.closeDevTools(); else w.openDevTools(); }
+      break;
+    }
+    case 'reloadActive': { const w = getActiveWebview(); if (w) w.reload(); break; }
+    case 'reloadNoCache': { const w = getActiveWebview(); if (w) w.reloadIgnoringCache(); break; }
+    case 'reloadAll':
+      getOpenAccountsOfActiveWorkspace().forEach((acc) => {
+        const w = grid.querySelector(`.account-card[data-id="${acc.id}"] webview`);
+        if (w) w.reload();
+      });
+      break;
+    case 'muteActive': $('#topbar-mute').click(); break;
+    case 'muteAll': {
+      const open = getOpenAccountsOfActiveWorkspace();
+      const anyUnmuted = open.some((a) => !a.muted);
+      open.forEach((acc) => {
+        acc.muted = anyUnmuted;
+        const w = grid.querySelector(`.account-card[data-id="${acc.id}"] webview`);
+        if (w) w.setAudioMuted(anyUnmuted);
+        const btn = grid.querySelector(`.account-card[data-id="${acc.id}"] .mute`);
+        if (btn) btn.innerHTML = muteIcon(anyUnmuted);
+      });
+      updateMuteButton(); schedulePersist();
+      break;
+    }
+    case 'focusAddress': addressBar.focus(); addressBar.select(); break;
+    case 'zoomIn': adjustZoom(0.1); break;
+    case 'zoomOut': adjustZoom(-0.1); break;
+    case 'zoomReset': resetZoom(); break;
+    case 'cleanMode': toggleCleanMode(); break;
+    case 'presentationMode': togglePresentationMode(); break;
+    case 'fullscreen': window.nativeAPI.toggleFullscreen(); break;
+    case 'settings': openSettingsModal(); break;
+    case 'help': openShortcutsModal(); break;
+  }
+}
+
+window.addEventListener('keydown', (e) => {
+  // Modo "capturando nova tecla" no editor de atalhos tem prioridade sobre tudo
+  if (capturingActionId) { captureKeybinding(e); return; }
+
+  const mod = e.ctrlKey || e.metaKey;
+
+  // Nunca atrapalha recortar/copiar/colar/desfazer normais enquanto o foco
+  // está num campo de texto nosso (mesmo que "Excluir conta" use Ctrl+X).
+  if (isEditableTarget(e.target) && mod && !e.altKey && NATIVE_EDIT_KEYS.includes(e.key.toLowerCase())) return;
+
+  // Ctrl+1..9 seleciona o painel — é uma faixa, não faz parte do remapeamento
+  if (mod && !e.shiftKey && !e.altKey && /^[1-9]$/.test(e.key)) {
+    e.preventDefault();
+    const open = getOpenAccountsOfActiveWorkspace();
+    const acc = open[Number(e.key) - 1];
+    if (acc) setActiveAccount(acc.id);
+    return;
+  }
+
+  for (const def of ACTION_DEFS) {
+    if (comboMatches(e, getBinding(def.id))) { e.preventDefault(); runAction(def.id); return; }
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Modal: Atalhos de teclado (editável — clique em "Alterar" pra remapear)
+// ---------------------------------------------------------------------------
+let capturingActionId = null;
+function startCapture(actionId, btnEl) {
+  capturingActionId = actionId;
+  document.querySelectorAll('.shortcut-change-btn').forEach((b) => b.classList.remove('capturing'));
+  btnEl.textContent = t('pressKeys');
+  btnEl.classList.add('capturing');
+}
+function captureKeybinding(e) {
+  e.preventDefault();
+  if (e.key === 'Escape') { capturingActionId = null; renderShortcutsList(); return; }
+  if (['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) return; // espera uma tecla "de verdade", não só o modificador
+  const combo = { ctrl: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey, key: normalizeKey(e.key) };
+  if (!state.settings.keybindings) state.settings.keybindings = {};
+  state.settings.keybindings[capturingActionId] = combo;
+  capturingActionId = null;
+  schedulePersist();
+  renderShortcutsList();
 }
 function renderShortcutsList() {
   const wrap = $('#shortcuts-list');
-  wrap.innerHTML = getShortcutRows().map((s) => `
-    <div class="shortcut-row">
-      <span>${escapeHtml(s.label)}</span>
-      <span class="kbd-group">${s.keys.map((k) => `<kbd>${escapeHtml(k)}</kbd>`).join('<span class="plus">+</span>')}</span>
-    </div>`).join('');
+  wrap.innerHTML = '';
+
+  const fixedRow = document.createElement('div');
+  fixedRow.className = 'shortcut-row';
+  fixedRow.innerHTML = `<span>${escapeHtml(t('shcPanel19'))}</span><span class="kbd-group"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>1–9</kbd></span>`;
+  wrap.appendChild(fixedRow);
+
+  ACTION_DEFS.forEach((def) => {
+    const combo = getBinding(def.id);
+    const row = document.createElement('div');
+    row.className = 'shortcut-row';
+    const kbdHtml = comboToKeyParts(combo).map((k) => `<kbd>${escapeHtml(k)}</kbd>`).join('<span class="plus">+</span>');
+    row.innerHTML = `
+      <span>${escapeHtml(t(def.labelKey))}</span>
+      <span class="shortcut-edit-wrap">
+        <span class="kbd-group">${kbdHtml}</span>
+        <button class="shortcut-change-btn" type="button">${escapeHtml(t('changeBtn'))}</button>
+      </span>`;
+    row.querySelector('.shortcut-change-btn').addEventListener('click', (e) => startCapture(def.id, e.currentTarget));
+    wrap.appendChild(row);
+  });
 }
-function openShortcutsModal() { renderShortcutsList(); $('#shortcuts-overlay').classList.remove('hidden'); }
-$('#shortcuts-close').addEventListener('click', () => $('#shortcuts-overlay').classList.add('hidden'));
-$('#shortcuts-overlay').addEventListener('click', (e) => { if (e.target === $('#shortcuts-overlay')) $('#shortcuts-overlay').classList.add('hidden'); });
+function openShortcutsModal() { capturingActionId = null; renderShortcutsList(); $('#shortcuts-overlay').classList.remove('hidden'); }
+$('#shortcuts-close').addEventListener('click', () => { capturingActionId = null; $('#shortcuts-overlay').classList.add('hidden'); });
+$('#shortcuts-overlay').addEventListener('click', (e) => { if (e.target === $('#shortcuts-overlay')) { capturingActionId = null; $('#shortcuts-overlay').classList.add('hidden'); } });
+$('#shortcuts-reset').addEventListener('click', () => {
+  showConfirm(t('resetShortcutsTitle'), t('resetShortcutsBody'), () => {
+    state.settings.keybindings = {};
+    schedulePersist();
+    renderShortcutsList();
+  });
+});
 
 // ---------------------------------------------------------------------------
 // Modal: editar conta (a criação agora é instantânea, sem modal)
@@ -1371,66 +1591,8 @@ window.addEventListener('beforeunload', () => { persistState(); });
 // ---------------------------------------------------------------------------
 // Atalhos de teclado globais
 // ---------------------------------------------------------------------------
-function isModEvent(e) { return e.ctrlKey || e.metaKey; }
-window.addEventListener('keydown', (e) => {
-  const mod = isModEvent(e);
-
-  if (e.key === 'F1') { e.preventDefault(); openShortcutsModal(); return; }
-  if (e.key === 'F11') { e.preventDefault(); window.nativeAPI.toggleFullscreen(); return; }
-
-  if (!mod) return;
-
-  if (e.shiftKey && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); toggleCleanMode(); return; }
-  if (e.shiftKey && (e.key === 'p' || e.key === 'P')) { e.preventDefault(); togglePresentationMode(); return; }
-
-  if (/^[1-9]$/.test(e.key)) {
-    e.preventDefault();
-    const open = getOpenAccountsOfActiveWorkspace();
-    const acc = open[Number(e.key) - 1];
-    if (acc) setActiveAccount(acc.id);
-    return;
-  }
-  if (e.key === 'Tab') {
-    e.preventDefault();
-    const open = getOpenAccountsOfActiveWorkspace();
-    if (!open.length) return;
-    const idx = open.findIndex((a) => a.id === activeAccountId);
-    setActiveAccount(open[(idx + 1) % open.length].id);
-    return;
-  }
-  if (e.shiftKey && (e.key === 'n' || e.key === 'N')) { e.preventDefault(); createWorkspace(); return; }
-  if (!e.shiftKey && !e.altKey && (e.key === 'n' || e.key === 'N')) { e.preventDefault(); quickCreateAccount(); return; }
-  if (!e.shiftKey && !e.altKey && (e.key === 'r' || e.key === 'R')) { e.preventDefault(); const w = getActiveWebview(); if (w) w.reload(); return; }
-  if (e.shiftKey && (e.key === 'r' || e.key === 'R')) { e.preventDefault(); const w = getActiveWebview(); if (w) w.reloadIgnoringCache(); return; }
-  if (e.altKey && (e.key === 'r' || e.key === 'R')) {
-    e.preventDefault();
-    getOpenAccountsOfActiveWorkspace().forEach((acc) => {
-      const w = grid.querySelector(`.account-card[data-id="${acc.id}"] webview`);
-      if (w) w.reload();
-    });
-    return;
-  }
-  if (!e.shiftKey && (e.key === 'm' || e.key === 'M')) { e.preventDefault(); $('#topbar-mute').click(); return; }
-  if (e.shiftKey && (e.key === 'm' || e.key === 'M')) {
-    e.preventDefault();
-    const open = getOpenAccountsOfActiveWorkspace();
-    const anyUnmuted = open.some((a) => !a.muted);
-    open.forEach((acc) => {
-      acc.muted = anyUnmuted;
-      const w = grid.querySelector(`.account-card[data-id="${acc.id}"] webview`);
-      if (w) w.setAudioMuted(anyUnmuted);
-      const btn = grid.querySelector(`.account-card[data-id="${acc.id}"] .mute`);
-      if (btn) btn.innerHTML = muteIcon(anyUnmuted);
-    });
-    updateMuteButton(); schedulePersist();
-    return;
-  }
-  if (e.key === 'l' || e.key === 'L') { e.preventDefault(); addressBar.focus(); addressBar.select(); return; }
-  if (e.key === '=' || e.key === '+') { e.preventDefault(); adjustZoom(0.1); return; }
-  if (e.key === '-') { e.preventDefault(); adjustZoom(-0.1); return; }
-  if (e.key === '0') { e.preventDefault(); resetZoom(); return; }
-  if (e.key === ',') { e.preventDefault(); openSettingsModal(); return; }
-});
+// (Os atalhos de teclado agora são tratados pelo sistema data-driven definido
+// mais acima, junto com o editor de atalhos do modal de Ajuda — ver ACTION_DEFS.)
 
 // ---------------------------------------------------------------------------
 // Modal: Configurações

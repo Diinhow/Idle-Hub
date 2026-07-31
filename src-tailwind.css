@@ -37,28 +37,37 @@
 
   /* ---------- Modo tela limpa ---------- */
   #edge-trigger-top, #edge-trigger-left { position: fixed; z-index: 400; }
-  #edge-trigger-top { top: 0; left: 0; right: 0; height: 10px; display: none; }
-  #edge-trigger-left { top: 0; left: 0; bottom: 0; width: 10px; display: none; }
+  #edge-trigger-top { top: 0; left: 0; right: 0; height: 16px; display: none; }
+  #edge-trigger-left { top: 0; left: 0; bottom: 0; width: 16px; display: none; }
   body.clean-mode.edge-reveal #edge-trigger-top,
   body.clean-mode.edge-reveal #edge-trigger-left { display: block; }
 
-  /* Alça visível — deixa claro que dá pra encostar ali pra revelar a interface */
+  /* Alça de revelar — uma "abinha" sólida e visível, não uma linha fina */
   .edge-handle {
-    position: absolute; background: #c89b3c; border-radius: 999px;
-    opacity: .45; transition: opacity .15s, transform .15s;
-    animation: edge-handle-pulse 2.6s ease-in-out infinite;
+    position: absolute; display: flex; align-items: center; justify-content: center;
+    background: #c89b3c; box-shadow: 0 2px 10px rgba(200,155,60,.65), 0 0 0 1px rgba(0,0,0,.25);
+    opacity: .92; transition: opacity .15s, transform .15s, box-shadow .15s;
+    animation: edge-handle-pulse 2.2s ease-in-out infinite;
   }
-  .edge-handle-top { top: 3px; left: 50%; width: 56px; height: 4px; transform: translateX(-50%); }
-  .edge-handle-left { left: 3px; top: 50%; width: 4px; height: 56px; transform: translateY(-50%); }
+  .edge-handle svg { width: 16px; height: 16px; }
+  .edge-handle-top {
+    top: 0; left: 50%; width: 72px; height: 16px; transform: translateX(-50%);
+    border-radius: 0 0 10px 10px;
+  }
+  .edge-handle-left {
+    left: 0; top: 50%; width: 16px; height: 72px; transform: translateY(-50%);
+    border-radius: 0 10px 10px 0;
+  }
   #edge-trigger-top:hover .edge-handle-top,
   #edge-trigger-left:hover .edge-handle-left {
-    opacity: 1; animation: none;
+    opacity: 1; animation: none; background: #e3b341;
+    box-shadow: 0 4px 18px rgba(227,179,65,.9), 0 0 0 1px rgba(0,0,0,.3);
   }
-  #edge-trigger-top:hover .edge-handle-top { transform: translateX(-50%) scaleY(1.5); }
-  #edge-trigger-left:hover .edge-handle-left { transform: translateY(-50%) scaleX(1.5); }
+  #edge-trigger-top:hover .edge-handle-top { transform: translateX(-50%) translateY(4px) scale(1.12); }
+  #edge-trigger-left:hover .edge-handle-left { transform: translateY(-50%) translateX(4px) scale(1.12); }
   @keyframes edge-handle-pulse {
-    0%, 100% { opacity: .3; }
-    50% { opacity: .65; }
+    0%, 100% { box-shadow: 0 2px 10px rgba(200,155,60,.45), 0 0 0 1px rgba(0,0,0,.25); }
+    50% { box-shadow: 0 2px 16px rgba(200,155,60,.95), 0 0 0 1px rgba(0,0,0,.25); }
   }
 
   body.clean-mode #titlebar,
@@ -91,6 +100,8 @@
   }
   .titlebar-left { display: flex; align-items: center; gap: 8px; padding: 0 12px; }
   .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: #c89b3c; display: inline-block; }
+  .titlebar-logo { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; }
+  .titlebar-logo img { width: 18px; height: 18px; border-radius: 4px; object-fit: contain; }
   .brand-name { font-size: 13px; color: #c3cadd; }
   .brand-name b { color: #c89b3c; }
   .titlebar-drag { flex: 1; }
@@ -470,3 +481,20 @@
   .col-gutter { top: 0; bottom: 0; width: 6px; cursor: col-resize; }
   .row-gutter { left: 0; right: 0; height: 6px; cursor: row-resize; }
   .col-gutter:hover, .row-gutter:hover { background: rgba(200,155,60,.5); }
+  .drag-capture-layer { position: fixed; inset: 0; z-index: 9999; background: transparent; }
+
+  /* ---------- Editor de atalhos (dentro do modal de Ajuda) ---------- */
+  .shortcut-edit-wrap { display: flex; align-items: center; gap: 10px; }
+  .shortcut-change-btn {
+    padding: 4px 10px; border-radius: 6px; border: 1px solid #223247; background: #111b28;
+    color: #9fa9b9; font-size: 11px; flex-shrink: 0;
+  }
+  .shortcut-change-btn:hover { border-color: #c89b3c; color: #c89b3c; }
+  .shortcut-change-btn.capturing {
+    border-color: #c89b3c; color: #0a0a14; background: #c89b3c; animation: capture-pulse 1s ease-in-out infinite;
+  }
+  @keyframes capture-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+  .shortcuts-foot { padding: 10px 20px 16px; border-top: 1px solid #1a2129; flex-shrink: 0; }
+
+  /* ---------- Reset das divisórias (dentro de Editar workspace) ---------- */
+  .ws-edit-reset-wrap { margin-top: 4px; margin-bottom: 4px; }
