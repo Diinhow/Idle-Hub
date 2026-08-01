@@ -119,7 +119,7 @@
 
   /* ---------- Workspace rail ---------- */
   #workspace-rail {
-    width: 56px; background: #0c131d; border-right: 1px solid #223247;
+    width: 56px; background: #090e14; border-right: 1px solid #223247;
     display: flex; flex-direction: column; align-items: center; padding: 10px 0; flex-shrink: 0;
   }
   #workspace-icons { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; width: 100%; align-items: center; }
@@ -131,6 +131,11 @@
   .ws-icon svg { width: 20px; height: 20px; }
   .ws-icon:hover { border-color: #223247; }
   .ws-icon.active { background: var(--ws-color); color: #05070b; border-color: var(--ws-color); }
+  .ws-icon .ws-indicator {
+    position: absolute; left: -13px; top: 50%; transform: translateY(-50%);
+    width: 3px; height: 22px; border-radius: 4px; opacity: 0; transition: opacity .15s;
+  }
+  .ws-icon.active .ws-indicator { opacity: 1; }
   .ws-icon .ws-badge {
     position: absolute; top: -4px; left: -4px; display: flex; align-items: center; justify-content: center;
     min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px; border: 1px solid #223247;
@@ -346,6 +351,7 @@
   #ws-edit-save { padding: 9px 18px; border-radius: 10px; border: none; font-size: 13px; background: #c89b3c; color: #0a0a14; font-weight: 600; }
   #ws-edit-save:hover { background: #e3b341; }
   #ws-edit-box .modal-actions { justify-content: flex-end; margin-top: 18px; }
+  .modal-actions-split { justify-content: space-between !important; align-items: center; }
 
   /* ---------- Menus de contexto ---------- */
   #context-menu, #ws-context-menu {
@@ -497,4 +503,53 @@
   .shortcuts-foot { padding: 10px 20px 16px; border-top: 1px solid #1a2129; flex-shrink: 0; }
 
   /* ---------- Reset das divisórias (dentro de Editar workspace) ---------- */
-  .ws-edit-reset-wrap { margin-top: 4px; margin-bottom: 4px; }
+  .ghost-btn.hidden { display: none; }
+
+  /* ---------- Resultado inline da verificação de atualizações ---------- */
+  .update-result { margin-top: 14px; padding: 14px 16px; border-radius: 10px; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 10px; }
+  .update-result.hidden { display: none; }
+  .update-result.state-checking { background: #111b28; border: 1px solid #223247; color: #9fa9b9; }
+  .update-result.state-ok { background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.4); color: #34d399; }
+  .update-result.state-update { background: rgba(200,155,60,.1); border: 1px solid rgba(200,155,60,.45); color: #e3b341; }
+  .update-result.state-error { background: rgba(217,76,76,.08); border: 1px solid rgba(217,76,76,.4); color: #f0a6a6; }
+  .update-result-row { display: flex; align-items: center; gap: 10px; }
+  .update-result-row svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .update-result .ghost-btn { align-self: flex-start; }
+
+  /* ---------- Toast de atualização (canto da tela, ao abrir o app) ---------- */
+  #update-toast {
+    position: fixed; right: 18px; bottom: 40px; z-index: 500; width: 320px;
+    display: flex; align-items: flex-start; gap: 12px; padding: 14px;
+    background: #0c131d; border: 1px solid #223247; border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.55);
+    animation: update-toast-in .25s ease-out;
+  }
+  #update-toast.hidden { display: none; }
+  #update-toast.closing { animation: update-toast-out .2s ease-in forwards; }
+  @keyframes update-toast-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes update-toast-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(12px); } }
+  .update-toast-icon {
+    width: 34px; height: 34px; border-radius: 10px; background: rgba(200,155,60,.15); color: #c89b3c;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .update-toast-icon svg { width: 18px; height: 18px; }
+  .update-toast-body { flex: 1; min-width: 0; }
+  .update-toast-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .update-toast-text { font-size: 12px; color: #9fa9b9; line-height: 1.5; margin-bottom: 10px; }
+  .update-toast-actions .ghost-btn { padding: 6px 12px; font-size: 12px; }
+  #update-toast-close {
+    background: transparent; border: none; color: #6a6a8a; width: 22px; height: 22px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  #update-toast-close svg { width: 13px; height: 13px; }
+  #update-toast-close:hover { background: #223247; color: #fff; }
+
+  /* ---------- Tooltip customizado (substitui o nativo do sistema, mais rápido e bonito) ---------- */
+  #app-tooltip {
+    position: fixed; z-index: 9999; background: #0c131d; border: 1px solid #223247; color: #fff;
+    font-size: 11.5px; line-height: 1.3; padding: 5px 9px; border-radius: 7px; pointer-events: none;
+    max-width: 260px; white-space: nowrap; box-shadow: 0 6px 18px rgba(0,0,0,.45);
+    opacity: 0; transform: translateY(2px); transition: opacity .08s, transform .08s;
+  }
+  #app-tooltip.visible { opacity: 1; transform: translateY(0); }
+  #app-tooltip.hidden { display: none; }

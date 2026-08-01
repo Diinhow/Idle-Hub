@@ -25,11 +25,23 @@ const I18N = {
     presentationTitle: 'Modo apresentação/gravação (Ctrl+Shift+P)',
     presentationModeLabel: 'Modo apresentação / gravação',
     presentationModeDesc: 'Borra nomes e URLs nos cabeçalhos (contas, sidebar, barra de endereço) — passe o mouse para revelar (Ctrl+Shift+P)',
+    ecoModeTitle: 'Modo Eco — reduz uso de CPU (Ctrl+Shift+E)',
+    ecoModeLabel: 'Modo Eco',
+    ecoModeDesc: 'Reduz o uso de CPU da conta em foco deixando as animações mais lentas — o progresso do jogo não é afetado, só a atualização visual',
+    shcEcoMode: 'Modo Eco (reduz CPU)',
     shcPresentation: 'Modo apresentação/gravação',
     exportBtn: 'Exportar workspaces', importBtn: 'Importar workspaces',
     defaultUrlSettings: 'URL inicial padrão', defaultZoomSettings: 'Zoom padrão para novas contas', defaultLayoutSettings: 'Layout padrão',
     downloadsFolder: 'Pasta de downloads', downloadsFolderDefault: 'Pasta padrão do sistema', chooseFolder: 'Escolher pasta...',
     askEachDownload: 'Perguntar onde salvar cada download', updatesText: 'Você está usando a versão mais recente deste projeto.',
+    checkingUpdates: 'Verificando...',
+    updateNotConfigured: 'O verificador de atualizações ainda não foi configurado pelo desenvolvedor (falta preencher o arquivo version.js com o usuário e repositório do GitHub).',
+    updateCheckFailed: 'Não foi possível verificar atualizações agora. Confira sua conexão com a internet e tente de novo.',
+    updateAvailableBody: 'Tem uma atualização nova no GitHub (commit {sha}). Quer abrir a página do repositório pra baixar?',
+    updateUnknownBody: 'O repositório está configurado, mas ainda não sei qual é a sua versão atual pra comparar (falta preencher o "commit" no version.js). Commit mais recente no GitHub: {sha}. Quer abrir a página do repositório?',
+    commitLabel: 'Commit',
+    updateToastTitle: 'Atualização disponível', updateToastOpen: 'Abrir no GitHub',
+    updateToastBody: 'Tem uma versão nova no GitHub (commit {sha}). Baixe e atualize quando puder.',
     checkUpdates: 'Verificar atualizações', aboutDesc: 'Gerenciador multi-sessão com workspaces: organize contas ilimitadas em grupos, cada uma com sessão isolada.',
     versionLabel: 'Versão', downloadsHead: 'DOWNLOADS', downloadsEmpty: 'Nenhum download nesta sessão',
     back: 'Voltar', forward: 'Avançar', reloadTitle: 'Recarregar (Ctrl+R)', homeTitle: 'Ir para a URL padrão do workspace',
@@ -47,6 +59,7 @@ const I18N = {
     resetShortcutsBtn: 'Restaurar padrões', resetShortcutsTitle: 'Restaurar atalhos padrão?',
     resetShortcutsBody: 'Todos os atalhos personalizados voltam para o valor original. Essa ação não pode ser desfeita.',
     resetDividersBtn: 'Redefinir tamanho das divisórias',
+    dblClickHint: 'Duplo clique para maximizar/restaurar',
     confirmDeleteWsTitle: 'Excluir este workspace?', confirmDeleteWsBody: 'O workspace e todas as suas contas serão removidos da lista. As sessões salvas em disco não são apagadas.',
     confirmDeleteAccTitle: 'Excluir esta conta?', confirmDeleteAccBody: 'A conta "{name}" será removida da lista. A sessão salva em disco não é apagada automaticamente.',
     confirmCloseAllTitle: 'Fechar todas as contas?', confirmCloseAllBody: 'Isso vai fechar {count} conta(s) aberta(s) neste workspace. As sessões salvas em disco não são apagadas.',
@@ -77,11 +90,23 @@ const I18N = {
     presentationTitle: 'Presentation/recording mode (Ctrl+Shift+P)',
     presentationModeLabel: 'Presentation / recording mode',
     presentationModeDesc: 'Blurs names and URLs in headers (accounts, sidebar, address bar) — hover to reveal (Ctrl+Shift+P)',
+    ecoModeTitle: 'Eco mode — reduces CPU usage (Ctrl+Shift+E)',
+    ecoModeLabel: 'Eco mode',
+    ecoModeDesc: "Reduces CPU usage of the focused account by slowing down animations — game progress isn't affected, only how often the screen redraws",
+    shcEcoMode: 'Eco mode (reduce CPU)',
     shcPresentation: 'Presentation/recording mode',
     exportBtn: 'Export workspaces', importBtn: 'Import workspaces',
     defaultUrlSettings: 'Default initial URL', defaultZoomSettings: 'Default zoom for new accounts', defaultLayoutSettings: 'Default layout',
     downloadsFolder: 'Downloads folder', downloadsFolderDefault: 'System default folder', chooseFolder: 'Choose folder...',
     askEachDownload: 'Ask where to save each download', updatesText: 'You are using the latest version of this project.',
+    checkingUpdates: 'Checking...',
+    updateNotConfigured: "The update checker hasn't been set up by the developer yet (version.js needs the GitHub username and repository name).",
+    updateCheckFailed: "Couldn't check for updates right now. Check your internet connection and try again.",
+    updateAvailableBody: 'There is a new update on GitHub (commit {sha}). Open the repository page to download it?',
+    updateUnknownBody: "The repository is configured, but there's no local commit set to compare against yet (fill in \"commit\" in version.js). Latest commit on GitHub: {sha}. Open the repository page?",
+    commitLabel: 'Commit',
+    updateToastTitle: 'Update available', updateToastOpen: 'Open on GitHub',
+    updateToastBody: 'There is a new version on GitHub (commit {sha}). Download and update whenever you can.',
     checkUpdates: 'Check for updates', aboutDesc: 'Multi-session manager with workspaces: organize unlimited accounts into groups, each with an isolated session.',
     versionLabel: 'Version', downloadsHead: 'DOWNLOADS', downloadsEmpty: 'No downloads this session',
     back: 'Back', forward: 'Forward', reloadTitle: 'Reload (Ctrl+R)', homeTitle: "Go to the workspace's default URL",
@@ -99,6 +124,7 @@ const I18N = {
     resetShortcutsBtn: 'Reset to defaults', resetShortcutsTitle: 'Reset default shortcuts?',
     resetShortcutsBody: 'All custom shortcuts go back to their original value. This cannot be undone.',
     resetDividersBtn: 'Reset divider sizes',
+    dblClickHint: 'Double-click to maximize/restore',
     confirmDeleteWsTitle: 'Delete this workspace?', confirmDeleteWsBody: 'The workspace and all its accounts will be removed from the list. Sessions saved on disk are not deleted.',
     confirmDeleteAccTitle: 'Delete this account?', confirmDeleteAccBody: 'The account "{name}" will be removed from the list. The session saved on disk is not automatically deleted.',
     confirmCloseAllTitle: 'Close all accounts?', confirmCloseAllBody: 'This will close {count} open account(s) in this workspace. Sessions saved on disk are not deleted.',
@@ -129,11 +155,23 @@ const I18N = {
     presentationTitle: 'Modo presentación/grabación (Ctrl+Shift+P)',
     presentationModeLabel: 'Modo presentación / grabación',
     presentationModeDesc: 'Difumina nombres y URLs en los encabezados (cuentas, barra lateral, barra de direcciones) — pasa el mouse para revelar (Ctrl+Shift+P)',
+    ecoModeTitle: 'Modo Eco — reduce el uso de CPU (Ctrl+Shift+E)',
+    ecoModeLabel: 'Modo Eco',
+    ecoModeDesc: 'Reduce el uso de CPU de la cuenta activa ralentizando las animaciones — el progreso del juego no se ve afectado, solo la frecuencia de actualización visual',
+    shcEcoMode: 'Modo Eco (reduce CPU)',
     shcPresentation: 'Modo presentación/grabación',
     exportBtn: 'Exportar workspaces', importBtn: 'Importar workspaces',
     defaultUrlSettings: 'URL inicial predeterminada', defaultZoomSettings: 'Zoom predeterminado para nuevas cuentas', defaultLayoutSettings: 'Diseño predeterminado',
     downloadsFolder: 'Carpeta de descargas', downloadsFolderDefault: 'Carpeta predeterminada del sistema', chooseFolder: 'Elegir carpeta...',
     askEachDownload: 'Preguntar dónde guardar cada descarga', updatesText: 'Estás usando la versión más reciente de este proyecto.',
+    checkingUpdates: 'Verificando...',
+    updateNotConfigured: 'El verificador de actualizaciones aún no fue configurado por el desarrollador (falta completar version.js con el usuario y repositorio de GitHub).',
+    updateCheckFailed: 'No se pudo verificar actualizaciones ahora. Revisa tu conexión a internet e intenta de nuevo.',
+    updateAvailableBody: 'Hay una actualización nueva en GitHub (commit {sha}). ¿Abrir la página del repositorio para descargarla?',
+    updateUnknownBody: 'El repositorio está configurado, pero todavía no sé cuál es tu versión actual para comparar (falta completar el "commit" en version.js). Commit más reciente en GitHub: {sha}. ¿Abrir la página del repositorio?',
+    commitLabel: 'Commit',
+    updateToastTitle: 'Actualización disponible', updateToastOpen: 'Abrir en GitHub',
+    updateToastBody: 'Hay una versión nueva en GitHub (commit {sha}). Descárgala y actualiza cuando puedas.',
     checkUpdates: 'Buscar actualizaciones', aboutDesc: 'Gestor multisesión con workspaces: organiza cuentas ilimitadas en grupos, cada una con sesión aislada.',
     versionLabel: 'Versión', downloadsHead: 'DESCARGAS', downloadsEmpty: 'Ninguna descarga en esta sesión',
     back: 'Atrás', forward: 'Adelante', reloadTitle: 'Recargar (Ctrl+R)', homeTitle: 'Ir a la URL predeterminada del workspace',
@@ -151,6 +189,7 @@ const I18N = {
     resetShortcutsBtn: 'Restablecer predeterminados', resetShortcutsTitle: '¿Restablecer atajos predeterminados?',
     resetShortcutsBody: 'Todos los atajos personalizados vuelven a su valor original. Esta acción no se puede deshacer.',
     resetDividersBtn: 'Restablecer tamaño de las divisiones',
+    dblClickHint: 'Doble clic para maximizar/restaurar',
     confirmDeleteWsTitle: '¿Eliminar este workspace?', confirmDeleteWsBody: 'El workspace y todas sus cuentas se eliminarán de la lista. Las sesiones guardadas en disco no se borran.',
     confirmDeleteAccTitle: '¿Eliminar esta cuenta?', confirmDeleteAccBody: 'La cuenta "{name}" se eliminará de la lista. La sesión guardada en disco no se borra automáticamente.',
     confirmCloseAllTitle: '¿Cerrar todas las cuentas?', confirmCloseAllBody: 'Esto cerrará {count} cuenta(s) abierta(s) en este workspace. Las sesiones guardadas en disco no se borran.',
@@ -174,7 +213,7 @@ function detectSystemLang() {
 function applyLanguage(langSetting) {
   currentLang = langSetting === 'sistema' ? detectSystemLang() : (I18N[langSetting] ? langSetting : 'pt');
   document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
-  document.querySelectorAll('[data-i18n-title]').forEach((el) => { el.title = t(el.dataset.i18nTitle); });
+  document.querySelectorAll('[data-i18n-title]').forEach((el) => { el.dataset.tooltip = t(el.dataset.i18nTitle); });
   document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
   renderSidebar(); updateStatusBar(); renderShortcutsList();
   if (!$('#downloads-popover').classList.contains('hidden')) renderDownloadsList();
@@ -233,6 +272,7 @@ function defaultSettings() {
     urlInicialPadrao: DEFAULT_URL, zoomPadrao: 1, layoutPadrao: 'auto',
     downloadsPath: null, perguntarOndeSalvar: true, modoTelaLimpa: false, encostarBordas: true,
     modoApresentacao: false,
+    modoEco: false,
   };
 }
 
@@ -329,6 +369,7 @@ async function init() {
   applyLanguage(state.settings.idioma);
   applyCleanMode();
   applyPresentationMode();
+  applyEcoMode();
   renderWorkspaceRail();
   renderSidebar();
   renderGrid();
@@ -376,6 +417,22 @@ function applyPresentationMode() {
 function togglePresentationMode() {
   state.settings.modoApresentacao = !state.settings.modoApresentacao;
   applyPresentationMode();
+  schedulePersist();
+}
+
+// ---------------------------------------------------------------------------
+// Modo Eco: reduz o uso de CPU da conta em foco também (não só das que já
+// estão em segundo plano), trocando o requestAnimationFrame por uma versão
+// mais lenta. O progresso do jogo não é afetado — só a frequência de
+// atualização visual cai.
+// ---------------------------------------------------------------------------
+function applyEcoMode() {
+  $('#topbar-eco') && $('#topbar-eco').classList.toggle('active-state', !!state.settings.modoEco);
+  refreshAllRafThrottles();
+}
+function toggleEcoMode() {
+  state.settings.modoEco = !state.settings.modoEco;
+  applyEcoMode();
   schedulePersist();
 }
 let revealTimer = null;
@@ -491,14 +548,15 @@ function confirmDeleteWorkspace(id) {
 }
 function renderWorkspaceRail() {
   workspaceIconsEl.innerHTML = '';
-  state.workspaces.forEach((ws, idx) => {
+  state.workspaces.forEach((ws) => {
     const el = document.createElement('div');
     el.className = 'ws-icon' + (ws.id === state.activeWorkspaceId ? ' active' : '');
     el.draggable = true;
     el.dataset.id = ws.id;
-    el.title = ws.name;
+    el.dataset.tooltip = ws.name;
     el.style.setProperty('--ws-color', ws.color);
-    el.innerHTML = `${ICONS[ws.iconKey] || ICONS.apps}<span class="ws-badge">${idx + 1}</span>`;
+    const openCount = ws.accounts.filter((a) => a.status === 'open').length;
+    el.innerHTML = `<span class="ws-indicator" style="background:${ws.color}"></span>${ICONS[ws.iconKey] || ICONS.apps}<span class="ws-badge">${openCount}</span>`;
     el.addEventListener('click', () => switchWorkspace(ws.id));
     el.addEventListener('contextmenu', (e) => { e.preventDefault(); openWsContextMenu(e.clientX, e.clientY, ws.id); });
     el.addEventListener('dragstart', (e) => { el.classList.add('dragging'); e.dataTransfer.setData('text/ws-id', String(ws.id)); });
@@ -553,7 +611,7 @@ function openWorkspaceEditModal() {
   $('#ws-edit-name').focus();
 }
 function updateResetDividersVisibility() {
-  $('#ws-edit-reset-dividers-wrap').style.display = $('#ws-edit-layout').value === 'auto' ? '' : 'none';
+  $('#ws-edit-reset-dividers').classList.toggle('hidden', $('#ws-edit-layout').value !== 'auto');
 }
 $('#ws-edit-layout').addEventListener('change', updateResetDividersVisibility);
 $('#ws-edit-reset-dividers').addEventListener('click', () => {
@@ -944,9 +1002,12 @@ function renderGrid() {
   Array.from(grid.children).forEach((child) => {
     if (!child.classList || !child.classList.contains('account-card')) return;
     const id = Number(child.dataset.id);
-    if (!allOpenIdsEverywhere.has(id)) { child.remove(); return; }
-    if (visibleOrder.has(id)) { child.style.display = ''; child.style.order = String(visibleOrder.get(id)); }
+    if (!allOpenIdsEverywhere.has(id)) { child.remove(); rafThrottleState.delete(id); return; }
+    const isVisible = visibleOrder.has(id);
+    if (isVisible) { child.style.display = ''; child.style.order = String(visibleOrder.get(id)); }
     else { child.style.display = 'none'; }
+    const webview = child.querySelector('webview');
+    if (webview) applyRafThrottle(webview, id, isVisible);
   });
 
   visibleAccounts.forEach((acc, idx) => {
@@ -986,6 +1047,65 @@ function renderGrid() {
     const { cols, rows } = computeAutoGrid(visibleAccounts.length);
     if (cols > 1 || rows > 1) requestAnimationFrame(() => layoutAutoGridGutters(ws, cols, rows));
   }
+}
+
+// ---------------------------------------------------------------------------
+// Throttle de requestAnimationFrame — corrige o "bug de segundo plano" (uma
+// conta com display:none continua rodando a 60fps completos por dentro,
+// já que o Electron não pausa isso sozinho) e serve de base pro Modo Eco.
+//
+// Como funciona: injetamos uma pequena função na página de cada conta que
+// TROCA window.requestAnimationFrame por uma versão baseada em setTimeout
+// com um intervalo configurável. O jogo continua recebendo os "ticks" de
+// animação normalmente (com o timestamp certo), só que com menos frequência
+// — jogos idle/incremental calculam progresso pela diferença de tempo real
+// (Date.now()), não pela quantidade de frames, então o progresso NÃO se
+// perde, só a frequência de redesenho cai. Nada é pausado/congelado.
+// ---------------------------------------------------------------------------
+const RAF_THROTTLE_INJECT = `(function(){
+  if (window.__idleHubRafPatched) return;
+  window.__idleHubRafPatched = true;
+  var nativeRAF = window.requestAnimationFrame.bind(window);
+  var nativeCAF = window.cancelAnimationFrame.bind(window);
+  var throttleMs = 0;
+  var pending = Object.create(null);
+  var nextId = 1;
+  window.__idleHubSetRafThrottle = function(ms) { throttleMs = ms || 0; };
+  window.requestAnimationFrame = function(cb) {
+    if (!throttleMs) return nativeRAF(cb);
+    var id = nextId++;
+    pending[id] = setTimeout(function(){ delete pending[id]; cb(performance.now()); }, throttleMs);
+    return id;
+  };
+  window.cancelAnimationFrame = function(id) {
+    if (pending[id]) { clearTimeout(pending[id]); delete pending[id]; return; }
+    nativeCAF(id);
+  };
+})();`;
+
+const BACKGROUND_THROTTLE_MS = 1500; // contas ocultas (outro workspace, ou cobertas no layout "Painel único")
+const ECO_ACTIVE_THROTTLE_MS = 200;  // conta visível, mas com Modo Eco ligado
+const rafThrottleState = new Map(); // accountId -> valor já aplicado (evita mandar executeJavaScript à toa)
+
+function computeThrottleFor(isVisible) {
+  if (!isVisible) return BACKGROUND_THROTTLE_MS;
+  return state.settings.modoEco ? ECO_ACTIVE_THROTTLE_MS : 0;
+}
+function applyRafThrottle(webview, accountId, isVisible) {
+  const ms = computeThrottleFor(isVisible);
+  if (rafThrottleState.get(accountId) === ms) return;
+  rafThrottleState.set(accountId, ms);
+  webview.executeJavaScript(`window.__idleHubSetRafThrottle && window.__idleHubSetRafThrottle(${ms})`).catch(() => {});
+}
+// Chamado ao ligar/desligar o Modo Eco — reaplica o throttle certo em tudo
+// que já está montado (contas ocultas não mudam, só as visíveis).
+function refreshAllRafThrottles() {
+  document.querySelectorAll('.account-card').forEach((card) => {
+    const id = Number(card.dataset.id);
+    const isVisible = card.style.display !== 'none';
+    const webview = card.querySelector('webview');
+    if (webview) applyRafThrottle(webview, id, isVisible);
+  });
 }
 
 function buildCard(acc) {
@@ -1030,6 +1150,10 @@ function buildCard(acc) {
     if (acc.muted) webview.setAudioMuted(true);
     webview.setZoomFactor(acc.zoomFactor || 1);
     if (acc.id === activeAccountId) { updateNavButtons(); updateZoomLabel(); }
+    rafThrottleState.delete(acc.id); // página recarregou — a patch some, precisa injetar de novo
+    webview.executeJavaScript(RAF_THROTTLE_INJECT).then(() => {
+      applyRafThrottle(webview, acc.id, card.style.display !== 'none');
+    }).catch((err) => console.error('Erro ao aplicar throttle de rAF:', err));
     if (ws) {
       state.scripts.filter((s) => scriptAppliesToAccount(s, ws.id, acc.id)).forEach((s) => {
         webview.executeJavaScript(s.code).catch((err) => console.error(`Erro no script "${s.name}":`, err));
@@ -1064,7 +1188,12 @@ function buildCard(acc) {
     schedulePersist();
   });
   header.querySelector('.reload').addEventListener('click', (ev) => { ev.stopPropagation(); webview.reload(); });
+  header.dataset.tooltip = t('dblClickHint');
   header.querySelector('.expand').addEventListener('click', (ev) => { ev.stopPropagation(); card.classList.toggle('maximized'); });
+  header.addEventListener('dblclick', (ev) => {
+    if (ev.target.closest('button')) return; // duplo-clique num botão do cabeçalho não deve maximizar
+    card.classList.toggle('maximized');
+  });
   header.querySelector('.close').addEventListener('click', (ev) => { ev.stopPropagation(); closeAccount(acc.id); });
 
   card.addEventListener('dragstart', (e) => { card.classList.add('dragging'); e.dataTransfer.setData('text/acc-id', String(acc.id)); });
@@ -1297,6 +1426,7 @@ $('#topbar-downloads').addEventListener('click', (e) => {
 $('#downloads-popover').addEventListener('click', (e) => e.stopPropagation());
 document.addEventListener('click', () => $('#downloads-popover').classList.add('hidden'));
 
+$('#topbar-eco').addEventListener('click', toggleEcoMode);
 $('#topbar-presentation').addEventListener('click', togglePresentationMode);
 $('#topbar-cleanmode').addEventListener('click', toggleCleanMode);
 $('#topbar-fullscreen').addEventListener('click', async () => { try { await window.nativeAPI.toggleFullscreen(); } catch (err) { /* ignore */ } });
@@ -1323,6 +1453,7 @@ const ACTION_DEFS = [
   { id: 'zoomReset', labelKey: 'shcZoomReset', def: { ctrl: true, key: '0' } },
   { id: 'cleanMode', labelKey: 'shcCleanMode', def: { ctrl: true, shift: true, key: 'z' } },
   { id: 'presentationMode', labelKey: 'shcPresentation', def: { ctrl: true, shift: true, key: 'p' } },
+  { id: 'ecoMode', labelKey: 'shcEcoMode', def: { ctrl: true, shift: true, key: 'e' } },
   { id: 'fullscreen', labelKey: 'shcFullscreen', def: { key: 'F11' } },
   { id: 'settings', labelKey: 'shcSettings', def: { ctrl: true, key: ',' } },
   { id: 'help', labelKey: 'shcHelp', def: { key: 'F1' } },
@@ -1412,6 +1543,7 @@ function runAction(id) {
     case 'zoomReset': resetZoom(); break;
     case 'cleanMode': toggleCleanMode(); break;
     case 'presentationMode': togglePresentationMode(); break;
+    case 'ecoMode': toggleEcoMode(); break;
     case 'fullscreen': window.nativeAPI.toggleFullscreen(); break;
     case 'settings': openSettingsModal(); break;
     case 'help': openShortcutsModal(); break;
@@ -1606,6 +1738,7 @@ document.querySelectorAll('.settings-tab').forEach((b) => b.addEventListener('cl
 
 async function openSettingsModal() {
   const s = state.settings;
+  $('#update-result-box').classList.add('hidden');
   $('#set-idioma').value = s.idioma;
   $('#set-tema').value = s.tema;
   $('#set-login-item').checked = !!s.iniciarComSistema;
@@ -1613,6 +1746,7 @@ async function openSettingsModal() {
   $('#set-clean-mode').checked = !!s.modoTelaLimpa;
   $('#set-edge-reveal').checked = s.encostarBordas !== false;
   $('#set-presentation-mode').checked = !!s.modoApresentacao;
+  $('#set-eco-mode').checked = !!s.modoEco;
   $('#set-url-padrao').value = s.urlInicialPadrao || DEFAULT_URL;
   $('#set-zoom').value = String(s.zoomPadrao || 1);
   $('#set-layout-padrao').value = s.layoutPadrao || 'auto';
@@ -1625,6 +1759,12 @@ async function openSettingsModal() {
     $('#about-version').textContent = v.app;
     $('#about-electron').textContent = v.electron;
     $('#about-chrome').textContent = v.chrome;
+    if (v.commit) {
+      $('#about-commit').textContent = v.commit;
+      $('#about-commit-row').style.display = '';
+    } else {
+      $('#about-commit-row').style.display = 'none';
+    }
   } catch (err) { /* ignore */ }
 }
 $('#settings-close').addEventListener('click', () => settingsOverlay.classList.add('hidden'));
@@ -1641,6 +1781,7 @@ $('#set-reopen-last').addEventListener('change', (e) => { state.settings.reabrir
 $('#set-clean-mode').addEventListener('change', (e) => { state.settings.modoTelaLimpa = e.target.checked; applyCleanMode(); schedulePersist(); });
 $('#set-edge-reveal').addEventListener('change', (e) => { state.settings.encostarBordas = e.target.checked; applyCleanMode(); schedulePersist(); });
 $('#set-presentation-mode').addEventListener('change', (e) => { state.settings.modoApresentacao = e.target.checked; applyPresentationMode(); schedulePersist(); });
+$('#set-eco-mode').addEventListener('change', (e) => { state.settings.modoEco = e.target.checked; applyEcoMode(); schedulePersist(); });
 $('#set-url-padrao').addEventListener('change', (e) => { state.settings.urlInicialPadrao = normalizeUrl(e.target.value.trim() || DEFAULT_URL); schedulePersist(); });
 $('#set-zoom').addEventListener('change', (e) => { state.settings.zoomPadrao = parseFloat(e.target.value); schedulePersist(); });
 $('#set-layout-padrao').addEventListener('change', (e) => { state.settings.layoutPadrao = e.target.value; schedulePersist(); });
@@ -1670,7 +1811,74 @@ $('#set-import').addEventListener('click', async () => {
     });
   } catch (err) { console.error(err); }
 });
-$('#set-check-updates').addEventListener('click', () => alert(t('updatesText')));
+function renderUpdateResult(html, stateClass) {
+  const box = $('#update-result-box');
+  box.className = `update-result ${stateClass}`;
+  box.innerHTML = html;
+  const openBtn = box.querySelector('.update-open-github');
+  if (openBtn) openBtn.addEventListener('click', () => window.nativeAPI.openExternal(openBtn.dataset.url));
+}
+$('#set-check-updates').addEventListener('click', async () => {
+  const btn = $('#set-check-updates');
+  btn.disabled = true;
+  renderUpdateResult(`<div class="update-result-row"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg> ${escapeHtml(t('checkingUpdates'))}</div>`, 'state-checking');
+  try {
+    const result = await window.nativeAPI.checkForUpdates();
+    if (!result.ok) {
+      const msg = result.error === 'not-configured' ? t('updateNotConfigured') : t('updateCheckFailed');
+      renderUpdateResult(`<div class="update-result-row">${escapeHtml(msg)}</div>`, 'state-error');
+    } else if (result.upToDate === true) {
+      renderUpdateResult(`<div class="update-result-row"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> ${escapeHtml(t('updatesText'))}</div>`, 'state-ok');
+    } else if (result.upToDate === false) {
+      renderUpdateResult(`
+        <div class="update-result-row">${escapeHtml(t('updateAvailableBody', { sha: result.latestSha.slice(0, 7) }))}</div>
+        <button class="ghost-btn update-open-github" type="button" data-url="${escapeHtml(result.repoUrl)}">${escapeHtml(t('updateToastOpen'))}</button>
+      `, 'state-update');
+    } else {
+      renderUpdateResult(`
+        <div class="update-result-row">${escapeHtml(t('updateUnknownBody', { sha: result.latestSha.slice(0, 7) }))}</div>
+        <button class="ghost-btn update-open-github" type="button" data-url="${escapeHtml(result.repoUrl)}">${escapeHtml(t('updateToastOpen'))}</button>
+      `, 'state-update');
+    }
+  } catch (err) {
+    console.error(err);
+    renderUpdateResult(`<div class="update-result-row">${escapeHtml(t('updateCheckFailed'))}</div>`, 'state-error');
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Verificação silenciosa ao abrir o app — se houver atualização, mostra um
+// toast discreto num canto da tela (some sozinho em 1 minuto, ou fecha na hora
+// pelo botão X). Erros/"não configurado" não incomodam o usuário no início.
+// ---------------------------------------------------------------------------
+let updateToastTimer = null;
+function showUpdateToast(sha, repoUrl) {
+  const toast = $('#update-toast');
+  $('#update-toast-text').textContent = t('updateToastBody', { sha: sha.slice(0, 7) });
+  $('#update-toast-open').onclick = () => window.nativeAPI.openExternal(repoUrl);
+  toast.classList.remove('hidden', 'closing');
+  clearTimeout(updateToastTimer);
+  updateToastTimer = setTimeout(closeUpdateToast, 60000); // 1 minuto
+}
+function closeUpdateToast() {
+  const toast = $('#update-toast');
+  if (toast.classList.contains('hidden')) return;
+  clearTimeout(updateToastTimer);
+  toast.classList.add('closing');
+  setTimeout(() => toast.classList.add('hidden'), 200);
+}
+$('#update-toast-close').addEventListener('click', closeUpdateToast);
+
+(async function checkForUpdatesOnStartup() {
+  try {
+    const result = await window.nativeAPI.checkForUpdates();
+    if (result.ok && result.upToDate === false) {
+      showUpdateToast(result.latestSha, result.repoUrl);
+    }
+  } catch (err) { /* silencioso — não incomoda o usuário com erro de rede ao abrir o app */ }
+})();
 
 // ---------------------------------------------------------------------------
 // Scripts / Extras — userscripts estilo Tampermonkey, com alvo por workspace/conta
@@ -1826,6 +2034,61 @@ function openScriptsModal() {
 $('#open-scripts-btn').addEventListener('click', openScriptsModal);
 $('#scripts-close').addEventListener('click', () => $('#scripts-overlay').classList.add('hidden'));
 $('#scripts-overlay').addEventListener('click', (e) => { if (e.target === $('#scripts-overlay')) $('#scripts-overlay').classList.add('hidden'); });
+
+// ---------------------------------------------------------------------------
+// Tooltip customizado — substitui o balão nativo do sistema (lento e feio)
+// por um bem mais rápido de aparecer e no estilo visual do app. Qualquer
+// elemento com atributo data-tooltip="texto" ganha o tooltip automaticamente.
+// ---------------------------------------------------------------------------
+const TOOLTIP_DELAY_MS = 150;
+let tooltipEl = null;
+let tooltipTimer = null;
+let currentTooltipTarget = null;
+
+function positionTooltip(target) {
+  const rect = target.getBoundingClientRect();
+  const tRect = tooltipEl.getBoundingClientRect();
+  let left = rect.left + rect.width / 2 - tRect.width / 2;
+  left = Math.max(6, Math.min(left, window.innerWidth - tRect.width - 6));
+  let top = rect.bottom + 8;
+  if (top + tRect.height > window.innerHeight - 6) top = rect.top - tRect.height - 8;
+  tooltipEl.style.left = `${left}px`;
+  tooltipEl.style.top = `${top}px`;
+}
+function showTooltip(target) {
+  const text = target.dataset.tooltip;
+  if (!text) return;
+  tooltipEl.textContent = text;
+  tooltipEl.classList.remove('hidden');
+  positionTooltip(target);
+  requestAnimationFrame(() => tooltipEl.classList.add('visible'));
+}
+function hideTooltip() {
+  if (!tooltipEl) return;
+  tooltipEl.classList.remove('visible');
+  currentTooltipTarget = null;
+  clearTimeout(tooltipTimer);
+}
+function initTooltipSystem() {
+  tooltipEl = $('#app-tooltip');
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target.closest('[data-tooltip]');
+    if (!target || target === currentTooltipTarget) return;
+    currentTooltipTarget = target;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => showTooltip(target), TOOLTIP_DELAY_MS);
+  });
+  document.addEventListener('mouseout', (e) => {
+    const target = e.target.closest('[data-tooltip]');
+    if (!target || target !== currentTooltipTarget) return;
+    if (e.relatedTarget && target.contains(e.relatedTarget)) return;
+    hideTooltip();
+  });
+  document.addEventListener('mousedown', hideTooltip);
+  document.addEventListener('wheel', hideTooltip, { passive: true });
+  window.addEventListener('blur', hideTooltip);
+}
+initTooltipSystem();
 
 // ---------------------------------------------------------------------------
 // Start

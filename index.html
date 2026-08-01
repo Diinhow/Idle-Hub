@@ -20,16 +20,16 @@
           <span class="brand-dot" style="display:none;"></span>
         </span>
         <span class="brand-name">Idle <b>Hub</b></span>
-        <button id="donate-btn" title="Apoiar o desenvolvimento do projeto">
+        <button id="donate-btn" data-tooltip="Apoiar o desenvolvimento do projeto">
           <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
           <span>Doar</span>
         </button>
       </div>
       <div class="titlebar-drag"></div>
       <div class="titlebar-controls">
-        <button id="btn-min" title="Minimizar"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <button id="btn-max" title="Maximizar"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg></button>
-        <button id="btn-close" title="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button id="btn-min" data-tooltip="Minimizar"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <button id="btn-max" data-tooltip="Maximizar"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg></button>
+        <button id="btn-close" data-tooltip="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
     </div>
 
@@ -38,17 +38,17 @@
       <!-- Coluna estreita: lista de workspaces -->
       <div id="workspace-rail">
         <div id="workspace-icons"></div>
-        <button id="add-workspace-btn" title="Novo workspace">
+        <button id="add-workspace-btn" data-tooltip="Novo workspace">
           <svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
         </button>
-        <button id="open-scripts-btn" title="Scripts / Extras">
+        <button id="open-scripts-btn" data-tooltip="Scripts / Extras">
           <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         </button>
       </div>
 
       <!-- Tira fina exibida quando a barra lateral está recolhida -->
       <div id="sidebar-collapsed-strip" class="hidden">
-        <button id="expand-sidebar-btn" title="Mostrar barra lateral">
+        <button id="expand-sidebar-btn" data-tooltip="Mostrar barra lateral">
           <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
         </button>
       </div>
@@ -58,10 +58,10 @@
         <div class="sidebar-header">
           <span id="workspace-icon-badge"></span>
           <span id="workspace-title" class="blur-target">Principal</span>
-          <button id="rename-workspace-btn" title="Editar workspace" data-i18n-title="editWorkspace">
+          <button id="rename-workspace-btn" data-tooltip="Editar workspace" data-i18n-data-tooltip="editWorkspace">
             <svg viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
           </button>
-          <button id="collapse-sidebar-btn" title="Recolher barra lateral" data-i18n-title="collapseSidebar">
+          <button id="collapse-sidebar-btn" data-tooltip="Recolher barra lateral" data-i18n-data-tooltip="collapseSidebar">
             <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/><path d="M6 3v18"/></svg>
           </button>
         </div>
@@ -73,7 +73,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
             <span data-i18n="addAccount">Adicionar conta</span>
           </button>
-          <button id="close-all-btn" title="Fechar todas as contas abertas" data-i18n-title="closeAllTitle">
+          <button id="close-all-btn" data-tooltip="Fechar todas as contas abertas" data-i18n-data-tooltip="closeAllTitle">
             <svg viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg>
           </button>
         </div>
@@ -82,16 +82,16 @@
       <!-- Área principal -->
       <div id="main">
         <div id="toolbar">
-          <button id="nav-back" class="btn-icon" title="Voltar" data-i18n-title="back" disabled>
+          <button id="nav-back" class="btn-icon" data-tooltip="Voltar" data-i18n-data-tooltip="back" disabled>
             <svg viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
           </button>
-          <button id="nav-forward" class="btn-icon" title="Avançar" data-i18n-title="forward" disabled>
+          <button id="nav-forward" class="btn-icon" data-tooltip="Avançar" data-i18n-data-tooltip="forward" disabled>
             <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </button>
-          <button id="nav-reload" class="btn-icon" title="Recarregar (Ctrl+R)" data-i18n-title="reloadTitle">
+          <button id="nav-reload" class="btn-icon" data-tooltip="Recarregar (Ctrl+R)" data-i18n-data-tooltip="reloadTitle">
             <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
           </button>
-          <button id="nav-home" class="btn-icon" title="Ir para a URL padrão do workspace" data-i18n-title="homeTitle">
+          <button id="nav-home" class="btn-icon" data-tooltip="Ir para a URL padrão do workspace" data-i18n-data-tooltip="homeTitle">
             <svg viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           </button>
 
@@ -100,31 +100,31 @@
           <div id="address-wrap">
             <svg class="address-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
             <input id="address-bar" class="blur-target" type="text" placeholder="Digite uma URL e pressione Enter… (Ctrl+L)" data-i18n-ph="addressPh" spellcheck="false" />
-            <button id="nav-go-all" title="Abrir esta URL em todas as contas abertas (deste workspace)" data-i18n-title="goAllTitle">
+            <button id="nav-go-all" data-tooltip="Abrir esta URL em todas as contas abertas (deste workspace)" data-i18n-data-tooltip="goAllTitle">
               <svg viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
             </button>
           </div>
 
           <div class="toolbar-sep"></div>
 
-          <button id="topbar-mute" class="btn-icon" title="Silenciar conta ativa (Ctrl+M)" data-i18n-title="muteTitle">
+          <button id="topbar-mute" class="btn-icon" data-tooltip="Silenciar conta ativa (Ctrl+M)" data-i18n-data-tooltip="muteTitle">
             <svg viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
           </button>
 
           <div id="zoom-wrap">
-            <button id="topbar-zoom" class="btn-icon" title="Zoom da conta ativa" data-i18n-title="zoomTitle">
+            <button id="topbar-zoom" class="btn-icon" data-tooltip="Zoom da conta ativa" data-i18n-data-tooltip="zoomTitle">
               <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
               <span id="zoom-label">100%</span>
             </button>
             <div id="zoom-popover" class="hidden">
-              <button id="zoom-out" title="Diminuir (Ctrl+-)">−</button>
-              <button id="zoom-reset" title="Restaurar 100% (Ctrl+0)">100%</button>
-              <button id="zoom-in" title="Aumentar (Ctrl++)">+</button>
+              <button id="zoom-out" data-tooltip="Diminuir (Ctrl+-)">−</button>
+              <button id="zoom-reset" data-tooltip="Restaurar 100% (Ctrl+0)">100%</button>
+              <button id="zoom-in" data-tooltip="Aumentar (Ctrl++)">+</button>
             </div>
           </div>
 
           <div id="downloads-wrap">
-            <button id="topbar-downloads" class="btn-icon" title="Downloads" data-i18n-title="downloadsTitle">
+            <button id="topbar-downloads" class="btn-icon" data-tooltip="Downloads" data-i18n-data-tooltip="downloadsTitle">
               <svg viewBox="0 0 24 24"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>
             </button>
             <div id="downloads-popover" class="hidden">
@@ -133,19 +133,22 @@
             </div>
           </div>
 
-          <button id="topbar-presentation" class="btn-icon" title="Modo apresentação/gravação (Ctrl+Shift+P)" data-i18n-title="presentationTitle">
+          <button id="topbar-eco" class="btn-icon" data-tooltip="Modo Eco — reduz uso de CPU (Ctrl+Shift+E)" data-i18n-data-tooltip="ecoModeTitle">
+            <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          </button>
+          <button id="topbar-presentation" class="btn-icon" data-tooltip="Modo apresentação/gravação (Ctrl+Shift+P)" data-i18n-data-tooltip="presentationTitle">
             <svg viewBox="0 0 24 24"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
           </button>
-          <button id="topbar-cleanmode" class="btn-icon" title="Modo tela limpa (Ctrl+Shift+Z)" data-i18n-title="cleanModeTitle">
+          <button id="topbar-cleanmode" class="btn-icon" data-tooltip="Modo tela limpa (Ctrl+Shift+Z)" data-i18n-data-tooltip="cleanModeTitle">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
           </button>
-          <button id="topbar-fullscreen" class="btn-icon" title="Tela cheia (F11)" data-i18n-title="fullscreenTitle">
+          <button id="topbar-fullscreen" class="btn-icon" data-tooltip="Tela cheia (F11)" data-i18n-data-tooltip="fullscreenTitle">
             <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
           </button>
-          <button id="topbar-settings" class="btn-icon" title="Configurações (Ctrl+,)" data-i18n-title="settingsTitle">
+          <button id="topbar-settings" class="btn-icon" data-tooltip="Configurações (Ctrl+,)" data-i18n-data-tooltip="settingsTitle">
             <svg viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
-          <button id="topbar-help" class="btn-icon" title="Ajuda / Atalhos (F1)" data-i18n-title="helpTitle">
+          <button id="topbar-help" class="btn-icon" data-tooltip="Ajuda / Atalhos (F1)" data-i18n-data-tooltip="helpTitle">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
           </button>
         </div>
@@ -173,7 +176,7 @@
       <span class="spacer"></span>
       <span id="status-cpu">CPU —</span>
       <span id="status-ram">RAM —</span>
-      <span id="status-version">v1.2.2</span>
+      <span id="status-version">v1.2.3</span>
     </div>
 
   </div>
@@ -198,7 +201,7 @@
     <div id="ws-edit-box">
       <div class="ws-edit-head">
         <h3 data-i18n="editWorkspace">Editar workspace</h3>
-        <button id="ws-edit-close" title="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button id="ws-edit-close" data-tooltip="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
 
       <label class="ws-edit-label" data-i18n="nameLabel">NOME</label>
@@ -227,14 +230,11 @@
         </div>
       </div>
 
-      <div id="ws-edit-reset-dividers-wrap" class="ws-edit-reset-wrap" style="display:none;">
-        <button id="ws-edit-reset-dividers" class="ghost-btn" type="button">
+      <div class="modal-actions modal-actions-split">
+        <button id="ws-edit-reset-dividers" class="ghost-btn hidden" type="button">
           <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
           <span data-i18n="resetDividersBtn">Redefinir tamanho das divisórias</span>
         </button>
-      </div>
-
-      <div class="modal-actions">
         <button id="ws-edit-save" data-i18n="save">Salvar</button>
       </div>
     </div>
@@ -267,7 +267,7 @@
     <div id="confirm-box">
       <div class="confirm-head">
         <h3 id="confirm-title">Confirmar ação</h3>
-        <button id="confirm-close" title="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button id="confirm-close" data-tooltip="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
       <p id="confirm-body">Tem certeza?</p>
       <div class="modal-actions">
@@ -282,7 +282,7 @@
     <div id="shortcuts-box">
       <div class="shortcuts-head">
         <h3 data-i18n="shortcutsTitle">Atalhos de teclado</h3>
-        <button id="shortcuts-close" title="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button id="shortcuts-close" data-tooltip="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
       <div class="shortcuts-list" id="shortcuts-list"></div>
       <div class="shortcuts-foot">
@@ -299,7 +299,7 @@
     <div id="settings-box">
       <div class="settings-head">
         <h3 data-i18n="settingsTitleModal">Configurações</h3>
-        <button id="settings-close" title="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button id="settings-close" data-tooltip="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
       <div class="settings-body">
         <div class="settings-tabs">
@@ -347,6 +347,13 @@
             <div class="settings-row">
               <span data-i18n="reopenLast">Reabrir o último workspace ao iniciar</span>
               <label class="switch"><input type="checkbox" id="set-reopen-last"><span class="switch-track"></span></label>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div data-i18n="ecoModeLabel">Modo Eco</div>
+                <div class="settings-subtext" data-i18n="ecoModeDesc">Reduz o uso de CPU da conta em foco deixando as animações mais lentas — o progresso do jogo não é afetado, só a atualização visual (Ctrl+Shift+E)</div>
+              </div>
+              <label class="switch"><input type="checkbox" id="set-eco-mode"><span class="switch-track"></span></label>
             </div>
             <div class="settings-row">
               <div>
@@ -426,6 +433,7 @@
               <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
               <span data-i18n="checkUpdates">Verificar atualizações</span>
             </button>
+            <div id="update-result-box" class="update-result hidden"></div>
           </div>
 
           <div class="settings-panel" data-panel="sobre">
@@ -434,6 +442,7 @@
             <div class="settings-info-row"><span data-i18n="versionLabel">Versão</span><span id="about-version">—</span></div>
             <div class="settings-info-row"><span>Electron</span><span id="about-electron">—</span></div>
             <div class="settings-info-row"><span>Chromium</span><span id="about-chrome">—</span></div>
+            <div class="settings-info-row" id="about-commit-row" style="display:none;"><span data-i18n="commitLabel">Commit</span><span id="about-commit">—</span></div>
           </div>
         </div>
       </div>
@@ -445,7 +454,7 @@
     <div id="scripts-box">
       <div class="scripts-head">
         <h3><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Scripts / Extras</h3>
-        <button id="scripts-close" title="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button id="scripts-close" data-tooltip="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
       <div class="scripts-body">
         <div class="scripts-warning">
@@ -481,6 +490,25 @@
       </div>
     </div>
   </div>
+
+  <!-- Notificação de atualização disponível (aparece ao abrir o app, some sozinha) -->
+  <div id="update-toast" class="hidden">
+    <div class="update-toast-icon">
+      <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+    </div>
+    <div class="update-toast-body">
+      <div class="update-toast-title" data-i18n="updateToastTitle">Atualização disponível</div>
+      <div class="update-toast-text" id="update-toast-text"></div>
+      <div class="update-toast-actions">
+        <button id="update-toast-open" class="ghost-btn"><span data-i18n="updateToastOpen">Abrir no GitHub</span></button>
+      </div>
+    </div>
+    <button id="update-toast-close" data-tooltip="Fechar">
+      <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+
+  <div id="app-tooltip" class="hidden"></div>
 
   <script src="renderer.js"></script>
 </body>

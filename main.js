@@ -1,6 +1,11 @@
 const { app, BrowserWindow, ipcMain, webContents, session, Menu, dialog, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
+
+let versionInfo = { commit: '', repoOwner: '', repoName: '', repoBranch: 'main' };
+try { versionInfo = { ...versionInfo, ...require('./version.js') }; }
+catch (err) { console.error('version.js não encontrado/ inválido:', err); }
 
 let mainWindow;
 const STATE_FILE = () => path.join(app.getPath('userData'), 'state.json');
@@ -107,6 +112,7 @@ ipcMain.handle('get-versions', () => ({
   app: app.getVersion(),
   electron: process.versions.electron,
   chrome: process.versions.chrome,
+  commit: (versionInfo.commit && !versionInfo.commit.includes('COLE_AQUI')) ? versionInfo.commit.slice(0, 7) : null,
 }));
 
 ipcMain.handle('get-login-item', () => app.getLoginItemSettings().openAtLogin);
@@ -219,4 +225,41 @@ ipcMain.handle('is-fullscreen', () => (mainWindow ? mainWindow.isFullScreen() : 
 
 ipcMain.handle('open-external', (event, url) => {
   if (/^https?:\/\//i.test(url)) shell.openExternal(url);
+});
+
+function fetchJson(url) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(url, {
+      headers: { 'User-Agent': 'idle-hub-update-check', Accept: 'application/vnd.github+json' },
+    }, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)); } catch (err) { reject(err); }
+      });
+    });
+    req.on('error', reject);
+    req.setTimeout(10000, () => req.destroy(new Error('timeout')));
+  });
+}
+
+ipcMain.handle('check-for-updates', async () => {
+  const { commit, repoOwner, repoName, repoBranch } = versionInfo;
+  if (!repoOwner || !repoName || repoOwner.includes('SEU_') || repoName.includes('SEU_')) {
+    return { ok: false, error: 'not-configured' };
+  }
+  try {
+    const data = await fetchJson(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${repoBranch || 'main'}`);
+    if (!data || !data.sha) return { ok: false, error: data && data.message ? data.message : 'github-error' };
+    const hasLocalCommit = commit && !commit.includes('COLE_AQUI');
+    return {
+      ok: true,
+      upToDate: hasLocalCommit ? data.sha === commit : null, // null = ainda não configurou o commit local pra comparar
+      latestSha: data.sha,
+      currentSha: hasLocalCommit ? commit : null,
+      repoUrl: `https://github.com/${repoOwner}/${repoName}`,
+    };
+  } catch (err) {
+    return { ok: false, error: String(err) };
+  }
 });
