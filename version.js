@@ -6,7 +6,7 @@
 // um aviso.
 // ============================================================
 module.exports = {
-  commit: '2c602735a610ea3ceb1a03d2742a7b849e020af9',
+  commit: 'aa6fbbd3330feaa2a69d70146150e95a8cf6c82e',
   repoOwner: 'Diinhow',
   repoName: 'Idle-Hub',
   repoBranch: 'main',
