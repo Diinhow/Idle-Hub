@@ -58,7 +58,8 @@ Ideal para quem gerencia múltiplos perfis em jogos, redes sociais, e‑commerce
 | 💾 | **Persistência Local** | Tudo é salvo automaticamente em `state.json`. Ao reabrir, o aplicativo restaura exatamente onde você parou. |
 | 🌐 | **Export/Import** | Exporte toda a configuração de workspaces e contas para um arquivo `.json` e importe em outra máquina. |
 | ⌨️ | **Atalhos de Teclado** | Navegue rapidamente entre painéis, recarregue, silencie e muito mais com atalhos intuitivos. |
-| 🎨 | **Temas Claro/Escuro** | Escolha o tema que melhor se adapta à sua preferência visual. |
+| 🎨 | **Temas Escuro/Neon** | Escolha o tema que melhor se adapta à sua preferência visual. |
+| 🐌 | **Modo Eco** | que segura o uso de CPU sem atrapalhar o progresso, troca o requestAnimationFrame por uma versão mais lenta. |
 
 ---
 

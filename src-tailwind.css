@@ -119,7 +119,7 @@
 
   /* ---------- Workspace rail ---------- */
   #workspace-rail {
-    width: 56px; background: #090e14; border-right: 1px solid #223247;
+    width: 56px; background: #0c131d; border-right: 1px solid #223247;
     display: flex; flex-direction: column; align-items: center; padding: 10px 0; flex-shrink: 0;
   }
   #workspace-icons { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; width: 100%; align-items: center; }
@@ -505,6 +505,16 @@
   /* ---------- Reset das divisórias (dentro de Editar workspace) ---------- */
   .ghost-btn.hidden { display: none; }
 
+  /* ---------- Tooltip customizado (substitui o nativo do sistema, mais rápido e bonito) ---------- */
+  #app-tooltip {
+    position: fixed; z-index: 9999; background: #0c131d; border: 1px solid #223247; color: #fff;
+    font-size: 11.5px; line-height: 1.3; padding: 5px 9px; border-radius: 7px; pointer-events: none;
+    max-width: 260px; white-space: nowrap; box-shadow: 0 6px 18px rgba(0,0,0,.45);
+    opacity: 0; transform: translateY(2px); transition: opacity .08s, transform .08s;
+  }
+  #app-tooltip.visible { opacity: 1; transform: translateY(0); }
+  #app-tooltip.hidden { display: none; }
+
   /* ---------- Resultado inline da verificação de atualizações ---------- */
   .update-result { margin-top: 14px; padding: 14px 16px; border-radius: 10px; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 10px; }
   .update-result.hidden { display: none; }
@@ -537,6 +547,7 @@
   .update-toast-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
   .update-toast-text { font-size: 12px; color: #9fa9b9; line-height: 1.5; margin-bottom: 10px; }
   .update-toast-actions .ghost-btn { padding: 6px 12px; font-size: 12px; }
+  .update-toast-actions .ghost-btn.hidden { display: none; }
   #update-toast-close {
     background: transparent; border: none; color: #6a6a8a; width: 22px; height: 22px; border-radius: 6px;
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -544,12 +555,225 @@
   #update-toast-close svg { width: 13px; height: 13px; }
   #update-toast-close:hover { background: #223247; color: #fff; }
 
-  /* ---------- Tooltip customizado (substitui o nativo do sistema, mais rápido e bonito) ---------- */
-  #app-tooltip {
-    position: fixed; z-index: 9999; background: #0c131d; border: 1px solid #223247; color: #fff;
-    font-size: 11.5px; line-height: 1.3; padding: 5px 9px; border-radius: 7px; pointer-events: none;
-    max-width: 260px; white-space: nowrap; box-shadow: 0 6px 18px rgba(0,0,0,.45);
-    opacity: 0; transform: translateY(2px); transition: opacity .08s, transform .08s;
-  }
-  #app-tooltip.visible { opacity: 1; transform: translateY(0); }
-  #app-tooltip.hidden { display: none; }
+/* =====================================================================
+   TEMA NEON — dourado/ciano/lima/violeta com fundo aurora e vidro fosco
+   (menos translúcido que a referência original, a pedido: superfícies
+   ficam bem mais opacas, só um blur sutil por trás pra dar profundidade)
+   ===================================================================== */
+body.theme-neon, body.theme-neon input, body.theme-neon select, body.theme-neon textarea, body.theme-neon button {
+  font-family: 'Outfit', 'Segoe UI', Arial, sans-serif;
+}
+body.theme-neon #address-bar, body.theme-neon #statusbar, body.theme-neon #zoom-label,
+body.theme-neon .downloads-head, body.theme-neon .download-item, body.theme-neon .download-status,
+body.theme-neon kbd, body.theme-neon #status-version, body.theme-neon #script-code {
+  font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+}
+
+body.theme-neon { background: #0b0e15; }
+body.theme-neon::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(60rem 40rem at 12% -10%, rgba(245,199,74,.16), transparent 60%),
+    radial-gradient(55rem 38rem at 95% 8%, rgba(89,231,214,.12), transparent 62%),
+    radial-gradient(70rem 50rem at 50% 110%, rgba(180,144,255,.12), transparent 65%);
+}
+body.theme-neon #app { position: relative; z-index: 1; }
+body.theme-neon #grid { background: transparent; }
+
+body.theme-neon ::-webkit-scrollbar-thumb { background: rgba(245,199,74,.55); }
+body.theme-neon ::-webkit-scrollbar-thumb:hover { background: rgba(245,199,74,.8); }
+body.theme-neon ::selection { background: rgba(245,199,74,.4); }
+
+/* Titlebar / rail / sidebar / toolbar / statusbar — vidro fosco, bem menos ver-através */
+body.theme-neon #titlebar { background: rgba(22,27,38,.92); border-bottom: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px) saturate(150%); }
+body.theme-neon .brand-dot { background: #f5c74a; }
+body.theme-neon .brand-name b { color: #f5c74a; }
+body.theme-neon .titlebar-controls button { color: #c3cadd; }
+body.theme-neon .titlebar-controls button:hover { background: rgba(255,255,255,.08); }
+body.theme-neon #btn-close:hover { background: #ff6070; }
+body.theme-neon #donate-btn { border: 1px solid rgba(255,96,112,.45); background: rgba(255,96,112,.14); color: #ffb3ba; }
+body.theme-neon #donate-btn svg { color: #ff6070; }
+body.theme-neon #donate-btn:hover { background: rgba(255,96,112,.24); color: #fff; }
+
+body.theme-neon #workspace-rail { background: rgba(22,27,38,.92); border-right: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px) saturate(150%); }
+body.theme-neon .ws-icon { background: rgba(30,36,49,.85); color: var(--ws-color,#9aa6b8); }
+body.theme-neon .ws-icon:hover { border-color: rgba(255,255,255,.14); }
+body.theme-neon .ws-icon.active { background: var(--ws-color); color: #0b0e15; border-color: var(--ws-color); box-shadow: 0 6px 18px -6px rgba(0,0,0,.5); }
+body.theme-neon .ws-icon .ws-badge { border: 1px solid rgba(255,255,255,.14); background: #161b26; color: #9aa6b8; }
+body.theme-neon .ws-icon.active .ws-badge { background: #0b0e15; color: var(--ws-color); border-color: rgba(255,255,255,.1); }
+body.theme-neon #add-workspace-btn, body.theme-neon #open-scripts-btn { border-color: rgba(255,255,255,.18); color: #9aa6b8; }
+body.theme-neon #add-workspace-btn:hover { border-color: #f5c74a; color: #f5c74a; }
+body.theme-neon #open-scripts-btn:hover { background: rgba(30,36,49,.85); color: #59e7d6; border-color: #59e7d6; }
+
+body.theme-neon #sidebar-collapsed-strip { background: rgba(22,27,38,.92); border-right: 1px solid rgba(255,255,255,.09); }
+body.theme-neon #expand-sidebar-btn { color: #9aa6b8; }
+body.theme-neon #expand-sidebar-btn:hover { color: #f5c74a; background: rgba(255,255,255,.08); }
+
+body.theme-neon #sidebar { background: rgba(22,27,38,.92); border-right: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px) saturate(150%); }
+body.theme-neon .sidebar-header { border-bottom: 1px solid rgba(255,255,255,.09); }
+body.theme-neon #workspace-title { color: #f2f5fa; }
+body.theme-neon .sidebar-header button { color: #9aa6b8; }
+body.theme-neon .sidebar-header button:hover { background: rgba(255,255,255,.08); color: #f5c74a; }
+body.theme-neon .account-item { background: rgba(22,27,38,.8); border: 1px solid transparent; }
+body.theme-neon .account-item:hover { border-color: rgba(255,255,255,.14); background: rgba(30,36,49,.85); }
+body.theme-neon .account-item.active { border-color: #f5c74a; background: rgba(245,199,74,.1); }
+body.theme-neon .account-item .row2 { color: #6ff0b0; }
+body.theme-neon .account-item .row3 { color: #9aa6b8; }
+body.theme-neon .sidebar-footer { border-top: 1px solid rgba(255,255,255,.09); }
+body.theme-neon #add-account-btn { background: #f5c74a; color: #0b0e15; }
+body.theme-neon #add-account-btn:hover { background: #ffe082; }
+body.theme-neon #close-all-btn { border: 1px solid rgba(255,255,255,.18); color: #9aa6b8; }
+body.theme-neon #close-all-btn:hover { border-color: #ff6070; color: #ff6070; }
+
+body.theme-neon #toolbar { background: rgba(22,27,38,.92); border-bottom: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px) saturate(150%); }
+body.theme-neon .btn-icon { color: #9aa6b8; }
+body.theme-neon .btn-icon:hover { background: rgba(255,255,255,.08); color: #f2f5fa; }
+body.theme-neon .btn-icon.active-state { color: #f5c74a; }
+body.theme-neon .toolbar-sep { background: rgba(255,255,255,.09); }
+body.theme-neon #address-wrap { border: 1px solid rgba(255,255,255,.14); background: rgba(30,36,49,.85); }
+body.theme-neon #address-wrap:focus-within { border-color: #f5c74a; box-shadow: 0 0 0 3px rgba(245,199,74,.18); }
+body.theme-neon .address-icon { color: #9aa6b8; }
+body.theme-neon #address-bar { color: #f2f5fa; }
+body.theme-neon #address-bar::placeholder { color: #9aa6b8; opacity: .6; }
+body.theme-neon #nav-go-all:hover { color: #f5c74a; }
+body.theme-neon #zoom-popover { background: rgba(22,27,38,.97); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 12px 32px rgba(0,0,0,.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+body.theme-neon #zoom-popover button { background: rgba(30,36,49,.9); color: #f2f5fa; }
+body.theme-neon #zoom-popover button:hover { background: rgba(255,255,255,.12); color: #f5c74a; }
+body.theme-neon #downloads-popover { background: rgba(22,27,38,.97); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 12px 32px rgba(0,0,0,.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+body.theme-neon .downloads-head, body.theme-neon .downloads-empty, body.theme-neon .download-status { color: #9aa6b8; }
+body.theme-neon .download-item { color: #f2f5fa; }
+body.theme-neon .download-item:hover { background: rgba(255,255,255,.07); }
+body.theme-neon .download-status.completed { color: #6ff0b0; }
+body.theme-neon .download-status.cancelled, body.theme-neon .download-status.interrupted { color: #ff6070; }
+
+body.theme-neon .account-card { background: rgba(22,27,38,.88); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 8px 24px -14px rgba(0,0,0,.6); }
+body.theme-neon .account-card:hover { border-color: rgba(255,255,255,.18); }
+body.theme-neon .account-card.active-card { border-color: #f5c74a; box-shadow: 0 0 0 1px rgba(245,199,74,.25), 0 8px 24px -14px rgba(0,0,0,.6); }
+body.theme-neon .card-header { background: rgba(30,36,49,.95); border-bottom: 1px solid rgba(255,255,255,.08); }
+body.theme-neon .card-header .name { color: #f2f5fa; }
+body.theme-neon .card-header .url { color: #9aa6b8; }
+body.theme-neon .card-header button { color: #9aa6b8; }
+body.theme-neon .card-header button:hover { background: rgba(255,255,255,.1); color: #f2f5fa; }
+body.theme-neon .card-header button.close:hover { background: #ff6070; }
+body.theme-neon .empty-state-card { background: rgba(22,27,38,.94); border: 1px solid rgba(255,255,255,.14); border-radius: 20px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 24px 60px -28px rgba(0,0,0,.85); }
+body.theme-neon .empty-state-card h3 { color: #f2f5fa; }
+body.theme-neon .empty-state-card p { color: #9aa6b8; }
+body.theme-neon .empty-state-card button { background: #f5c74a; color: #0b0e15; }
+body.theme-neon .empty-state-card button:hover { background: #ffe082; }
+
+body.theme-neon #statusbar { background: rgba(22,27,38,.92); border-top: 1px solid rgba(255,255,255,.09); color: #9aa6b8; backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px) saturate(150%); }
+body.theme-neon #status-conn { color: #6ff0b0; }
+
+body.theme-neon .switch-track { background: rgba(255,255,255,.18); }
+body.theme-neon .switch input:checked + .switch-track { background: #f5c74a; }
+
+/* Modais — praticamente opacos, cantos bem arredondados */
+body.theme-neon #modal-overlay, body.theme-neon #ws-edit-overlay, body.theme-neon #confirm-overlay,
+body.theme-neon #shortcuts-overlay, body.theme-neon #settings-overlay, body.theme-neon #scripts-overlay {
+  background: rgba(5,7,11,.65); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+body.theme-neon #modal-box, body.theme-neon #ws-edit-box, body.theme-neon #confirm-box,
+body.theme-neon #shortcuts-box, body.theme-neon #settings-box, body.theme-neon #scripts-box {
+  background: rgba(22,27,38,.97); border: 1px solid rgba(255,255,255,.14); border-radius: 22px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+body.theme-neon #modal-box h3 { color: #f5c74a; }
+body.theme-neon #modal-box label { color: #9aa6b8; }
+body.theme-neon #modal-box input { background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.14); color: #f2f5fa; }
+body.theme-neon #modal-box input:focus { border-color: #f5c74a; outline: none; box-shadow: 0 0 0 3px rgba(245,199,74,.18); }
+body.theme-neon #modal-cancel { background: rgba(30,36,49,.9); color: #9aa6b8; border: 1px solid rgba(255,255,255,.14); }
+body.theme-neon #modal-cancel:hover { background: rgba(255,255,255,.1); color: #f2f5fa; }
+body.theme-neon #modal-confirm { background: #f5c74a; color: #0b0e15; }
+body.theme-neon #modal-confirm:hover { background: #ffe082; }
+
+body.theme-neon .ws-edit-head h3, body.theme-neon .shortcuts-head h3, body.theme-neon .settings-head h3,
+body.theme-neon .confirm-head h3, body.theme-neon .scripts-head h3 { color: #f2f5fa; }
+body.theme-neon .scripts-head h3 svg { color: #59e7d6; }
+body.theme-neon #ws-edit-close, body.theme-neon #shortcuts-close, body.theme-neon #settings-close,
+body.theme-neon #confirm-close, body.theme-neon #scripts-close { color: #9aa6b8; }
+body.theme-neon #ws-edit-close:hover, body.theme-neon #shortcuts-close:hover, body.theme-neon #settings-close:hover,
+body.theme-neon #confirm-close:hover, body.theme-neon #scripts-close:hover { background: rgba(255,255,255,.1); color: #f2f5fa; }
+body.theme-neon .ws-edit-label { color: #9aa6b8; }
+body.theme-neon #ws-edit-name, body.theme-neon #ws-edit-url, body.theme-neon #ws-edit-layout {
+  background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.14); color: #f2f5fa;
+}
+body.theme-neon #ws-edit-name:focus, body.theme-neon #ws-edit-url:focus { border-color: #f5c74a; outline: none; box-shadow: 0 0 0 3px rgba(245,199,74,.18); }
+body.theme-neon .ws-edit-colors button.selected { border-color: #fff; box-shadow: 0 0 0 2px #161b26, 0 0 0 4px currentColor; }
+body.theme-neon .ws-edit-icons button { background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.14); color: #9aa6b8; }
+body.theme-neon .ws-edit-icons button:hover { border-color: rgba(255,255,255,.24); }
+body.theme-neon .ws-edit-icons button.selected { border-color: #f5c74a; background: rgba(245,199,74,.14); color: #f5c74a; }
+body.theme-neon #ws-edit-save { background: #f5c74a; color: #0b0e15; }
+body.theme-neon #ws-edit-save:hover { background: #ffe082; }
+
+body.theme-neon #context-menu, body.theme-neon #ws-context-menu {
+  background: rgba(22,27,38,.97); border: 1px solid rgba(255,255,255,.14); border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+body.theme-neon #context-menu button, body.theme-neon #ws-context-menu button { color: #f2f5fa; }
+body.theme-neon #context-menu button:hover, body.theme-neon #ws-context-menu button:hover { background: rgba(255,255,255,.08); }
+body.theme-neon #context-menu button.danger, body.theme-neon #ws-context-menu button.danger { color: #ff6070; }
+body.theme-neon #context-menu button.danger:hover, body.theme-neon #ws-context-menu button.danger:hover { background: rgba(255,96,112,.14); }
+body.theme-neon .ctx-sep { background: rgba(255,255,255,.09); }
+
+body.theme-neon #confirm-body { color: #9aa6b8; }
+body.theme-neon .btn-danger-solid { background: #ff6070; }
+body.theme-neon .btn-danger-solid:hover { background: #ff7a87; }
+body.theme-neon #confirm-cancel { background: rgba(30,36,49,.9); color: #9aa6b8; border: 1px solid rgba(255,255,255,.14); }
+body.theme-neon #confirm-cancel:hover { background: rgba(255,255,255,.1); color: #f2f5fa; }
+
+body.theme-neon .shortcuts-head, body.theme-neon .shortcuts-foot { border-color: rgba(255,255,255,.09); }
+body.theme-neon .shortcut-row { border-top: 1px solid rgba(255,255,255,.07); color: #f2f5fa; }
+body.theme-neon .kbd-group .plus { color: #9aa6b8; }
+body.theme-neon kbd { background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.16); color: #c3cadd; box-shadow: 0 1px 0 rgba(255,255,255,.08); }
+body.theme-neon .shortcut-change-btn { border: 1px solid rgba(255,255,255,.14); background: rgba(30,36,49,.9); color: #9aa6b8; }
+body.theme-neon .shortcut-change-btn:hover { border-color: #f5c74a; color: #f5c74a; }
+body.theme-neon .shortcut-change-btn.capturing { border-color: #f5c74a; color: #0b0e15; background: #f5c74a; }
+
+body.theme-neon .settings-tabs { background: rgba(11,14,21,.75); border-right: 1px solid rgba(255,255,255,.09); }
+body.theme-neon .settings-tab { color: #9aa6b8; }
+body.theme-neon .settings-tab:hover { background: rgba(255,255,255,.07); }
+body.theme-neon .settings-tab.active { background: rgba(255,255,255,.12); color: #f5c74a; }
+body.theme-neon .settings-row { color: #f2f5fa; }
+body.theme-neon .settings-row + .settings-row { border-top: 1px solid rgba(255,255,255,.07); }
+body.theme-neon .settings-row select, body.theme-neon .settings-row input[type="text"] {
+  background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.14); color: #f2f5fa;
+}
+body.theme-neon .settings-row select:focus, body.theme-neon .settings-row input[type="text"]:focus { border-color: #f5c74a; outline: none; box-shadow: 0 0 0 3px rgba(245,199,74,.18); }
+body.theme-neon .settings-sep { background: rgba(255,255,255,.07); }
+body.theme-neon .ghost-btn { border: 1px solid #f5c74a; color: #f5c74a; }
+body.theme-neon .ghost-btn:hover { background: rgba(245,199,74,.14); }
+body.theme-neon .settings-subtext { color: #9aa6b8; }
+body.theme-neon .settings-info-row { color: #f2f5fa; border-top: 1px solid rgba(255,255,255,.07); }
+body.theme-neon #settings-box h4 { color: #f5c74a; }
+
+body.theme-neon .scripts-warning { background: rgba(245,199,74,.12); border: 1px solid rgba(245,199,74,.4); color: #f5c74a; }
+body.theme-neon .scripts-warning b { color: #ffe082; }
+body.theme-neon .script-row { background: rgba(30,36,49,.85); border: 1px solid rgba(255,255,255,.1); }
+body.theme-neon .script-row input[type="checkbox"] { accent-color: #f5c74a; }
+body.theme-neon .script-row .script-name { color: #f2f5fa; }
+body.theme-neon .script-row .script-scope { color: #9aa6b8; }
+body.theme-neon .script-row button { color: #9aa6b8; }
+body.theme-neon .script-row .script-edit:hover { background: rgba(255,255,255,.1); color: #f5c74a; }
+body.theme-neon .script-row .script-delete:hover { background: rgba(255,96,112,.16); color: #ff6070; }
+body.theme-neon .scripts-form { border-top: 1px solid rgba(255,255,255,.07); }
+body.theme-neon .scripts-form h4 { color: #9aa6b8; }
+body.theme-neon #script-name, body.theme-neon #script-target-ws { background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.14); color: #f2f5fa; }
+body.theme-neon #script-name:focus, body.theme-neon #script-target-ws:focus { border-color: #f5c74a; outline: none; }
+body.theme-neon #script-code { background: rgba(11,14,21,.95); border: 1px solid rgba(255,255,255,.14); color: #d1e8ff; }
+body.theme-neon #script-target-accounts label { color: #f2f5fa; }
+body.theme-neon #script-target-accounts input { accent-color: #f5c74a; }
+body.theme-neon #script-save-btn { background: #f5c74a; color: #0b0e15; }
+body.theme-neon #script-save-btn:hover { background: #ffe082; }
+
+body.theme-neon #app-tooltip { background: rgba(22,27,38,.98); border: 1px solid rgba(255,255,255,.14); color: #f2f5fa; box-shadow: 0 8px 24px rgba(0,0,0,.6); }
+
+body.theme-neon .edge-handle { background: #f5c74a; }
+body.theme-neon #edge-trigger-top:hover .edge-handle-top, body.theme-neon #edge-trigger-left:hover .edge-handle-left { background: #ffe082; }
+
+body.theme-neon .update-result.state-ok { color: #6ff0b0; }
+body.theme-neon .update-result.state-update { color: #f5c74a; }
+body.theme-neon .update-result.state-error { color: #ff6070; }
+body.theme-neon .update-toast-icon { background: rgba(245,199,74,.16); color: #f5c74a; }
+body.theme-neon #update-toast { background: rgba(22,27,38,.97); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+
+body.theme-neon .col-gutter:hover, body.theme-neon .row-gutter:hover { background: rgba(245,199,74,.5); }

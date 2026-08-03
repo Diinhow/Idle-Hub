@@ -12,7 +12,7 @@ O Node.js é o "motor" que faz o app rodar.
 
 Pronto, isso não precisa fazer de novo.
 
-## Passo 2: baixar a PokeGrid
+## Passo 2: baixar a IdleHub
 
 1. Aqui em cima nesta página, clique no botão verde **Code**
 2. Clique em **Download ZIP**
@@ -28,15 +28,9 @@ Pronto, isso não precisa fazer de novo.
 
 **Quer um atalho na área de trabalho?** Clique com o **botão direito** no arquivo **Abrir IdleHub** e escolha **Enviar para: Área de trabalho (criar atalho)**. Pronto, vira um clique só.
 
-> O `iniciar.bat` continua na pasta e funciona igual, mas ele deixa uma janela preta aberta: se você fechar essa janela, o app fecha junto. Pelo **Abrir PokeGrid** isso não acontece.
+> O `iniciar.bat` continua na pasta e funciona igual, mas ele deixa uma janela preta aberta: se você fechar essa janela, o app fecha junto. Pelo **Abrir IdleHub** isso não acontece.
 
 **No Mac ou Linux:** abra o Terminal dentro da pasta e digite `bash iniciar.sh`.
-
-## Passo 4: usar
-
-1. Em cada quadradinho, entre na sua conta do Poke Idle World (ou crie uma)
-2. O **"Confirme que é humano"** é sempre você que resolve. O app nunca faz isso no seu lugar.
-3. Clique em **👤 Treinadores**, preencha e-mail e senha de cada conta e salve. Da próxima vez o app entra sozinho.
 
 ## Para atualizar depois
 

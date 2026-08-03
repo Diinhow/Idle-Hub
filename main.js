@@ -3,10 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const https = require('https');
 
-let versionInfo = { commit: '', repoOwner: '', repoName: '', repoBranch: 'main' };
-try { versionInfo = { ...versionInfo, ...require('./version.js') }; }
-catch (err) { console.error('version.js não encontrado/ inválido:', err); }
-
 let mainWindow;
 const STATE_FILE = () => path.join(app.getPath('userData'), 'state.json');
 const registeredPartitions = new Set();
@@ -112,7 +108,6 @@ ipcMain.handle('get-versions', () => ({
   app: app.getVersion(),
   electron: process.versions.electron,
   chrome: process.versions.chrome,
-  commit: (versionInfo.commit && !versionInfo.commit.includes('COLE_AQUI')) ? versionInfo.commit.slice(0, 7) : null,
 }));
 
 ipcMain.handle('get-login-item', () => app.getLoginItemSettings().openAtLogin);
@@ -243,21 +238,37 @@ function fetchJson(url) {
   });
 }
 
-ipcMain.handle('check-for-updates', async () => {
-  const { commit, repoOwner, repoName, repoBranch } = versionInfo;
-  if (!repoOwner || !repoName || repoOwner.includes('SEU_') || repoName.includes('SEU_')) {
-    return { ok: false, error: 'not-configured' };
-  }
+// Verificação de atualização via um Gist do GitHub contendo um JSON simples
+// tipo { "version": "1.3.0", "url": "...", "message": "..." }. Compara com a
+// versão real do app (package.json) — SEM baixar/instalar nada, só avisa.
+ipcMain.handle('check-for-updates', async (event, gistUrl) => {
   try {
-    const data = await fetchJson(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${repoBranch || 'main'}`);
-    if (!data || !data.sha) return { ok: false, error: data && data.message ? data.message : 'github-error' };
-    const hasLocalCommit = commit && !commit.includes('COLE_AQUI');
+    const match = String(gistUrl || '').match(/gist\.github(?:usercontent)?\.com\/[^/]+\/([a-f0-9]+)/i);
+    const gistId = match ? match[1] : null;
+    if (!gistId) return { ok: false, error: 'invalid-url' };
+
+    const data = await fetchJson(`https://api.github.com/gists/${gistId}`);
+    if (!data || !data.files) return { ok: false, error: 'gist-error' };
+
+    const fileKeys = Object.keys(data.files);
+    const fileKey = fileKeys.find((k) => k.toLowerCase().endsWith('.json')) || fileKeys[0];
+    if (!fileKey || !data.files[fileKey] || typeof data.files[fileKey].content !== 'string') {
+      return { ok: false, error: 'no-file' };
+    }
+
+    let remote;
+    try { remote = JSON.parse(data.files[fileKey].content); }
+    catch (err) { return { ok: false, error: 'bad-json' }; }
+    if (!remote || !remote.version) return { ok: false, error: 'no-version-field' };
+
+    const localVersion = app.getVersion();
     return {
       ok: true,
-      upToDate: hasLocalCommit ? data.sha === commit : null, // null = ainda não configurou o commit local pra comparar
-      latestSha: data.sha,
-      currentSha: hasLocalCommit ? commit : null,
-      repoUrl: `https://github.com/${repoOwner}/${repoName}`,
+      upToDate: String(remote.version) === String(localVersion),
+      remoteVersion: remote.version,
+      localVersion,
+      updateUrl: remote.url || null,
+      message: remote.message || null,
     };
   } catch (err) {
     return { ok: false, error: String(err) };

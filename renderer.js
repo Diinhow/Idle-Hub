@@ -1,6 +1,23 @@
 // ---------------------------------------------------------------------------
 // i18n — traduções reais (pt/en/es), aplicadas sem precisar recarregar
 // ---------------------------------------------------------------------------
+// ============================================================
+// Verificação de atualizações — link do Gist com o arquivo de versão.
+// EDITE AQUI (só no código-fonte, não aparece em nenhum lugar da interface)
+// se um dia você trocar de Gist. Formato esperado do arquivo .json dentro
+// dele: { "version": "1.3.0", "url": "https://...", "message": "..." }
+// ============================================================
+const UPDATE_GIST_URL = 'https://gist.github.com/Diinhow/b9261f1077c60b5dbcd4dccba8eb67e8';
+
+// ============================================================
+// Tema padrão para quem abre o app pela primeira vez.
+// Troque para 'neon' se quiser que o tema Neon já venha ativado de cara
+// (quem já tiver o app instalado e já tiver escolhido um tema não é afetado
+// por essa constante — ela só vale pra configuração inicial/em branco).
+// Valores válidos: 'escuro' | 'neon'
+// ============================================================
+const DEFAULT_THEME = 'escuro';
+
 const I18N = {
   pt: {
     addAccount: 'Adicionar conta', emptyTitle: 'Nenhuma conta aberta',
@@ -33,16 +50,16 @@ const I18N = {
     exportBtn: 'Exportar workspaces', importBtn: 'Importar workspaces',
     defaultUrlSettings: 'URL inicial padrão', defaultZoomSettings: 'Zoom padrão para novas contas', defaultLayoutSettings: 'Layout padrão',
     downloadsFolder: 'Pasta de downloads', downloadsFolderDefault: 'Pasta padrão do sistema', chooseFolder: 'Escolher pasta...',
-    askEachDownload: 'Perguntar onde salvar cada download', updatesText: 'Você está usando a versão mais recente deste projeto.',
-    checkingUpdates: 'Verificando...',
-    updateNotConfigured: 'O verificador de atualizações ainda não foi configurado pelo desenvolvedor (falta preencher o arquivo version.js com o usuário e repositório do GitHub).',
-    updateCheckFailed: 'Não foi possível verificar atualizações agora. Confira sua conexão com a internet e tente de novo.',
-    updateAvailableBody: 'Tem uma atualização nova no GitHub (commit {sha}). Quer abrir a página do repositório pra baixar?',
-    updateUnknownBody: 'O repositório está configurado, mas ainda não sei qual é a sua versão atual pra comparar (falta preencher o "commit" no version.js). Commit mais recente no GitHub: {sha}. Quer abrir a página do repositório?',
-    commitLabel: 'Commit',
-    updateToastTitle: 'Atualização disponível', updateToastOpen: 'Abrir no GitHub',
-    updateToastBody: 'Tem uma versão nova no GitHub (commit {sha}). Baixe e atualize quando puder.',
-    checkUpdates: 'Verificar atualizações', aboutDesc: 'Gerenciador multi-sessão com workspaces: organize contas ilimitadas em grupos, cada uma com sessão isolada.',
+    askEachDownload: 'Perguntar onde salvar cada download',
+    updatesIntro: 'O Idle Hub verifica um arquivo simples de versão (não baixa nem instala nada sozinho) — só avisa se tiver algo novo.',
+    checkUpdates: 'Verificar atualizações',
+    checkingUpdates: 'Verificando...', updatesUpToDate: 'Você está usando a versão mais recente deste projeto.',
+    updateInvalidUrl: 'Configure um link de Gist válido (https://gist.github.com/usuario/id) antes de verificar.',
+    updateCheckFailed: 'Não foi possível verificar atualizações agora. Confira o link do Gist e sua conexão com a internet.',
+    updateAvailableBody: 'Tem uma versão nova disponível: {version}.',
+    updateToastTitle: 'Atualização disponível', updateToastOpen: 'Abrir link',
+    updateToastBody: 'Tem uma versão nova disponível: {version}.',
+    aboutDesc: 'Gerenciador multi-sessão com workspaces: organize contas ilimitadas em grupos, cada uma com sessão isolada.',
     versionLabel: 'Versão', downloadsHead: 'DOWNLOADS', downloadsEmpty: 'Nenhum download nesta sessão',
     back: 'Voltar', forward: 'Avançar', reloadTitle: 'Recarregar (Ctrl+R)', homeTitle: 'Ir para a URL padrão do workspace',
     addressPh: 'Digite uma URL e pressione Enter… (Ctrl+L)', goAllTitle: 'Abrir esta URL em todas as contas abertas (deste workspace)',
@@ -98,16 +115,16 @@ const I18N = {
     exportBtn: 'Export workspaces', importBtn: 'Import workspaces',
     defaultUrlSettings: 'Default initial URL', defaultZoomSettings: 'Default zoom for new accounts', defaultLayoutSettings: 'Default layout',
     downloadsFolder: 'Downloads folder', downloadsFolderDefault: 'System default folder', chooseFolder: 'Choose folder...',
-    askEachDownload: 'Ask where to save each download', updatesText: 'You are using the latest version of this project.',
-    checkingUpdates: 'Checking...',
-    updateNotConfigured: "The update checker hasn't been set up by the developer yet (version.js needs the GitHub username and repository name).",
-    updateCheckFailed: "Couldn't check for updates right now. Check your internet connection and try again.",
-    updateAvailableBody: 'There is a new update on GitHub (commit {sha}). Open the repository page to download it?',
-    updateUnknownBody: "The repository is configured, but there's no local commit set to compare against yet (fill in \"commit\" in version.js). Latest commit on GitHub: {sha}. Open the repository page?",
-    commitLabel: 'Commit',
-    updateToastTitle: 'Update available', updateToastOpen: 'Open on GitHub',
-    updateToastBody: 'There is a new version on GitHub (commit {sha}). Download and update whenever you can.',
-    checkUpdates: 'Check for updates', aboutDesc: 'Multi-session manager with workspaces: organize unlimited accounts into groups, each with an isolated session.',
+    askEachDownload: 'Ask where to save each download',
+    updatesIntro: "Idle Hub checks a simple version file (it doesn't download or install anything on its own) — it just lets you know if there's something new.",
+    checkUpdates: 'Check for updates',
+    checkingUpdates: 'Checking...', updatesUpToDate: 'You are using the latest version of this project.',
+    updateInvalidUrl: 'Set a valid Gist link (https://gist.github.com/user/id) before checking.',
+    updateCheckFailed: "Couldn't check for updates right now. Check the Gist link and your internet connection.",
+    updateAvailableBody: 'A new version is available: {version}.',
+    updateToastTitle: 'Update available', updateToastOpen: 'Open link',
+    updateToastBody: 'A new version is available: {version}.',
+    aboutDesc: 'Multi-session manager with workspaces: organize unlimited accounts into groups, each with an isolated session.',
     versionLabel: 'Version', downloadsHead: 'DOWNLOADS', downloadsEmpty: 'No downloads this session',
     back: 'Back', forward: 'Forward', reloadTitle: 'Reload (Ctrl+R)', homeTitle: "Go to the workspace's default URL",
     addressPh: 'Type a URL and press Enter… (Ctrl+L)', goAllTitle: 'Open this URL in all open accounts (this workspace)',
@@ -163,16 +180,16 @@ const I18N = {
     exportBtn: 'Exportar workspaces', importBtn: 'Importar workspaces',
     defaultUrlSettings: 'URL inicial predeterminada', defaultZoomSettings: 'Zoom predeterminado para nuevas cuentas', defaultLayoutSettings: 'Diseño predeterminado',
     downloadsFolder: 'Carpeta de descargas', downloadsFolderDefault: 'Carpeta predeterminada del sistema', chooseFolder: 'Elegir carpeta...',
-    askEachDownload: 'Preguntar dónde guardar cada descarga', updatesText: 'Estás usando la versión más reciente de este proyecto.',
-    checkingUpdates: 'Verificando...',
-    updateNotConfigured: 'El verificador de actualizaciones aún no fue configurado por el desarrollador (falta completar version.js con el usuario y repositorio de GitHub).',
-    updateCheckFailed: 'No se pudo verificar actualizaciones ahora. Revisa tu conexión a internet e intenta de nuevo.',
-    updateAvailableBody: 'Hay una actualización nueva en GitHub (commit {sha}). ¿Abrir la página del repositorio para descargarla?',
-    updateUnknownBody: 'El repositorio está configurado, pero todavía no sé cuál es tu versión actual para comparar (falta completar el "commit" en version.js). Commit más reciente en GitHub: {sha}. ¿Abrir la página del repositorio?',
-    commitLabel: 'Commit',
-    updateToastTitle: 'Actualización disponible', updateToastOpen: 'Abrir en GitHub',
-    updateToastBody: 'Hay una versión nueva en GitHub (commit {sha}). Descárgala y actualiza cuando puedas.',
-    checkUpdates: 'Buscar actualizaciones', aboutDesc: 'Gestor multisesión con workspaces: organiza cuentas ilimitadas en grupos, cada una con sesión aislada.',
+    askEachDownload: 'Preguntar dónde guardar cada descarga',
+    updatesIntro: 'Idle Hub verifica un archivo simple de versión (no descarga ni instala nada por su cuenta) — solo avisa si hay algo nuevo.',
+    checkUpdates: 'Buscar actualizaciones',
+    checkingUpdates: 'Verificando...', updatesUpToDate: 'Estás usando la versión más reciente de este proyecto.',
+    updateInvalidUrl: 'Configura un enlace de Gist válido (https://gist.github.com/usuario/id) antes de verificar.',
+    updateCheckFailed: 'No se pudo verificar actualizaciones ahora. Revisa el enlace del Gist y tu conexión a internet.',
+    updateAvailableBody: 'Hay una versión nueva disponible: {version}.',
+    updateToastTitle: 'Actualización disponible', updateToastOpen: 'Abrir enlace',
+    updateToastBody: 'Hay una versión nueva disponible: {version}.',
+    aboutDesc: 'Gestor multisesión con workspaces: organiza cuentas ilimitadas en grupos, cada una con sesión aislada.',
     versionLabel: 'Versión', downloadsHead: 'DESCARGAS', downloadsEmpty: 'Ninguna descarga en esta sesión',
     back: 'Atrás', forward: 'Adelante', reloadTitle: 'Recargar (Ctrl+R)', homeTitle: 'Ir a la URL predeterminada del workspace',
     addressPh: 'Escribe una URL y presiona Enter… (Ctrl+L)', goAllTitle: 'Abrir esta URL en todas las cuentas abiertas (este workspace)',
@@ -217,6 +234,9 @@ function applyLanguage(langSetting) {
   document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
   renderSidebar(); updateStatusBar(); renderShortcutsList();
   if (!$('#downloads-popover').classList.contains('hidden')) renderDownloadsList();
+}
+function applyTheme(tema) {
+  document.body.classList.toggle('theme-neon', tema === 'neon');
 }
 
 // ---------------------------------------------------------------------------
@@ -268,7 +288,7 @@ const addressBar = $('#address-bar');
 
 function defaultSettings() {
   return {
-    idioma: 'sistema', tema: 'escuro', iniciarComSistema: false, reabrirUltimoWorkspace: true,
+    idioma: 'sistema', tema: DEFAULT_THEME, iniciarComSistema: false, reabrirUltimoWorkspace: true,
     urlInicialPadrao: DEFAULT_URL, zoomPadrao: 1, layoutPadrao: 'auto',
     downloadsPath: null, perguntarOndeSalvar: true, modoTelaLimpa: false, encostarBordas: true,
     modoApresentacao: false,
@@ -367,6 +387,7 @@ async function init() {
   if (state.sidebarCollapsed) applySidebarCollapsed(true);
 
   applyLanguage(state.settings.idioma);
+  applyTheme(state.settings.tema);
   applyCleanMode();
   applyPresentationMode();
   applyEcoMode();
@@ -379,6 +400,8 @@ async function init() {
   updateMuteButton();
 
   try { state.settings.iniciarComSistema = !!(await window.nativeAPI.getLoginItem()); } catch (err) { /* ignore */ }
+
+  checkForUpdatesOnStartup();
 }
 
 // ---------------------------------------------------------------------------
@@ -786,7 +809,18 @@ function reorderAccount(draggedId, targetId) {
 }
 function setActiveAccount(id) {
   if (activeAccountId === id) return;
+  const previousId = activeAccountId;
   activeAccountId = id;
+
+  // Se a conta anterior estava maximizada, a maximização "segue" pra conta
+  // que você acabou de selecionar, em vez de ficar presa na antiga cobrindo a tela.
+  const prevCard = previousId != null ? grid.querySelector(`.account-card[data-id="${previousId}"]`) : null;
+  if (prevCard && prevCard.classList.contains('maximized')) {
+    prevCard.classList.remove('maximized');
+    const newCard = grid.querySelector(`.account-card[data-id="${id}"]`);
+    if (newCard) newCard.classList.add('maximized');
+  }
+
   const acc = getAccountById(id);
   if (acc) addressBar.value = acc.url;
   renderSidebar();
@@ -1759,19 +1793,13 @@ async function openSettingsModal() {
     $('#about-version').textContent = v.app;
     $('#about-electron').textContent = v.electron;
     $('#about-chrome').textContent = v.chrome;
-    if (v.commit) {
-      $('#about-commit').textContent = v.commit;
-      $('#about-commit-row').style.display = '';
-    } else {
-      $('#about-commit-row').style.display = 'none';
-    }
   } catch (err) { /* ignore */ }
 }
 $('#settings-close').addEventListener('click', () => settingsOverlay.classList.add('hidden'));
 settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.add('hidden'); });
 
 $('#set-idioma').addEventListener('change', (e) => { state.settings.idioma = e.target.value; applyLanguage(e.target.value); schedulePersist(); });
-$('#set-tema').addEventListener('change', (e) => { state.settings.tema = e.target.value; schedulePersist(); });
+$('#set-tema').addEventListener('change', (e) => { state.settings.tema = e.target.value; applyTheme(e.target.value); schedulePersist(); });
 $('#set-login-item').addEventListener('change', async (e) => {
   state.settings.iniciarComSistema = e.target.checked;
   schedulePersist();
@@ -1805,40 +1833,48 @@ $('#set-import').addEventListener('click', async () => {
       if (!state.settings) state.settings = defaultSettings();
       activeAccountId = null;
       if (!state.activeWorkspaceId && state.workspaces.length) state.activeWorkspaceId = state.workspaces[0].id;
-      applyLanguage(state.settings.idioma); applyCleanMode();
+      applyLanguage(state.settings.idioma); applyTheme(state.settings.tema); applyCleanMode();
       renderWorkspaceRail(); renderSidebar(); renderGrid(); updateStatusBar(); schedulePersist();
       settingsOverlay.classList.add('hidden');
     });
   } catch (err) { console.error(err); }
 });
+// ---------------------------------------------------------------------------
+// Verificação de atualização via Gist (JSON simples com "version"/"url"/
+// "message"). Sem download/instalação automática — só compara e avisa.
+// A URL do Gist é fixa em UPDATE_GIST_URL (topo do arquivo), não aparece
+// em lugar nenhum da interface.
+// ---------------------------------------------------------------------------
+
 function renderUpdateResult(html, stateClass) {
   const box = $('#update-result-box');
+  box.classList.remove('hidden');
   box.className = `update-result ${stateClass}`;
   box.innerHTML = html;
-  const openBtn = box.querySelector('.update-open-github');
+  const openBtn = box.querySelector('.update-open-link');
   if (openBtn) openBtn.addEventListener('click', () => window.nativeAPI.openExternal(openBtn.dataset.url));
+}
+function updateErrorMessage(error) {
+  if (error === 'invalid-url') return t('updateInvalidUrl');
+  return t('updateCheckFailed');
 }
 $('#set-check-updates').addEventListener('click', async () => {
   const btn = $('#set-check-updates');
+  const gistUrl = UPDATE_GIST_URL;
+  if (!gistUrl) { renderUpdateResult(`<div class="update-result-row">${escapeHtml(t('updateInvalidUrl'))}</div>`, 'state-error'); return; }
   btn.disabled = true;
   renderUpdateResult(`<div class="update-result-row"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg> ${escapeHtml(t('checkingUpdates'))}</div>`, 'state-checking');
   try {
-    const result = await window.nativeAPI.checkForUpdates();
+    const result = await window.nativeAPI.checkForUpdates(gistUrl);
     if (!result.ok) {
-      const msg = result.error === 'not-configured' ? t('updateNotConfigured') : t('updateCheckFailed');
-      renderUpdateResult(`<div class="update-result-row">${escapeHtml(msg)}</div>`, 'state-error');
-    } else if (result.upToDate === true) {
-      renderUpdateResult(`<div class="update-result-row"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> ${escapeHtml(t('updatesText'))}</div>`, 'state-ok');
-    } else if (result.upToDate === false) {
-      renderUpdateResult(`
-        <div class="update-result-row">${escapeHtml(t('updateAvailableBody', { sha: result.latestSha.slice(0, 7) }))}</div>
-        <button class="ghost-btn update-open-github" type="button" data-url="${escapeHtml(result.repoUrl)}">${escapeHtml(t('updateToastOpen'))}</button>
-      `, 'state-update');
+      renderUpdateResult(`<div class="update-result-row">${escapeHtml(updateErrorMessage(result.error))}</div>`, 'state-error');
+    } else if (result.upToDate) {
+      renderUpdateResult(`<div class="update-result-row"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> ${escapeHtml(t('updatesUpToDate'))}</div>`, 'state-ok');
     } else {
-      renderUpdateResult(`
-        <div class="update-result-row">${escapeHtml(t('updateUnknownBody', { sha: result.latestSha.slice(0, 7) }))}</div>
-        <button class="ghost-btn update-open-github" type="button" data-url="${escapeHtml(result.repoUrl)}">${escapeHtml(t('updateToastOpen'))}</button>
-      `, 'state-update');
+      const msg = result.message ? `${result.message} ` : '';
+      let html = `<div class="update-result-row">${escapeHtml(msg + t('updateAvailableBody', { version: result.remoteVersion }))}</div>`;
+      if (result.updateUrl) html += `<button class="ghost-btn update-open-link" type="button" data-url="${escapeHtml(result.updateUrl)}">${escapeHtml(t('updateToastOpen'))}</button>`;
+      renderUpdateResult(html, 'state-update');
     }
   } catch (err) {
     console.error(err);
@@ -1848,16 +1884,19 @@ $('#set-check-updates').addEventListener('click', async () => {
   }
 });
 
-// ---------------------------------------------------------------------------
-// Verificação silenciosa ao abrir o app — se houver atualização, mostra um
-// toast discreto num canto da tela (some sozinho em 1 minuto, ou fecha na hora
-// pelo botão X). Erros/"não configurado" não incomodam o usuário no início.
-// ---------------------------------------------------------------------------
+// Verificação silenciosa ao abrir o app — só mostra o toast se houver
+// atualização de verdade; erros/link não configurado ficam em silêncio.
 let updateToastTimer = null;
-function showUpdateToast(sha, repoUrl) {
+function showUpdateToast(remoteVersion, updateUrl, message) {
   const toast = $('#update-toast');
-  $('#update-toast-text').textContent = t('updateToastBody', { sha: sha.slice(0, 7) });
-  $('#update-toast-open').onclick = () => window.nativeAPI.openExternal(repoUrl);
+  $('#update-toast-text').textContent = message || t('updateToastBody', { version: remoteVersion });
+  const openBtn = $('#update-toast-open');
+  if (updateUrl) {
+    openBtn.classList.remove('hidden');
+    openBtn.onclick = () => window.nativeAPI.openExternal(updateUrl);
+  } else {
+    openBtn.classList.add('hidden');
+  }
   toast.classList.remove('hidden', 'closing');
   clearTimeout(updateToastTimer);
   updateToastTimer = setTimeout(closeUpdateToast, 60000); // 1 minuto
@@ -1871,14 +1910,15 @@ function closeUpdateToast() {
 }
 $('#update-toast-close').addEventListener('click', closeUpdateToast);
 
-(async function checkForUpdatesOnStartup() {
-  try {
-    const result = await window.nativeAPI.checkForUpdates();
-    if (result.ok && result.upToDate === false) {
-      showUpdateToast(result.latestSha, result.repoUrl);
+function checkForUpdatesOnStartup() {
+  const gistUrl = UPDATE_GIST_URL;
+  if (!gistUrl) return;
+  window.nativeAPI.checkForUpdates(gistUrl).then((result) => {
+    if (result.ok && !result.upToDate) {
+      showUpdateToast(result.remoteVersion, result.updateUrl, result.message);
     }
-  } catch (err) { /* silencioso — não incomoda o usuário com erro de rede ao abrir o app */ }
-})();
+  }).catch(() => { /* silencioso — não incomoda o usuário com erro de rede ao abrir o app */ });
+}
 
 // ---------------------------------------------------------------------------
 // Scripts / Extras — userscripts estilo Tampermonkey, com alvo por workspace/conta
