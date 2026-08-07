@@ -23,4 +23,8 @@ contextBridge.exposeInMainWorld('nativeAPI', {
   isFullscreen: () => ipcRenderer.invoke('is-fullscreen'),
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
   checkForUpdates: (gistUrl) => ipcRenderer.invoke('check-for-updates', gistUrl),
+
+  loadCredentials: () => ipcRenderer.invoke('load-credentials'),
+  saveCredentials: (data) => ipcRenderer.invoke('save-credentials', data),
+  deleteCredentials: (accountId) => ipcRenderer.invoke('delete-credentials', accountId),
 });

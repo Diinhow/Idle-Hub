@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, webContents, session, Menu, dialog, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, webContents, session, Menu, dialog, shell, safeStorage } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const https = require('https');
@@ -87,6 +87,63 @@ ipcMain.handle('load-state', () => {
     return null;
   }
 });
+
+// ---------------------------------------------------------------------------
+// Credenciais de autopreenchimento (logins/senhas por conta) — criptografadas
+// com safeStorage (chave por usuário/máquina no sistema), num arquivo próprio
+// separado do state.json. Estrutura: { "<accountId>": [ { site, login, senha,
+// autoFill, selectors } ] }. Senhas NUNCA vão para o state.json/backup.
+// ---------------------------------------------------------------------------
+const CREDENTIALS_FILE = () => path.join(app.getPath('userData'), 'credentials.json');
+
+function readAllCredentials() {
+  try {
+    if (!fs.existsSync(CREDENTIALS_FILE())) return {};
+    const buf = fs.readFileSync(CREDENTIALS_FILE());
+    const json = safeStorage.decryptString(buf);
+    return JSON.parse(json);
+  } catch (err) {
+    console.error('Falha ao ler credenciais:', err);
+    return {};
+  }
+}
+
+function writeAllCredentials(data) {
+  try {
+    if (!safeStorage.isEncryptionAvailable()) return false;
+    const encrypted = safeStorage.encryptString(JSON.stringify(data || {}));
+    fs.writeFileSync(CREDENTIALS_FILE(), encrypted);
+    return true;
+  } catch (err) {
+    console.error('Falha ao salvar credenciais:', err);
+    return false;
+  }
+}
+
+ipcMain.handle('save-credentials', (event, data) => {
+  const all = readAllCredentials();
+  const accountId = String(data && data.accountId != null ? data.accountId : '');
+  const list = Array.isArray(data && data.list) ? data.list : [];
+  all[accountId] = list.map((c) => ({
+    site: String(c.site || '').trim(),
+    login: String(c.login || '').trim(),
+    senha: String(c.senha || ''),
+    autoFill: c.autoFill !== false,
+    selectors: {
+      login: String((c.selectors && c.selectors.login) || ''),
+      senha: String((c.selectors && c.selectors.senha) || ''),
+    },
+  }));
+  return { ok: writeAllCredentials(all) };
+});
+
+ipcMain.handle('delete-credentials', (event, accountId) => {
+  const all = readAllCredentials();
+  delete all[String(accountId)];
+  return { ok: writeAllCredentials(all) };
+});
+
+ipcMain.handle('load-credentials', () => readAllCredentials());
 
 // ---------------------------------------------------------------------------
 // Limpar dados de sessão (cookies/localStorage/cache) de uma partição

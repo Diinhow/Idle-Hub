@@ -179,19 +179,55 @@
       <span class="spacer"></span>
       <span id="status-cpu">CPU —</span>
       <span id="status-ram">RAM —</span>
-      <span id="status-version">v1.2.4</span>
+      <span id="status-version">v1.2.5</span>
     </div>
 
   </div>
 
-  <!-- Modal: editar conta (criação agora é instantânea, sem modal) -->
+  <!-- Modal: criar / editar conta -->
   <div id="modal-overlay" class="hidden">
     <div id="modal-box">
       <h3 id="modal-title" data-i18n="editAccount">Editar conta</h3>
+
       <label data-i18n="accountName">Nome da conta</label>
       <input id="modal-name" type="text" placeholder="Ex: Conta 5" />
+
       <label data-i18n="initialUrl">URL inicial / padrão</label>
       <input id="modal-url" type="text" placeholder="https://exemplo.com" />
+
+      <div class="modal-row2">
+        <div>
+          <label class="ws-edit-label" data-i18n="colorLabel">COR</label>
+          <div id="modal-colors" class="ws-edit-colors"></div>
+        </div>
+        <div>
+          <label class="ws-edit-label" data-i18n="iconLabel">ÍCONE</label>
+          <div id="modal-icons" class="ws-edit-icons"></div>
+        </div>
+      </div>
+
+      <div id="modal-workspace-wrap">
+        <label class="ws-edit-label" data-i18n="workspaceLabel">WORKSPACE</label>
+        <select id="modal-workspace"></select>
+      </div>
+
+      <div id="modal-open-wrap" class="modal-check-row">
+        <span data-i18n="openImmediately">Abrir a conta assim que criar</span>
+        <label class="switch"><input type="checkbox" id="modal-open" checked><span class="switch-track"></span></label>
+      </div>
+
+      <!-- Credenciais de autopreenchimento (aparecem na edição da conta) -->
+      <div id="modal-creds-sec" class="hidden">
+        <div class="ws-edit-sep"></div>
+        <label class="ws-edit-label" data-i18n="credsLabel">LOGINS / AUTOPREENCHER</label>
+        <div class="settings-subtext" data-i18n="credsDesc">Login/senha por site. Preenche sozinho ao carregar o site (com cada site você pode desligar) ou manualmente com Ctrl+Shift+F.</div>
+        <div id="modal-creds-list"></div>
+        <button id="modal-creds-add" type="button">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          <span data-i18n="credsAdd">Adicionar site</span>
+        </button>
+      </div>
+
       <div class="modal-actions">
         <button id="modal-cancel" data-i18n="cancel">Cancelar</button>
         <button id="modal-confirm" data-i18n="save">Salvar</button>
@@ -508,6 +544,28 @@
     <button id="update-toast-close" data-tooltip="Fechar">
       <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </button>
+  </div>
+
+  <!-- Modal: Doação (tudo configurável via DONATE_CONFIG no renderer.js) -->
+  <div id="donate-overlay" class="hidden">
+    <div id="donate-box">
+      <button id="donate-close" data-tooltip="Fechar">
+        <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <h3 id="donate-title">☕ Apoie o Idle Hub</h3>
+      <p id="donate-sub" class="donate-sub"></p>
+      <div class="donate-qr-wrap">
+        <img id="donate-qr" alt="Pix" onerror="this.style.display='none'; document.getElementById('donate-qr-fallback').style.display='flex';" />
+        <div id="donate-qr-fallback" class="donate-qr-fallback" style="display:none;">
+          <p id="donate-qr-fallback-text"></p>
+        </div>
+      </div>
+      <div id="donate-pix" class="donate-codigo"></div>
+      <div class="donate-rodape">
+        <button id="donate-close2" type="button"></button>
+        <button id="donate-copy" type="button" class="donate-primary"></button>
+      </div>
+    </div>
   </div>
 
   <div id="app-tooltip" class="hidden"></div>

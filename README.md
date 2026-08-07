@@ -23,10 +23,21 @@
 ## 🖼️ Capturas de Tela
 
 <div align="center">
-
-<img src="docs/modo-simples.png" width="880" alt="Modo Simples: painel com os números das quatro contas">
-<img src="docs/userscript.png" width="880" alt="Suporte para UserScript/Tampermonkey">
-
+  <table border="0" cellpadding="10">
+    <tr>
+      <td colspan="2" align="center">
+        <img src="docs/modo-simples.png" width="880" alt="Modo Simples: painel com os números das quatro contas">
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="docs/userscript.png" width="486" height="620" alt="Suporte para UserScript/Tampermonkey">
+      </td>
+      <td align="center">
+        <img src="docs/editarconta.png" width="486" height="705" alt="Editar Conta">
+      </td>
+    </tr>
+  </table>
 </div>
 
 > Esta é a versão que roda a partir do código. Não tem executável pronto pra baixar: você pega o código, olha o que ele faz e roda você mesmo. Assim a confiança fica com você, não comigo.
@@ -52,6 +63,7 @@ Ideal para quem gerencia múltiplos perfis em jogos, redes sociais, e‑commerce
 | 👤 | **Contas Isoladas** | Cada conta roda em uma partição separada do Electron. Cookies, cache, localStorage e sessões são totalmente independentes. |
 | 🧩 | **Layouts Flexíveis** | Escolha entre grade automática, painel único, colunas, linhas ou livre para organizar os painéis de cada workspace. |
 | 🔄 | **Recarregamento em Segundo Plano** | Troque entre workspaces sem perder o estado das contas — tudo permanece em memória e continua rodando em background. |
+| 🔒 | **AutoPreenchimento de Conta** | Login/senha por conta. Preenche sozinho ao carregar o site (com cada site você pode desligar) ou manualmente com Ctrl+Shift+F. |
 | 🔇 | **Controle de Áudio** | Silencie painéis individuais ou todos de uma vez. Ideal para evitar sons indesejados de várias sessões abertas. |
 | 📊 | **Métricas em Tempo Real** | Acompanhe CPU, RAM e FPS de cada conta e do processo principal na barra de status. |
 | 🔍 | **Barra de URL Universal** | Digite uma URL e ela será aberta em todas as contas abertas do workspace atual com um clique. |

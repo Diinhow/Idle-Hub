@@ -143,6 +143,7 @@
   }
   .ws-icon.active .ws-badge { background: #05070b; color: var(--ws-color); border-color: #05070b; }
   .ws-icon.dragging { opacity: .4; }
+  .ws-icon.drag-over { border-color: #c89b3c; border-style: dashed; }
   #add-workspace-btn, #open-scripts-btn {
     width: 40px; height: 40px; border-radius: 10px; border: 1px dashed #223247; background: transparent;
     color: #9fa9b9; margin-top: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
@@ -191,6 +192,8 @@
   .account-item.drag-over { border-color: #c89b3c; border-style: dashed; }
   .account-item .row1 { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
   .account-item .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .acc-icn { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; color: #9fa9b9; }
+  .acc-icn svg { width: 14px; height: 14px; }
   .account-item .dot.closed-dot { background: #4a4a6a !important; }
   .account-item .row2 { font-size: 11px; font-weight: 600; margin-top: 3px; padding-left: 18px; color: #34d399; }
   .account-item.closed .row2 { color: #6a6a8a; }
@@ -316,7 +319,7 @@
   /* ---------- Modais genéricos (add/edit conta) ---------- */
   #modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 100; }
   #modal-overlay.hidden { display: none; }
-  #modal-box { width: 340px; background: #0c131d; border: 1px solid #223247; border-radius: 16px; padding: 20px; }
+  #modal-box { width: 460px; max-width: 92vw; max-height: 90vh; overflow-y: auto; background: #0c131d; border: 1px solid #223247; border-radius: 16px; padding: 20px; }
   #modal-box h3 { margin: 0 0 14px 0; color: #c89b3c; font-size: 16px; }
   #modal-box label { display: block; font-size: 12px; color: #9fa9b9; margin: 10px 0 4px; }
   #modal-box input { width: 100%; height: 34px; background: #111b28; border: 1px solid #223247; border-radius: 8px; color: #fff; padding: 0 10px; font-size: 13px; }
@@ -353,6 +356,31 @@
   #ws-edit-box .modal-actions { justify-content: flex-end; margin-top: 18px; }
   .modal-actions-split { justify-content: space-between !important; align-items: center; }
 
+  /* ---------- Modal criar/editar conta ---------- */
+  .modal-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  #modal-icons { grid-template-columns: repeat(4, 1fr); }
+  #modal-workspace { width: 100%; height: 36px; background: #111b28; border: 1px solid #223247; border-radius: 8px; color: #fff; padding: 0 8px; font-size: 13px; }
+  .modal-check-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #cfd8e3; margin-top: 14px; }
+  .ws-edit-sep { height: 1px; background: #223247; margin: 16px 0 4px; }
+  #modal-creds-add { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 9px 12px; margin-top: 10px; background: #111b28; color: #9fa9b9; border: 1px dashed #223247; border-radius: 10px; font-size: 13px; font-weight: 600; }
+  #modal-creds-add svg { width: 14px; height: 14px; }
+  #modal-creds-add:hover { border-color: #c89b3c; color: #c89b3c; }
+  .creds-empty { font-size: 12px; color: #6b7689; padding: 6px 0 2px; }
+  .cred-entry { display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 8px; align-items: center; padding: 12px; margin-top: 10px; background: #111b28; border: 1px solid #223247; border-radius: 12px; }
+  .cred-entry input { height: 32px; font-size: 12px; }
+  .cred-pass-wrap { position: relative; }
+  .cred-toggle { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; background: transparent; border: none; color: #6b7689; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .cred-toggle svg { width: 14px; height: 14px; }
+  .cred-toggle:hover { color: #c89b3c; }
+  .cred-pass-wrap input[type="password"], .cred-pass-wrap input[type="text"] { padding-right: 34px; }
+  .cred-auto-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11px; color: #9fa9b9; white-space: nowrap; height: 32px; line-height: 1; }
+  .cred-auto-row .switch { width: 34px; height: 19px; }
+  .cred-auto-row .switch-track::before { width: 13px; height: 13px; }
+  .cred-auto-row .switch input:checked + .switch-track::before { transform: translateX(15px); }
+  .cred-del { width: 30px; height: 30px; border-radius: 8px; background: transparent; border: none; color: #d94c4c; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .cred-del svg { width: 13px; height: 13px; }
+  .cred-del:hover { background: rgba(217,76,76,.12); }
+
   /* ---------- Menus de contexto ---------- */
   #context-menu, #ws-context-menu {
     position: fixed; z-index: 200; background: #0c131d; border: 1px solid #223247; border-radius: 12px;
@@ -382,6 +410,27 @@
   #confirm-body { font-size: 14px; line-height: 1.6; color: #9fa9b9; margin: 6px 0 0; }
   .btn-danger-solid { background: #d94c4c; color: #fff; }
   .btn-danger-solid:hover { background: #e06666; }
+
+  /* ---------- Modal: Doação ---------- */
+  #donate-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 240; }
+  #donate-overlay.hidden { display: none; }
+  #donate-box { width: 360px; max-width: 92vw; max-height: 92vh; overflow-y: auto; background: #0c131d; border: 1px solid #223247; border-radius: 20px; padding: 24px 26px; text-align: center; position: relative; border-top: 3px solid #c89b3c; box-shadow: 0 25px 60px rgba(0,0,0,.7); }
+  #donate-close { position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: #9fa9b9; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  #donate-close svg { width: 14px; height: 14px; }
+  #donate-close:hover { background: #223247; color: #fff; }
+  #donate-title { margin: 4px 0 8px; color: #fff; font-size: 19px; font-weight: 800; }
+  .donate-sub { margin: 0 0 14px; color: #9fa9b9; font-size: 13px; line-height: 1.55; }
+  .donate-qr-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+  #donate-qr { width: 208px; height: 208px; border-radius: 14px; background: #fff; padding: 6px; object-fit: contain; }
+  .donate-qr-fallback { width: 208px; height: 208px; border-radius: 14px; background: #111b28; border: 1px dashed #223247; align-items: center; justify-content: center; padding: 18px; }
+  .donate-qr-fallback p { margin: 0; font-size: 12px; line-height: 1.5; color: #9fa9b9; }
+  .donate-codigo { font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.6; color: #9fa9b9; background: #111b28; border: 1px solid #223247; border-radius: 10px; padding: 10px 12px; word-break: break-all; text-align: left; user-select: all; }
+  .donate-rodape { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
+  .donate-rodape button { padding: 9px 16px; border-radius: 10px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; }
+  #donate-close2 { background: #111b28; color: #9fa9b9; border: 1px solid #223247; }
+  #donate-close2:hover { background: #223247; color: #fff; }
+  .donate-primary { background: #c89b3c; color: #0a0a14; }
+  .donate-primary:hover { background: #e3b341; }
   #confirm-cancel { background: #111b28; color: #9fa9b9; border: 1px solid #223247; }
   #confirm-cancel:hover { background: #223247; color: #fff; }
 
@@ -625,7 +674,7 @@ body.theme-neon #add-account-btn:hover { background: #ffe082; }
 body.theme-neon #close-all-btn { border: 1px solid rgba(255,255,255,.18); color: #9aa6b8; }
 body.theme-neon #close-all-btn:hover { border-color: #ff6070; color: #ff6070; }
 
-body.theme-neon #toolbar { background: rgba(22,27,38,.92); border-bottom: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px) saturate(150%); }
+body.theme-neon #toolbar { position: relative; z-index: 30; background: rgba(22,27,38,.92); border-bottom: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px) saturate(150%); }
 body.theme-neon .btn-icon { color: #9aa6b8; }
 body.theme-neon .btn-icon:hover { background: rgba(255,255,255,.08); color: #f2f5fa; }
 body.theme-neon .btn-icon.active-state { color: #f5c74a; }
@@ -685,6 +734,25 @@ body.theme-neon #modal-cancel { background: rgba(30,36,49,.9); color: #9aa6b8; b
 body.theme-neon #modal-cancel:hover { background: rgba(255,255,255,.1); color: #f2f5fa; }
 body.theme-neon #modal-confirm { background: #f5c74a; color: #0b0e15; }
 body.theme-neon #modal-confirm:hover { background: #ffe082; }
+body.theme-neon #modal-workspace { background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.14); color: #f2f5fa; }
+body.theme-neon .cred-entry { background: rgba(30,36,49,.9); border: 1px solid rgba(255,255,255,.14); }
+body.theme-neon .cred-empty { color: #6b7890; }
+body.theme-neon #modal-creds-add { background: rgba(30,36,49,.9); }
+body.theme-neon #modal-creds-add svg, body.theme-neon #modal-creds-add { color: #9aa6b8; }
+body.theme-neon #modal-creds-add:hover { border-color: #f5c74a; color: #f5c74a; }
+body.theme-neon .acc-icn { color: #9aa6b8; }
+body.theme-neon #donate-overlay { background: rgba(8,10,15,.6); }
+body.theme-neon #donate-box { background: rgba(22,27,38,.97); border-color: rgba(255,255,255,.14); border-top-color: #f5c74a; box-shadow: 0 25px 60px rgba(0,0,0,.7); }
+body.theme-neon #donate-title { color: #f2f5fa; }
+body.theme-neon .donate-sub { color: #9aa6b8; }
+body.theme-neon #donate-close { color: #9aa6b8; }
+body.theme-neon #donate-close:hover { background: rgba(255,255,255,.1); color: #f2f5fa; }
+body.theme-neon .donate-qr-fallback { background: rgba(30,36,49,.9); border-color: rgba(255,255,255,.14); }
+body.theme-neon .donate-codigo { background: rgba(30,36,49,.9); border-color: rgba(255,255,255,.14); color: #9aa6b8; }
+body.theme-neon #donate-close2 { background: rgba(30,36,49,.9); color: #9aa6b8; border-color: rgba(255,255,255,.14); }
+body.theme-neon #donate-close2:hover { background: rgba(255,255,255,.1); color: #f2f5fa; }
+body.theme-neon .donate-primary { background: #f5c74a; color: #0b0e15; }
+body.theme-neon .donate-primary:hover { background: #ffe082; }
 
 body.theme-neon .ws-edit-head h3, body.theme-neon .shortcuts-head h3, body.theme-neon .settings-head h3,
 body.theme-neon .confirm-head h3, body.theme-neon .scripts-head h3 { color: #f2f5fa; }

@@ -26,6 +26,13 @@ const I18N = {
     activeAccountSuffix: '{name} ativa', editAccount: 'Editar conta', accountName: 'Nome da conta',
     initialUrl: 'URL inicial / padrão', cancel: 'Cancelar', save: 'Salvar', editWorkspace: 'Editar workspace',
     collapseSidebar: 'Recolher barra lateral', closeAllTitle: 'Fechar todas as contas abertas',
+    workspaceLabel: 'WORKSPACE', openImmediately: 'Abrir a conta assim que criar',
+    credsLabel: 'LOGINS / AUTOPREENCHER',
+    credsDesc: 'Login/senha por site. Preenche sozinho ao carregar o site (desligue o "Auto" de um site se preferir) ou manualmente com Ctrl+Shift+F.',
+    credsAdd: 'Adicionar site', credsEmpty: 'Nenhum login salvo ainda.',
+    credsLoginPh: 'Login / e-mail', credsPassPh: 'Senha', credsAuto: 'Auto',
+    credsAutoTitle: 'Preencher automaticamente ao carregar este site',
+    credsDel: 'Remover credencial', credsShow: 'Mostrar/ocultar senha',
     nameLabel: 'NOME', colorLabel: 'COR', iconLabel: 'ÍCONE', defaultUrlLabel: 'URL PADRÃO', layoutsLabel: 'LAYOUTS',
     layoutAuto: 'Grade automática', layoutSingle: 'Painel único', layoutColumns: 'Colunas', layoutRows: 'Linhas', layoutFree: 'Livre (redimensionável)',
     ctxReload: 'Recarregar', ctxDefaultUrl: 'Ir para a URL padrão', ctxMute: 'Silenciar painel', ctxUnmute: 'Reativar som',
@@ -47,6 +54,7 @@ const I18N = {
     ecoModeDesc: 'Reduz o uso de CPU da conta em foco deixando as animações mais lentas — o progresso do jogo não é afetado, só a atualização visual',
     shcEcoMode: 'Modo Eco (reduz CPU)',
     shcPresentation: 'Modo apresentação/gravação',
+    shcFillCredentials: 'Preencher login/senha da conta ativa',
     exportBtn: 'Exportar workspaces', importBtn: 'Importar workspaces',
     defaultUrlSettings: 'URL inicial padrão', defaultZoomSettings: 'Zoom padrão para novas contas', defaultLayoutSettings: 'Layout padrão',
     downloadsFolder: 'Pasta de downloads', downloadsFolderDefault: 'Pasta padrão do sistema', chooseFolder: 'Escolher pasta...',
@@ -91,6 +99,13 @@ const I18N = {
     activeAccountSuffix: '{name} active', editAccount: 'Edit account', accountName: 'Account name',
     initialUrl: 'Initial / default URL', cancel: 'Cancel', save: 'Save', editWorkspace: 'Edit workspace',
     collapseSidebar: 'Collapse sidebar', closeAllTitle: 'Close all open accounts',
+    workspaceLabel: 'WORKSPACE', openImmediately: 'Open the account right away',
+    credsLabel: 'LOGINS / AUTOFILL',
+    credsDesc: 'Username/password per site. Fills in automatically when the site loads (turn off "Auto" per site) or manually with Ctrl+Shift+F.',
+    credsAdd: 'Add site', credsEmpty: 'No saved logins yet.',
+    credsLoginPh: 'Username / email', credsPassPh: 'Password', credsAuto: 'Auto',
+    credsAutoTitle: 'Fill automatically when this site loads',
+    credsDel: 'Remove credential', credsShow: 'Show/hide password',
     nameLabel: 'NAME', colorLabel: 'COLOR', iconLabel: 'ICON', defaultUrlLabel: 'DEFAULT URL', layoutsLabel: 'LAYOUTS',
     layoutAuto: 'Auto grid', layoutSingle: 'Single panel', layoutColumns: 'Columns', layoutRows: 'Rows', layoutFree: 'Free (resizable)',
     ctxReload: 'Reload', ctxDefaultUrl: 'Go to default URL', ctxMute: 'Mute panel', ctxUnmute: 'Unmute',
@@ -112,6 +127,7 @@ const I18N = {
     ecoModeDesc: "Reduces CPU usage of the focused account by slowing down animations — game progress isn't affected, only how often the screen redraws",
     shcEcoMode: 'Eco mode (reduce CPU)',
     shcPresentation: 'Presentation/recording mode',
+    shcFillCredentials: 'Fill active account login/password',
     exportBtn: 'Export workspaces', importBtn: 'Import workspaces',
     defaultUrlSettings: 'Default initial URL', defaultZoomSettings: 'Default zoom for new accounts', defaultLayoutSettings: 'Default layout',
     downloadsFolder: 'Downloads folder', downloadsFolderDefault: 'System default folder', chooseFolder: 'Choose folder...',
@@ -156,6 +172,13 @@ const I18N = {
     activeAccountSuffix: '{name} activa', editAccount: 'Editar cuenta', accountName: 'Nombre de la cuenta',
     initialUrl: 'URL inicial / predeterminada', cancel: 'Cancelar', save: 'Guardar', editWorkspace: 'Editar workspace',
     collapseSidebar: 'Contraer barra lateral', closeAllTitle: 'Cerrar todas las cuentas abiertas',
+    workspaceLabel: 'WORKSPACE', openImmediately: 'Abrir la cuenta al crear',
+    credsLabel: 'INICIOS DE SESIÓN / AUTORELLENO',
+    credsDesc: 'Usuario/contraseña por sitio. Rellena solo al cargar el sitio (desactiva "Auto" por sitio) o manualmente con Ctrl+Shift+F.',
+    credsAdd: 'Añadir sitio', credsEmpty: 'Aún no hay inicios de sesión guardados.',
+    credsLoginPh: 'Usuario / correo', credsPassPh: 'Contraseña', credsAuto: 'Auto',
+    credsAutoTitle: 'Rellenar automáticamente al cargar este sitio',
+    credsDel: 'Quitar credencial', credsShow: 'Mostrar/ocultar contraseña',
     nameLabel: 'NOMBRE', colorLabel: 'COLOR', iconLabel: 'ICONO', defaultUrlLabel: 'URL PREDETERMINADA', layoutsLabel: 'DISEÑOS',
     layoutAuto: 'Cuadrícula automática', layoutSingle: 'Panel único', layoutColumns: 'Columnas', layoutRows: 'Filas', layoutFree: 'Libre (redimensionable)',
     ctxReload: 'Recargar', ctxDefaultUrl: 'Ir a la URL predeterminada', ctxMute: 'Silenciar panel', ctxUnmute: 'Reactivar sonido',
@@ -177,6 +200,7 @@ const I18N = {
     ecoModeDesc: 'Reduce el uso de CPU de la cuenta activa ralentizando las animaciones — el progreso del juego no se ve afectado, solo la frecuencia de actualización visual',
     shcEcoMode: 'Modo Eco (reduce CPU)',
     shcPresentation: 'Modo presentación/grabación',
+    shcFillCredentials: 'Rellenar usuario/contraseña de la cuenta activa',
     exportBtn: 'Exportar workspaces', importBtn: 'Importar workspaces',
     defaultUrlSettings: 'URL inicial predeterminada', defaultZoomSettings: 'Zoom predeterminado para nuevas cuentas', defaultLayoutSettings: 'Diseño predeterminado',
     downloadsFolder: 'Carpeta de descargas', downloadsFolderDefault: 'Carpeta predeterminada del sistema', chooseFolder: 'Elegir carpeta...',
@@ -338,7 +362,7 @@ function serializeState() {
       id: ws.id, name: ws.name, color: ws.color, iconKey: ws.iconKey, defaultUrl: ws.defaultUrl, layout: ws.layout,
       accounts: ws.accounts.map((a) => ({
         id: a.id, name: a.name, url: a.url, defaultUrl: a.defaultUrl, partition: a.partition,
-        colorIdx: a.colorIdx, status: a.status, muted: !!a.muted, createdAt: a.createdAt,
+        colorIdx: a.colorIdx, iconKey: a.iconKey || 'apps', status: a.status, muted: !!a.muted, createdAt: a.createdAt,
         zoomFactor: a.zoomFactor || 1, freeWidth: a.freeWidth || null, freeHeight: a.freeHeight || null,
       })),
       autoGridColFr: ws.autoGridColFr || null, autoGridRowFr: ws.autoGridRowFr || null,
@@ -366,7 +390,7 @@ async function init() {
       if (!ws.iconKey) ws.iconKey = 'apps';
       if (!ws.layout) ws.layout = state.settings.layoutPadrao || 'auto';
       if (!ws.defaultUrl) ws.defaultUrl = state.settings.urlInicialPadrao || DEFAULT_URL;
-      ws.accounts.forEach((a) => { if (!a.zoomFactor) a.zoomFactor = 1; a.webContentsId = null; a.pid = null; });
+      ws.accounts.forEach((a) => { if (!a.zoomFactor) a.zoomFactor = 1; if (!a.iconKey) a.iconKey = 'apps'; a.webContentsId = null; a.pid = null; });
     });
     if (state.settings.reabrirUltimoWorkspace === false) state.activeWorkspaceId = state.workspaces[0].id;
   } else {
@@ -401,6 +425,7 @@ async function init() {
 
   try { state.settings.iniciarComSistema = !!(await window.nativeAPI.getLoginItem()); } catch (err) { /* ignore */ }
 
+  await loadCredentials();
   checkForUpdatesOnStartup();
 }
 
@@ -548,7 +573,7 @@ function duplicateWorkspace(id) {
       const newAccId = state.nextAccountId++;
       return {
         id: newAccId, name: a.name, url: a.defaultUrl, defaultUrl: a.defaultUrl, partition: `persist:conta-${newAccId}`,
-        colorIdx: a.colorIdx, status: 'closed', muted: false, zoomFactor: 1, createdAt: Date.now(), webContentsId: null, pid: null,
+        colorIdx: a.colorIdx, iconKey: a.iconKey || 'apps', status: 'closed', muted: false, zoomFactor: 1, createdAt: Date.now(), webContentsId: null, pid: null,
       };
     }),
   };
@@ -584,8 +609,15 @@ function renderWorkspaceRail() {
     el.addEventListener('contextmenu', (e) => { e.preventDefault(); openWsContextMenu(e.clientX, e.clientY, ws.id); });
     el.addEventListener('dragstart', (e) => { el.classList.add('dragging'); e.dataTransfer.setData('text/ws-id', String(ws.id)); });
     el.addEventListener('dragend', () => el.classList.remove('dragging'));
-    el.addEventListener('dragover', (e) => e.preventDefault());
-    el.addEventListener('drop', (e) => { e.preventDefault(); const draggedId = Number(e.dataTransfer.getData('text/ws-id')); if (draggedId) reorderWorkspace(draggedId, ws.id); });
+    el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('drag-over'); });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', (e) => {
+      e.preventDefault(); el.classList.remove('drag-over');
+      const wsId = Number(e.dataTransfer.getData('text/ws-id'));
+      if (wsId) { reorderWorkspace(wsId, ws.id); return; }
+      const accId = Number(e.dataTransfer.getData('text/acc-id'));
+      if (accId) moveAccountToWorkspace(accId, ws.id);
+    });
     workspaceIconsEl.appendChild(el);
   });
 }
@@ -685,29 +717,26 @@ $('#ws-edit-save').addEventListener('click', () => {
 // ---------------------------------------------------------------------------
 // Contas: criação instantânea (sem modal) / abrir / fechar / duplicar / editar / excluir / limpar
 // ---------------------------------------------------------------------------
-function createAccount(name, url, openImmediately = true) {
-  const ws = getActiveWorkspace();
+function createAccount(name, url, openImmediately = true, opts = {}) {
+  const ws = opts.workspaceId != null
+    ? state.workspaces.find((w) => w.id === opts.workspaceId) || getActiveWorkspace()
+    : getActiveWorkspace();
   if (!ws) return null;
   const id = state.nextAccountId++;
   const finalUrl = url && url.trim() ? normalizeUrl(url.trim()) : (ws.defaultUrl || DEFAULT_URL);
   const account = {
     id, name: name || `${t('accountWord')} ${id}`, url: finalUrl, defaultUrl: finalUrl,
-    partition: `persist:conta-${id}`, colorIdx: ws.accounts.length % ACCOUNT_COLORS.length,
+    partition: `persist:conta-${id}`,
+    colorIdx: opts.colorIdx != null ? opts.colorIdx : ws.accounts.length % ACCOUNT_COLORS.length,
+    iconKey: opts.iconKey || 'apps',
     status: openImmediately ? 'open' : 'closed', muted: false, zoomFactor: state.settings.zoomPadrao || 1,
     createdAt: Date.now(), webContentsId: null, pid: null,
   };
   ws.accounts.push(account);
   renderWorkspaceRail(); renderSidebar(); renderGrid();
-  setActiveAccount(id);
+  if (openImmediately && ws.id === getActiveWorkspace().id) setActiveAccount(id);
   schedulePersist();
   return account;
-}
-// Clique em "Adicionar conta": cria na hora com um nome aleatório, sem pedir confirmação
-// (editar nome/URL depois é feito pelo menu de contexto "Editar conta")
-function quickCreateAccount() {
-  const ws = getActiveWorkspace();
-  const name = nextSequentialName(ws ? ws.accounts.map((a) => a.name) : [], t('accountWord'));
-  createAccount(name, null, true);
 }
 function openAccount(id, urlOverride) {
   const acc = getAccountById(id);
@@ -746,6 +775,8 @@ function deleteAccount(id) {
     if (!ws) return;
     ws.accounts = ws.accounts.filter((a) => a.id !== id);
     if (activeAccountId === id) activeAccountId = null;
+    delete credentials[id];
+    window.nativeAPI.deleteCredentials(id);
     renderWorkspaceRail(); renderSidebar(); renderGrid(); updateStatusBar(); schedulePersist();
   });
 }
@@ -756,7 +787,7 @@ function duplicateAccount(id) {
   const newId = state.nextAccountId++;
   const copy = {
     id: newId, name: `${src.name} ${t('copySuffix')}`, url: src.defaultUrl, defaultUrl: src.defaultUrl,
-    partition: `persist:conta-${newId}`, colorIdx: ws.accounts.length % ACCOUNT_COLORS.length,
+    partition: `persist:conta-${newId}`, colorIdx: src.colorIdx || 0, iconKey: src.iconKey || 'apps',
     status: 'open', muted: false, zoomFactor: src.zoomFactor || 1, createdAt: Date.now(), webContentsId: null, pid: null,
   };
   ws.accounts.push(copy);
@@ -764,10 +795,12 @@ function duplicateAccount(id) {
   setActiveAccount(newId);
   schedulePersist();
 }
-function editAccount(id, name, url) {
+function editAccount(id, name, url, opts = {}) {
   const acc = getAccountById(id);
   if (!acc) return;
   if (name.trim()) acc.name = name.trim();
+  if (opts.colorIdx != null) acc.colorIdx = opts.colorIdx;
+  if (opts.iconKey) acc.iconKey = opts.iconKey;
   const trimmedUrl = url.trim();
   if (trimmedUrl) {
     const full = normalizeUrl(trimmedUrl);
@@ -806,6 +839,25 @@ function reorderAccount(draggedId, targetId) {
   const [item] = ws.accounts.splice(from, 1);
   ws.accounts.splice(to, 0, item);
   renderSidebar(); renderGrid(); schedulePersist();
+}
+// Mover uma conta para outro workspace (arrastando a conta da sidebar para o
+// ícone de um workspace na coluna da esquerda). A conta preserva sessão
+// (partição), cor, ícone e configurações — só troca de "pasta".
+function moveAccountToWorkspace(accountId, targetWorkspaceId) {
+  const targetWs = state.workspaces.find((w) => w.id === targetWorkspaceId);
+  if (!targetWs) return;
+  let sourceWs = null;
+  for (const w of state.workspaces) {
+    if (w.accounts.some((a) => a.id === accountId)) { sourceWs = w; break; }
+  }
+  if (!sourceWs || sourceWs.id === targetWs.id) return;
+  const acc = sourceWs.accounts.find((a) => a.id === accountId);
+  sourceWs.accounts = sourceWs.accounts.filter((a) => a.id !== accountId);
+  targetWs.accounts.push(acc);
+  if (activeAccountId === accountId) activeAccountId = null;
+  if (state.activeWorkspaceId === targetWs.id) setActiveAccount(accountId);
+  renderWorkspaceRail(); renderSidebar(); renderGrid(); updateStatusBar(); updateNavButtons(); updateZoomLabel(); updateMuteButton();
+  schedulePersist();
 }
 function setActiveAccount(id) {
   if (activeAccountId === id) return;
@@ -850,6 +902,7 @@ function renderSidebar() {
     item.innerHTML = `
       <div class="row1">
         <span class="dot ${acc.status === 'closed' ? 'closed-dot' : ''}" style="background:${acc.status === 'closed' ? '' : ACCOUNT_COLORS[acc.colorIdx % ACCOUNT_COLORS.length]}"></span>
+        <span class="acc-icn">${ICONS[acc.iconKey] || ICONS.apps}</span>
         <span class="blur-target">${escapeHtml(acc.name)}</span>
       </div>
       <div class="row2">${acc.status === 'open' ? t('statusOnline') + ' · ' + formatUptime(acc.createdAt) : t('statusClosed')}</div>
@@ -1159,6 +1212,7 @@ function buildCard(acc) {
   header.innerHTML = `
     <span class="drag-handle">::</span>
     <span class="dot" style="background:${ACCOUNT_COLORS[acc.colorIdx % ACCOUNT_COLORS.length]}"></span>
+    <span class="acc-icn">${ICONS[acc.iconKey] || ICONS.apps}</span>
     <span class="name blur-target">${escapeHtml(acc.name)}</span>
     <span class="url blur-target">${escapeHtml(acc.url)}</span>
     <button class="mute" title="Mudo">${muteIcon(acc.muted)}</button>
@@ -1188,6 +1242,9 @@ function buildCard(acc) {
     webview.executeJavaScript(RAF_THROTTLE_INJECT).then(() => {
       applyRafThrottle(webview, acc.id, card.style.display !== 'none');
     }).catch((err) => console.error('Erro ao aplicar throttle de rAF:', err));
+    if (credentials[acc.id] && credentials[acc.id].length) {
+      autofillAccount(acc.id, false);
+    }
     if (ws) {
       state.scripts.filter((s) => scriptAppliesToAccount(s, ws.id, acc.id)).forEach((s) => {
         webview.executeJavaScript(s.code).catch((err) => console.error(`Erro no script "${s.name}":`, err));
@@ -1204,6 +1261,11 @@ function buildCard(acc) {
     acc.url = e.url;
     header.querySelector('.url').textContent = e.url;
     if (acc.id === activeAccountId) updateNavButtons();
+    // SPAs trocam de "página" sem recarregar o documento — tenta preencher o
+    // formulário que o site montou, com um atraso pro campo existir.
+    if (credentials[acc.id] && credentials[acc.id].length) {
+      setTimeout(() => autofillAccount(acc.id, false), 700);
+    }
   });
 
   wrap.appendChild(webview);
@@ -1489,6 +1551,7 @@ const ACTION_DEFS = [
   { id: 'presentationMode', labelKey: 'shcPresentation', def: { ctrl: true, shift: true, key: 'p' } },
   { id: 'ecoMode', labelKey: 'shcEcoMode', def: { ctrl: true, shift: true, key: 'e' } },
   { id: 'fullscreen', labelKey: 'shcFullscreen', def: { key: 'F11' } },
+  { id: 'fillCredentials', labelKey: 'shcFillCredentials', def: { ctrl: true, shift: true, key: 'f' } },
   { id: 'settings', labelKey: 'shcSettings', def: { ctrl: true, key: ',' } },
   { id: 'help', labelKey: 'shcHelp', def: { key: 'F1' } },
 ];
@@ -1542,7 +1605,7 @@ function runAction(id) {
       break;
     }
     case 'newWorkspace': createWorkspace(); break;
-    case 'newAccount': quickCreateAccount(); break;
+    case 'newAccount': openAccountModal('create'); break;
     case 'deleteAccount': if (activeAccountId) deleteAccount(activeAccountId); break;
     case 'devtools': {
       const w = getActiveWebview();
@@ -1579,6 +1642,7 @@ function runAction(id) {
     case 'presentationMode': togglePresentationMode(); break;
     case 'ecoMode': toggleEcoMode(); break;
     case 'fullscreen': window.nativeAPI.toggleFullscreen(); break;
+    case 'fillCredentials': if (activeAccountId != null) autofillAccount(activeAccountId, true); break;
     case 'settings': openSettingsModal(); break;
     case 'help': openShortcutsModal(); break;
   }
@@ -1665,30 +1729,266 @@ $('#shortcuts-reset').addEventListener('click', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Modal: editar conta (a criação agora é instantânea, sem modal)
+// Modal: criar / editar conta (nome + cor + ícone + URL + workspace +
+// credenciais de autopreenchimento)
 // ---------------------------------------------------------------------------
 const overlay = $('#modal-overlay');
+let modalMode = 'create';
 let modalTargetId = null;
+let modalColorIdx = 0;
+let modalIconKey = 'apps';
+let modalCreds = [];
+
 function openAccountModal(mode, accountId) {
-  modalTargetId = accountId || null;
-  const acc = getAccountById(accountId);
-  $('#modal-name').value = acc ? acc.name : '';
+  modalMode = mode === 'edit' ? 'edit' : 'create';
+  modalTargetId = modalMode === 'edit' ? accountId : null;
+  const acc = modalTargetId != null ? getAccountById(modalTargetId) : null;
+  const activeWs = getActiveWorkspace() || { accounts: [], id: state.workspaces[0] ? state.workspaces[0].id : null };
+  const defaultName = nextSequentialName(activeWs.accounts.map((a) => a.name), t('accountWord'));
+
+  $('#modal-title').textContent = modalTargetId != null ? t('editAccount') : t('addAccount');
+  $('#modal-name').value = acc ? acc.name : defaultName;
   $('#modal-url').value = acc ? acc.defaultUrl : '';
+
+  // Na criação dá pra escolher o workspace; na edição a conta já tem workspace
+  $('#modal-workspace-wrap').classList.toggle('hidden', modalMode === 'edit');
+  const wsSelect = $('#modal-workspace');
+  wsSelect.innerHTML = state.workspaces.map((w) => `<option value="${w.id}">${escapeHtml(w.name)}</option>`).join('');
+  if (activeWs.id != null) wsSelect.value = String(activeWs.id);
+
+  $('#modal-open-wrap').classList.toggle('hidden', modalMode === 'edit');
+  $('#modal-open').checked = true;
+
+  modalColorIdx = acc ? (acc.colorIdx || 0) : (activeWs.accounts.length % ACCOUNT_COLORS.length);
+  modalIconKey = acc ? (acc.iconKey || 'apps') : 'apps';
+  renderModalColors();
+  renderModalIcons();
+
+  modalCreds = (modalMode === 'edit' && acc && credentials[acc.id]) ? credentials[acc.id].map((c) => ({ ...c })) : [];
+  $('#modal-creds-sec').classList.toggle('hidden', modalMode !== 'edit');
+  renderModalCreds();
+
   overlay.classList.remove('hidden');
   $('#modal-name').focus();
 }
+
+function renderModalColors() {
+  const wrap = $('#modal-colors'); wrap.innerHTML = '';
+  COLORS.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.style.background = c; b.style.color = c;
+    if (i === modalColorIdx) b.classList.add('selected');
+    b.addEventListener('click', () => { modalColorIdx = i; renderModalColors(); });
+    wrap.appendChild(b);
+  });
+}
+function renderModalIcons() {
+  const wrap = $('#modal-icons'); wrap.innerHTML = '';
+  ICON_KEYS.forEach((key) => {
+    const b = document.createElement('button');
+    b.innerHTML = ICONS[key];
+    if (key === modalIconKey) b.classList.add('selected');
+    b.addEventListener('click', () => { modalIconKey = key; renderModalIcons(); });
+    wrap.appendChild(b);
+  });
+}
+
+function renderModalCreds() {
+  const wrap = $('#modal-creds-list');
+  if (!modalCreds.length) {
+    wrap.innerHTML = `<div class="creds-empty">${t('credsEmpty')}</div>`;
+    return;
+  }
+  wrap.innerHTML = '';
+  modalCreds.forEach((c, idx) => {
+    const row = document.createElement('div');
+    row.className = 'cred-entry';
+    row.innerHTML = `
+      <input class="cred-site" type="text" placeholder="exemplo.com" value="${escapeHtml(c.site)}" style="grid-column:1 / -1" />
+      <div class="cred-pass-wrap">
+        <input class="cred-login" type="text" placeholder="${t('credsLoginPh')}" value="${escapeHtml(c.login)}" />
+      </div>
+      <div class="cred-pass-wrap">
+        <input class="cred-senha" type="password" placeholder="${t('credsPassPh')}" value="${escapeHtml(c.senha)}" />
+        <button type="button" class="cred-toggle" title="${t('credsShow')}">
+          <svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <label class="cred-auto-row" title="${t('credsAutoTitle')}">
+        <span>${t('credsAuto')}</span>
+        <label class="switch"><input type="checkbox" class="cred-autofill" ${c.autoFill !== false ? 'checked' : ''}><span class="switch-track"></span></label>
+      </label>
+      <button type="button" class="cred-del" title="${t('credsDel')}">
+        <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    `;
+    const readEntry = () => {
+      c.site = row.querySelector('.cred-site').value.trim();
+      c.login = row.querySelector('.cred-login').value.trim();
+      c.senha = row.querySelector('.cred-senha').value;
+      c.autoFill = row.querySelector('.cred-autofill').checked;
+      c.selectors = c.selectors || { login: '', senha: '' };
+    };
+    row.querySelector('.cred-toggle').addEventListener('click', () => {
+      const inp = row.querySelector('.cred-senha');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    });
+    row.querySelector('.cred-del').addEventListener('click', () => { modalCreds.splice(idx, 1); renderModalCreds(); });
+    ['cred-site', 'cred-login', 'cred-senha'].forEach((cls) => {
+      row.querySelector('.' + cls).addEventListener('input', readEntry);
+    });
+    row.querySelector('.cred-autofill').addEventListener('change', readEntry);
+    wrap.appendChild(row);
+  });
+}
+$('#modal-creds-add').addEventListener('click', () => { modalCreds.push({ site: '', login: '', senha: '', autoFill: true, selectors: { login: '', senha: '' } }); renderModalCreds(); });
+
 $('#modal-cancel').addEventListener('click', () => overlay.classList.add('hidden'));
-$('#modal-confirm').addEventListener('click', () => {
+$('#modal-confirm').addEventListener('click', async () => {
   const name = $('#modal-name').value.trim();
   const url = $('#modal-url').value.trim();
   overlay.classList.add('hidden');
-  if (modalTargetId != null) editAccount(modalTargetId, name, url);
+  if (modalMode === 'edit' && modalTargetId != null) {
+    editAccount(modalTargetId, name, url, { colorIdx: modalColorIdx, iconKey: modalIconKey });
+    persistAccountCredentials(modalTargetId, modalCreds);
+  } else {
+    const wsId = Number($('#modal-workspace').value);
+    const openNow = $('#modal-open').checked;
+    const acc = createAccount(name, url, openNow, { workspaceId: wsId, colorIdx: modalColorIdx, iconKey: modalIconKey });
+    if (acc && modalCreds.length) persistAccountCredentials(acc.id, modalCreds);
+  }
 });
 overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.add('hidden'); });
 
-$('#add-account-btn').addEventListener('click', quickCreateAccount);
-$('#empty-add-account-btn').addEventListener('click', quickCreateAccount);
+$('#add-account-btn').addEventListener('click', () => openAccountModal('create'));
+$('#empty-add-account-btn').addEventListener('click', () => openAccountModal('create'));
 $('#add-workspace-btn').addEventListener('click', () => createWorkspace());
+
+// ---------------------------------------------------------------------------
+// Credenciais de autopreenchimento — login/senha por conta, criptografadas no
+// arquivo credentials.json (safeStorage). Chamadas de autofill são rejeitadas
+// silenciosamente (o site bloqueia ou não acha o campo), então nada quebra.
+// ---------------------------------------------------------------------------
+let credentials = {}; // accountId -> [{ site, login, senha, autoFill, selectors }]
+
+async function persistAccountCredentials(accountId, list) {
+  const clean = (list || [])
+    .map((c) => ({
+      site: String(c.site || '').trim(),
+      login: String(c.login || '').trim(),
+      senha: String(c.senha || ''),
+      autoFill: c.autoFill !== false,
+      selectors: { login: String((c.selectors && c.selectors.login) || ''), senha: String((c.selectors && c.selectors.senha) || '') },
+    }))
+    .filter((c) => c.site || c.login || c.senha);
+  if (!clean.length) {
+    delete credentials[accountId];
+    try { await window.nativeAPI.deleteCredentials(accountId); } catch (err) { /* ignore */ }
+    return;
+  }
+  credentials[accountId] = clean;
+  try { await window.nativeAPI.saveCredentials({ accountId, list: clean }); } catch (err) { console.error('Falha ao salvar credenciais', err); }
+}
+
+async function loadCredentials() {
+  try { credentials = await window.nativeAPI.loadCredentials(); } catch (err) { console.error('Falha ao carregar credenciais', err); }
+  if (!credentials || typeof credentials !== 'object') credentials = {};
+}
+
+// ---------------------------------------------------------------------------
+// Autofill: script injetado na página de cada conta. Detecta campos de
+// email/text + senha sozinhos (com override opcional via seletores CSS por
+// site) e preenche de um jeito compatível com frameworks (React etc.) usando
+// o setter nativo + eventos input/change.
+// ---------------------------------------------------------------------------
+const AUTOFILL_INJECT = `(function(){
+  if (window.__idleHubFillReady) return;
+  window.__idleHubFillReady = true;
+  function nativeSet(el, value) {
+    var proto = el.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
+    try { Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, value); }
+    catch (err) { el.value = value; }
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+    el.focus();
+    el.blur();
+  }
+  function query(selector) {
+    if (!selector) return null;
+    try { return document.querySelector(selector); } catch (err) { return null; }
+  }
+  function siteMatches(host, site) {
+    if (!site) return false;
+    var s = String(site).toLowerCase().trim();
+    var p = s.indexOf('://');
+    if (p !== -1) s = s.slice(p + 3);
+    var q = s.indexOf('/');
+    if (q !== -1) s = s.slice(0, q);
+    var c = s.indexOf(':');
+    if (c !== -1) s = s.slice(0, c);
+    if (s.indexOf('www.') === 0) s = s.slice(4);
+    var h = String(host || '').toLowerCase().trim();
+    if (h.indexOf('www.') === 0) h = h.slice(4);
+    return s !== '' && (h === s || h.endsWith('.' + s) || s.endsWith('.' + h));
+  }
+  function pickLogin(force) {
+    var inputs = Array.prototype.slice.call(document.querySelectorAll('input:not([type]), input[type=text], input[type=email], input[type=tel], input[type=password]'));
+    var scored = [];
+    inputs.forEach(function (el) {
+      var n = ((el.name || '') + ' ' + (el.id || '') + ' ' + (el.placeholder || '')).toLowerCase();
+      var a = (el.autocomplete || '').toLowerCase();
+      var s = 0;
+      if (el.type === 'password') s += 0;
+      if (a === 'username' || a === 'email' || a === 'user-name') s += 5;
+      if (a.indexOf('user') !== -1 || a === 'login') s += 3;
+      if (n.indexOf('user') !== -1 || n.indexOf('login') !== -1 || n.indexOf('mail') !== -1 || n.indexOf('email') !== -1) s += 2;
+      if (el.type !== 'password' && el.type !== 'email' && el.type !== 'tel') s += 1;
+      if (s > 0 && (force || el.value === '')) scored.push({ el: el, s: s });
+    });
+    if (!scored.length) return null;
+    scored.sort(function (a, b) { return b.s - a.s; });
+    for (var i = 0; i < scored.length; i++) {
+      if (scored[i].el.type !== 'password') return scored[i].el;
+    }
+    return scored[0].el;
+  }
+  window.__idleHubFill = function (list, force) {
+    var host = location.hostname;
+    var entry = null;
+    for (var i = 0; i < list.length; i++) {
+      if (siteMatches(host, list[i].site)) { entry = list[i]; break; }
+    }
+    if (!entry || !entry.login) return false;
+    if (!force && entry.autoFill === false) return false;
+    var loginSel = entry.selectors && entry.selectors.login;
+    var passSel = entry.selectors && entry.selectors.senha;
+    var loginEl = query(loginSel) || pickLogin(force);
+    var passEl = query(passSel) || document.querySelector('input[type=password]');
+    if (!loginEl || !passEl) return false;
+    var done = false;
+    if (entry.login && (force || loginEl.value === '')) { nativeSet(loginEl, entry.login); done = true; }
+    if (entry.senha && (force || passEl.value === '')) { nativeSet(passEl, entry.senha); done = true; }
+    return done;
+  };
+  window.__idleHubAutoFill = function (list) {
+    if (window.__idleHubFill(list, false)) return true;
+    var tried = 0;
+    var timer = setInterval(function () {
+      tried++;
+      if (window.__idleHubFill(list, false) || tried >= 6) clearInterval(timer);
+    }, 400);
+    return false;
+  };
+})();`;
+
+function autofillAccount(accountId, force) {
+  const list = credentials[accountId];
+  if (!list || !list.length) return;
+  const webview = grid.querySelector(`.account-card[data-id="${accountId}"] webview`);
+  if (!webview) return;
+  const call = force ? 'window.__idleHubFill(%s, true)' : 'window.__idleHubAutoFill(%s)';
+  webview.executeJavaScript(AUTOFILL_INJECT + '; ' + call.replace('%s', JSON.stringify(list)) + ';').catch(() => { /* site bloqueia ou não tem o campo — segue o jogo */ });
+}
 
 // ---------------------------------------------------------------------------
 // Titlebar custom
@@ -1697,9 +1997,69 @@ $('#btn-min').addEventListener('click', () => window.nativeAPI.minimize());
 $('#btn-max').addEventListener('click', () => window.nativeAPI.maximize());
 $('#btn-close').addEventListener('click', () => window.nativeAPI.close());
 
-// ATENÇÃO: coloque aqui o seu link real de doação (Pix/Ko-fi/GitHub Sponsors/Patreon etc.)
-const DONATE_URL = 'https://github.com/sponsors/';
-$('#donate-btn').addEventListener('click', () => window.nativeAPI.openExternal(DONATE_URL));
+// ---------------------------------------------------------------------------
+// DOAÇÃO — edite tudo aqui: textos, imagem e o código Pix (somente o
+// códigoPix precisa ser trocado; a imagem pix-qrcode.png é a mesma).
+// Se preencher urlExterna, o botão Doar abre o link em vez do modal.
+// ---------------------------------------------------------------------------
+const DONATE_CONFIG = {
+  titulo: '☕ Apoie o Idle Hub',
+  subtitulo: 'Se o launcher te ajudou, um cafezinho via Pix é muito bem-vindo!',
+  imagem: 'pix-qrcode.png',
+  codigoPix: '00020101021126580014br.gov.bcb.pix01368d6f750d-6713-4c9f-82c9-d8acf020463a5204000053039865802BR5920WANDERSON S F MORAES6006MACEIO62070503***63046A77',
+  textoFechar: 'Fechar',
+  textoCopiar: 'Copiar código Pix',
+  textoCopiado: 'Código Pix copiado!',
+  textoFallbackImagem: 'QR Code indisponível — use o código Pix abaixo',
+  urlExterna: '', // ex: 'https://github.com/sponsors/' (modal é usado se vazio)
+};
+
+const donateOverlay = $('#donate-overlay');
+function openDonateModal() {
+  if (DONATE_CONFIG.urlExterna) { window.nativeAPI.openExternal(DONATE_CONFIG.urlExterna); return; }
+  $('#donate-title').textContent = DONATE_CONFIG.titulo;
+  $('#donate-sub').textContent = DONATE_CONFIG.subtitulo;
+  const qr = $('#donate-qr');
+  qr.src = DONATE_CONFIG.imagem;
+  qr.style.display = '';
+  $('#donate-qr-fallback').style.display = 'none';
+  $('#donate-qr-fallback-text').textContent = DONATE_CONFIG.textoFallbackImagem;
+  $('#donate-pix').textContent = DONATE_CONFIG.codigoPix;
+  $('#donate-close2').textContent = DONATE_CONFIG.textoFechar;
+  $('#donate-copy').textContent = DONATE_CONFIG.textoCopiar;
+  donateOverlay.classList.remove('hidden');
+}
+function closeDonateModal() {
+  donateOverlay.classList.add('hidden');
+  const copyBtn = $('#donate-copy');
+  copyBtn.textContent = DONATE_CONFIG.textoCopiar;
+}
+function copyPixCode() {
+  const code = DONATE_CONFIG.codigoPix;
+  const done = () => {
+    const btn = $('#donate-copy');
+    btn.textContent = DONATE_CONFIG.textoCopiado;
+    setTimeout(() => { btn.textContent = DONATE_CONFIG.textoCopiar; }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(done).catch(() => legacyCopyPix(code, done));
+  } else legacyCopyPix(code, done);
+}
+function legacyCopyPix(code, done) {
+  const ta = document.createElement('textarea');
+  ta.value = code;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); done(); } catch (err) { /* ignore */ }
+  ta.remove();
+}
+$('#donate-btn').addEventListener('click', openDonateModal);
+$('#donate-close').addEventListener('click', closeDonateModal);
+$('#donate-close2').addEventListener('click', closeDonateModal);
+$('#donate-copy').addEventListener('click', copyPixCode);
+donateOverlay.addEventListener('click', (e) => { if (e.target === donateOverlay) closeDonateModal(); });
 
 // ---------------------------------------------------------------------------
 // Barra de status
